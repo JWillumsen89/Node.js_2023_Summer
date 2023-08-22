@@ -19,5 +19,5 @@ const number = 1;
 // The result should be 2023
 // You cannot touch line 1 or 2
 const newYear = parseInt(year) + number
-console.log(`${newYear}`)
+console.log(newYear)
 // --------------------------------------
