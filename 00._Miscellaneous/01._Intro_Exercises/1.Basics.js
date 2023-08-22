@@ -25,4 +25,7 @@ const result3 = +year + number;
 console.log(result1);
 console.log(result2);
 console.log(result3);
+
+console.log(Number("32566dsf6546"))
+console.log(parseInt("659746ad644"))
 // --------------------------------------
