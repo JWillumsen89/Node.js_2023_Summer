@@ -1,0 +1,10 @@
+npm, yarn, pnpm, pip, maven, gradle, ant, cargo
+
+maven     vs.         npm
+
+pom.xml               package.json
+
+meta info             meta info
+dependencies          dependencies
+life cycle methods    scripts
+
