@@ -1,0 +1,12 @@
+protocol    domain      endpoint
+https://www.google.com/search?hl=en&q=test
+        subdomain   top-level domain
+
+query string
+?hl=en&q=test
+  query parameters
+hl  en
+key value
+
+        path variable
+/search/1

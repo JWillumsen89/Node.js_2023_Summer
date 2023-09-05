@@ -353,33 +353,6 @@
         "height": 7410,
         "country": "Pakistan;China",
         "firstAscent": 1957
-    },
-    {
-        "id": 51,
-        "name": "K12",
-        "height": 7428,
-        "country": "Pakistan;China",
-        "firstAscent": 1970
-    },
-    {
-        "id": 52,
-        "name": "Siguang Ri",
-        "height": 7309,
-        "country": "China",
-        "firstAscent": 1989
-    },
-    {
-        "id": 53,
-        "name": "The Crown",
-        "height": 7295,
-        "country": "Pakistan",
-        "firstAscent": 1973
-    },
-    {
-        "id": 54,
-        "name": "Gangkhar Puensum",
-        "height": 7570,
-        "country": "Bhutan;China",
-        "firstAscent": 1982
     }
+
 ]

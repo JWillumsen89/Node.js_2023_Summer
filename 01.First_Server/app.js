@@ -1,10 +1,12 @@
 //import Express
-//const express = require("express");
+const express = require('express');
 //Install Express
-//const app = express();
+const app = express();
 
 //Same as above. But use the above instead in the future.
-const app = require('express')();
+//const app = require('express')();
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({ data: 'This is the first request handler' });
@@ -21,6 +23,11 @@ app.get('/dog/:firstValue/:id', (req, res) => {
     console.log(req.params.id);
     console.log(req.params);
     res.send({ dog: 'Meow' });
+});
+
+app.get('/cat', (req, res) => {
+    console.log(req.query);
+    res.send({ date: req.query });
 });
 
 let balance = 100;
@@ -40,6 +47,12 @@ app.get('/wallet/:withdrawalAmount', (req, res) => {
             message: `You've withdrawn ${req.params.withdrawalAmount} dkr - Your current balance is ${balance - req.params.withdrawalAmount} dkr`,
         });
     }
+});
+
+//If you get undefined as return body, then you are missing the app.use(express.json()) in the top.
+app.post('/giveMeTheBody', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
 });
 
 //80 http

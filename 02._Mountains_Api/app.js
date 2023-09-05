@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+const Joi = require('joi');
+
+app.use(express.json());
+
 /*const mountains = [
     { id: 1, name: 'Everest', height: 8848, country: 'Nepal;China', firstAscent: 1953, recordTime: '26 hours' },
     { id: 2, name: 'Aconcagua', height: 6961, country: 'Argentina', firstAscent: 1897, recordTime: '8 hours 10 mins' },
@@ -7,7 +11,15 @@ const app = express();
     { id: 4, name: 'Kilimanjaro', height: 5895, country: 'Tanzania', firstAscent: 1889, recordTime: '6 hours 42 mins' },
     { id: 5, name: 'Mont Blanc', height: 4810, country: 'France;Italy', firstAscent: 1786, recordTime: '4 hours 57 mins' },
 ];*/
-const mountains = require('./mountainsDB.json');
+let mountains = require('./mountainsDB.json');
+let currentMaxId = Math.max(...mountains.map(mountain => mountain.id));
+
+const schema = Joi.object({
+    name: Joi.string().min(3).max(40).required(),
+    height: Joi.number().min(3).max(12000).required(),
+    country: Joi.string().min(3).max(40).required(),
+    firstAscent: Joi.number().min(1),
+});
 
 app.get('/mountains', (req, res) => {
     res.send({ data: mountains });
@@ -78,6 +90,108 @@ app.get('/mountains/country/:country', (req, res) => {
         }
     } else {
         res.status(200).send({ error: 'Invalid country name' });
+    }
+});
+
+app.post('/mountains', async (req, res) => {
+    const { name, height, country, firstAscent } = req.body;
+
+    try {
+        const result = await schema.validateAsync({ name, height, country, firstAscent });
+
+        const mountain = mountains.find(m => m.name === name);
+
+        if (mountain) {
+            res.status(409).send({ error: 'Mountain already exists' });
+            return;
+        }
+
+        const newMountain = {
+            id: ++currentMaxId,
+            ...result,
+        };
+
+        mountains.push(newMountain);
+
+        console.log('New mountain has been created');
+        res.status(201).send(newMountain);
+    } catch (error) {
+        res.status(400).send({ error: error.details[0].message });
+    }
+});
+
+app.put('/mountains/:id', async (req, res) => {
+    const mountainId = Number(req.params.id);
+
+    try {
+        if (!mountainId) {
+            return res.status(400).send({ error: `ID must be an integer!` });
+        }
+
+        const { name, height, country, firstAscent } = req.body;
+
+        const result = await schema.validateAsync({ name, height, country, firstAscent });
+
+        const mountain = mountains.find(m => m.id === mountainId);
+
+        if (mountain) {
+            const updatedMountain = {
+                ...mountain,
+                ...result,
+            };
+
+            mountains = mountains.map(m => (m.id === mountainId ? updatedMountain : m));
+
+            res.status(200).send(updatedMountain);
+        } else {
+            res.status(404).send({ error: `No mountain with id: ${mountainId} found` });
+        }
+    } catch (error) {
+        res.status(400).send({ error: error.details[0].message });
+    }
+});
+
+app.patch('/mountains/:id', async (req, res) => {
+    const mountainId = Number(req.params.id);
+
+    try {
+        if (!mountainId) {
+            return res.status(400).send({ error: `ID must be an integer!` });
+        }
+
+        const mountain = mountains.find(m => m.id === mountainId);
+
+        if (mountain) {
+            const updatedMountain = { ...mountain, ...req.body };
+            delete updatedMountain.id;
+
+            const validation = await schema.validateAsync(updatedMountain);
+
+            Object.assign(mountain, updatedMountain);
+
+            res.send({ message: `Mountain with id: ${mountainId} partially updated successfully`, data: mountain });
+        } else {
+            res.status(404).send({ error: `No mountain with id: ${mountainId} found` });
+        }
+    } catch (error) {
+        res.status(400).send({ error: error.details[0].message });
+    }
+});
+
+app.delete('/mountains/:id', (req, res) => {
+    const mountainId = Number(req.params.id);
+
+    if (!mountainId) {
+        return res.status(400).send({ error: `ID must be an integer!` });
+    }
+
+    const mountain = mountains.find(m => m.id === mountainId);
+
+    if (mountain) {
+        mountains = mountains.filter(m => m.id !== mountainId);
+        res.send({ message: `Mountain with id: ${mountainId} deleted successfully` });
+    } else {
+        res.status(200).send({ message: `No mountain with id: ${mountainId} found` });
     }
 });
 
