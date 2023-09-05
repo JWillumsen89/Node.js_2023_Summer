@@ -21,6 +21,13 @@ const schema = Joi.object({
     firstAscent: Joi.number().min(1),
 });
 
+const patchSchema = Joi.object({
+    name: Joi.string().min(3).max(40).optional(),
+    height: Joi.number().min(3).max(12000).optional(),
+    country: Joi.string().min(3).max(40).optional(),
+    firstAscent: Joi.number().min(1).optional(),
+});
+
 app.get('/mountains', (req, res) => {
     res.send({ data: mountains });
 });
@@ -165,7 +172,7 @@ app.patch('/mountains/:id', async (req, res) => {
             const updatedMountain = { ...mountain, ...req.body };
             delete updatedMountain.id;
 
-            const validation = await schema.validateAsync(updatedMountain);
+            const validation = await patchSchema.validateAsync(updatedMountain);
 
             Object.assign(mountain, updatedMountain);
 
