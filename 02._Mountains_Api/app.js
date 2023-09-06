@@ -28,16 +28,6 @@ const patchSchema = Joi.object({
     firstAscent: Joi.number().min(1).optional(),
 });
 
-function getNextId() {
-    while (idLock) {
-        // Here im waiting for the lock to "open", so that concurrency wont happen.
-    }
-    idLock = true;
-    const nextId = ++currentMaxId;
-    idLock = false;
-    return nextId;
-}
-
 app.get('/mountains', (req, res) => {
     res.send({ data: mountains });
 });
@@ -124,7 +114,7 @@ app.post('/mountains', async (req, res) => {
         }
 
         const newMountain = {
-            id: getNextId(),
+            id: ++currentMaxId,
             ...result,
         };
 
