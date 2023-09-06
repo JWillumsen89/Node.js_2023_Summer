@@ -28,6 +28,16 @@ const patchSchema = Joi.object({
     firstAscent: Joi.number().min(1).optional(),
 });
 
+function getNextId() {
+    while (idLock) {
+        // Here im waiting for the lock to "open", so that concurrency wont happen.
+    }
+    idLock = true;
+    const nextId = ++currentMaxId;
+    idLock = false;
+    return nextId;
+}
+
 app.get('/mountains', (req, res) => {
     res.send({ data: mountains });
 });
@@ -49,7 +59,7 @@ app.get('/mountains/:id', (req, res) => {
     if (mountain) {
         res.send({ data: mountain });
     } else {
-        res.status(200).send({ message: `No mountain with id: ${mountainId} found` });
+        res.status(404).send({ message: `No mountain with id: ${mountainId} found` });
     }
 });
 
@@ -64,7 +74,7 @@ app.get('/mountains/max-height/:height', (req, res) => {
     if (result.length) {
         res.send({ data: result });
     } else {
-        res.status(200).send({ message: 'No mountains found with or below the specified height', mountains: [] });
+        res.status(404).send({ message: 'No mountains found with or below the specified height', mountains: [] });
     }
 });
 
@@ -79,7 +89,7 @@ app.get('/mountains/min-height/:height', (req, res) => {
     if (result.length) {
         res.send({ data: result });
     } else {
-        res.status(200).send({ message: 'No mountains found with or below the specified height', mountains: [] });
+        res.status(404).send({ message: 'No mountains found with or above the specified height', mountains: [] });
     }
 });
 
@@ -114,7 +124,7 @@ app.post('/mountains', async (req, res) => {
         }
 
         const newMountain = {
-            id: ++currentMaxId,
+            id: getNextId(),
             ...result,
         };
 
@@ -151,7 +161,7 @@ app.put('/mountains/:id', async (req, res) => {
 
             res.status(200).send(updatedMountain);
         } else {
-            res.status(404).send({ error: `No mountain with id: ${mountainId} found` });
+            res.status(404).send({ message: `No mountain with id: ${mountainId} found` });
         }
     } catch (error) {
         res.status(400).send({ error: error.details[0].message });
@@ -178,7 +188,7 @@ app.patch('/mountains/:id', async (req, res) => {
 
             res.send({ message: `Mountain with id: ${mountainId} partially updated successfully`, data: mountain });
         } else {
-            res.status(404).send({ error: `No mountain with id: ${mountainId} found` });
+            res.status(404).send({ message: `No mountain with id: ${mountainId} found` });
         }
     } catch (error) {
         res.status(400).send({ error: error.details[0].message });
@@ -198,7 +208,7 @@ app.delete('/mountains/:id', (req, res) => {
         mountains = mountains.filter(m => m.id !== mountainId);
         res.send({ message: `Mountain with id: ${mountainId} deleted successfully` });
     } else {
-        res.status(200).send({ message: `No mountain with id: ${mountainId} found` });
+        res.status(404).send({ message: `No mountain with id: ${mountainId} found` });
     }
 });
 
