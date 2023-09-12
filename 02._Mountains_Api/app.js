@@ -41,7 +41,7 @@ app.get('/mountains/random', (req, res) => {
 app.get('/mountains/:id', (req, res) => {
     const mountainId = Number(req.params.id);
     if (!mountainId) {
-        return res.status(400).send({ error: `ID must be an integer!` });
+        return res.status(404).send({ error: `ID must be an number!` });
     }
 
     const mountain = mountains.find(m => m.id === mountainId);
@@ -56,7 +56,7 @@ app.get('/mountains/:id', (req, res) => {
 app.get('/mountains/max-height/:height', (req, res) => {
     const mountainHeight = Number(req.params.height);
     if (!mountainHeight) {
-        return res.status(400).send({ error: `Input must be a number` });
+        return res.status(404).send({ error: `Input must be a number!` });
     }
 
     const result = mountains.filter(m => m.height <= mountainHeight);
@@ -71,7 +71,7 @@ app.get('/mountains/max-height/:height', (req, res) => {
 app.get('/mountains/min-height/:height', (req, res) => {
     const mountainHeight = Number(req.params.height);
     if (!mountainHeight) {
-        return res.status(400).send({ error: `Input must be a number` });
+        return res.status(404).send({ error: `Input must be a number!` });
     }
 
     const result = mountains.filter(m => m.height >= mountainHeight);
@@ -132,7 +132,7 @@ app.put('/mountains/:id', async (req, res) => {
 
     try {
         if (!mountainId) {
-            return res.status(400).send({ error: `ID must be an integer!` });
+            return res.status(404).send({ error: `ID must be an number!` });
         }
 
         const { name, height, country, firstAscent } = req.body;
@@ -163,7 +163,7 @@ app.patch('/mountains/:id', async (req, res) => {
 
     try {
         if (!mountainId) {
-            return res.status(400).send({ error: `ID must be an integer!` });
+            return res.status(400).send({ error: `ID must be an number!` });
         }
 
         const mountain = mountains.find(m => m.id === mountainId);
@@ -189,13 +189,14 @@ app.delete('/mountains/:id', (req, res) => {
     const mountainId = Number(req.params.id);
 
     if (!mountainId) {
-        return res.status(400).send({ error: `ID must be an integer!` });
+        return res.status(400).send({ error: `ID must be an number!` });
     }
 
-    const mountain = mountains.find(m => m.id === mountainId);
+    const foundIndex = mountains.findIndex(m => m.id === mountainId);
 
-    if (mountain) {
-        mountains = mountains.filter(m => m.id !== mountainId);
+    if (foundIndex) {
+        //mountains = mountains.filter(m => m.id !== mountainId);
+        mountains.splice(foundIndex, 1);
         res.send({ message: `Mountain with id: ${mountainId} deleted successfully` });
     } else {
         res.status(404).send({ message: `No mountain with id: ${mountainId} found` });
