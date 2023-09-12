@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Solution 3: link -->
+        <!-- <link rel="stylesheet" href="home.css"> -->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>First HTML Server</title>
+        <!-- solution 2: in-file -->
+        <style>
+            #title {
+                color: red;
+            }
+        </style>
     </head>
     <body>
-        <h1>Home</h1>
+        <!-- solution 1: inline styling -->
+        <h1 style="color: red">Home</h1>
 
-        <!-- assignment: console log in the console "hello" a second after the client visits the frontpage-->
+        <p id="welcomeMessage">Home</p>
+        <input id="clientName" type="text" required />
+        <button id="sendButton" onclick="sendName()">Send Name</button>
 
         <script>
-            setTimeout(() => {
-                console.log('Hello');
-            }, 1000);
+            //assignment: personalize the message
+
+            function sendName() {
+                const clientName = document.getElementById('clientName').value;
+                fetch(`/welcomeMessage?user=${clientName}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error');
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        console.log(result.data);
+                        const welcomeMessageHeader = document.getElementById('welcomeMessage');
+                        welcomeMessageHeader.innerText = result.data;
+                    });
+            }
         </script>
     </body>
 </html>
