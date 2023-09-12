@@ -5,8 +5,6 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/home.html');
 });
 
-//create a route for the page "secondPage.html"
-
 app.get('/secondPage', (req, res) => {
     res.sendFile(__dirname + '/public/secondPage.html');
 });
