@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Questions</title>
+        <style>
+            .progressBar {
+                display: flex;
+                width: 100%;
+                flex-direction: row;
+                align-items: flex-end;
+            }
+
+            .era {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: background-color 0.5s;
+            }
+
+            .era:first-child {
+                border-left: none;
+            }
+
+            .era-title {
+                margin-bottom: 10px;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .questions-container {
+                display: flex;
+                height: 30px;
+                width: 100%;
+                border: 1px solid #000;
+            }
+
+            .questions-container .question:first-child {
+                border-left: none;
+            }
+
+            .question {
+                flex: 1;
+                background-color: #ddd;
+                border-left: 1px solid black;
+                transition: background-color 0.5s;
+            }
+
+            .question:first-child {
+                border-left: none;
+            }
+
+            .question.completed {
+                background-color: green;
+            }
+
+            .era.completed .questions-container {
+                background-color: green;
+            }
+            .questions-container.completed {
+                background-color: blue;
+            }
+
+            .questions-container.completed .question {
+                border: none;
+                background-color: transparent;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div>
+                <div id="question"></div>
+                <div id="choices"></div>
+                <button onclick="submitAnswer()">Submit</button>
+            </div>
+            <br />
+            <div>
+                <div class="progressBar">
+                    <div class="era" data-era="1">
+                        <div class="era-title">Ancient Mespotamia</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+
+                    <div class="era" data-era="2">
+                        <div class="era-title">Ancient Egypt</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="3">
+                        <div class="era-title">Classical Greece</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="4">
+                        <div class="era-title">Roman Empire</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="5">
+                        <div class="era-title">Medieval Europe</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="6">
+                        <div class="era-title">Renaissance</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="7">
+                        <div class="era-title">Enlightenment</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="8">
+                        <div class="era-title">Industrial Revolution</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="9">
+                        <div class="era-title">World Wars Era</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                    <div class="era" data-era="10">
+                        <div class="era-title">Contemporary Era</div>
+                        <div class="questions-container">
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                            <div class="question"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            let currentQuestion;
+            let currentEra = 1;
+            let correctAnswersCount = 0;
+            let answeredQuestionsIds = [];
+
+            async function loadQuestion() {
+                const res = await fetch(`/questions?era=${currentEra}`);
+                const data = await res.json();
+                const unansweredQuestions = data.filter(q => !answeredQuestionsIds.includes(q.id));
+                if (unansweredQuestions.length === 0) {
+                    //Make handling for when there is no more questions.
+                    return;
+                }
+                currentQuestion = unansweredQuestions[Math.floor(Math.random() * unansweredQuestions.length)];
+                displayQuestion(currentQuestion);
+            }
+
+            function displayQuestion(question) {
+                const questionDiv = document.getElementById('question');
+                questionDiv.textContent = question.question;
+
+                const choicesDiv = document.getElementById('choices');
+                choicesDiv.innerHTML = '';
+                question.choices.forEach(choice => {
+                    const radioBtn = document.createElement('input');
+                    radioBtn.type = 'radio';
+                    radioBtn.name = 'choice';
+                    radioBtn.value = choice;
+
+                    const label = document.createElement('label');
+                    label.appendChild(radioBtn);
+                    label.appendChild(document.createTextNode(choice));
+
+                    choicesDiv.appendChild(label);
+                    choicesDiv.appendChild(document.createElement('br'));
+                });
+            }
+
+            async function submitAnswer() {
+                const selectedChoice = document.querySelector('input[name="choice"]:checked').value;
+
+                const res = await fetch('/validate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: currentQuestion.id,
+                        answer: selectedChoice,
+                        era: currentQuestion.era,
+                    }),
+                });
+
+                const data = await res.json();
+                if (data.data.correct) {
+                    correctAnswersCount++;
+                    updateProgressBar();
+                    answeredQuestionsIds.push(currentQuestion.id);
+                    alert('Correct answer!');
+                    if (correctAnswersCount == 4) {
+                        correctAnswersCount = 0;
+                        currentEra++;
+                    }
+                    loadQuestion();
+                } else {
+                    alert('Wrong answer.');
+                    loadQuestion();
+                }
+            }
+
+            function updateProgressBar() {
+                const eraDiv = document.querySelector(`.era[data-era="${currentEra}"]`);
+                const questions = eraDiv.querySelectorAll('.question');
+                questions[correctAnswersCount - 1].classList.add('completed');
+
+                if (correctAnswersCount === 4) {
+                    const questionsContainer = eraDiv.querySelector('.questions-container');
+                    questionsContainer.classList.add('completed');
+                }
+            }
+
+            loadQuestion();
+        </script>
+    </body>
+</html>
