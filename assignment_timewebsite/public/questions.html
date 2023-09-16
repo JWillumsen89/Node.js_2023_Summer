@@ -4,12 +4,118 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Questions</title>
+        <link href="https://fonts.googleapis.com/css?family=Orbitron:400,700&display=swap" rel="stylesheet" />
+        <script src="https://unpkg.com/css-doodle"></script>
         <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Orbitron', sans-serif;
+            }
+
+            body {
+                font-family: sans-serif;
+                background-color: #121212;
+                color: #eaeaea;
+            }
+
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                background: #000;
+                overflow: hidden;
+            }
+
+            css-doodle {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+            .quiz-container::before,
+            .quiz-container::after,
+            .quiz-container > div::before,
+            .quiz-container > div::after {
+                content: '';
+                position: absolute;
+                background: rgba(255, 255, 255, 0.6);
+                pointer-events: none;
+                border-radius: 50%;
+                opacity: 0.6;
+                z-index: -1;
+            }
+
+            .quiz-container::before {
+                top: -10%;
+                left: 10%;
+                width: 10px;
+                height: 10px;
+                animation: particleFall 10s infinite;
+            }
+
+            .quiz-container {
+                max-width: 600px;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: #222;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+                height: 300px;
+                overflow-y: auto;
+            }
+
+            .quiz-question {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                color: #ffffff;
+                border-bottom: 2px solid #444;
+                padding-bottom: 10px;
+            }
+
+            .quiz-choices {
+                margin-bottom: 20px;
+            }
+
+            .quiz-button {
+                display: block;
+                width: 100%;
+                padding: 10px 15px;
+                background-color: #555;
+                color: #ffffff;
+                font-size: 18px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .quiz-button:hover {
+                background-color: #777;
+            }
+
+            .quiz-button:active {
+                background-color: #333;
+            }
+
+            .quiz-button:focus {
+                outline: none;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            }
+
             .progressBar {
                 display: flex;
                 width: 100%;
                 flex-direction: row;
                 align-items: flex-end;
+                padding: 10px;
+                background: #222;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             }
 
             .era {
@@ -20,32 +126,46 @@
                 transition: background-color 0.5s;
             }
 
-            .era:first-child {
-                border-left: none;
-            }
-
             .era-title {
                 margin-bottom: 10px;
                 text-align: center;
                 font-weight: bold;
+                font-family: 'Orbitron', sans-serif;
+                color: #eaeaea;
+                font-size: 10px;
+                transition: box-shadow 0.3s ease, font-weight 0.3s ease;
+            }
+
+            .era.active .era-title {
+                font-weight: bold;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            }
+            .era.active .questions-container {
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
             }
 
             .questions-container {
                 display: flex;
                 height: 30px;
                 width: 100%;
-                border: 1px solid #000;
-            }
-
-            .questions-container .question:first-child {
-                border-left: none;
+                overflow: hidden;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                background: linear-gradient(to right, #2a2a2a, #333333);
+                position: relative;
+                z-index: 2;
             }
 
             .question {
                 flex: 1;
-                background-color: #ddd;
-                border-left: 1px solid black;
-                transition: background-color 0.5s;
+                background-color: #555;
+                border-left: 1px solid rgba(0, 0, 0, 0.1);
+                transition: background-color 0.5s, transform 0.3s;
+                cursor: pointer;
+            }
+
+            .question:hover {
+                transform: scale(1.05);
             }
 
             .question:first-child {
@@ -53,28 +173,40 @@
             }
 
             .question.completed {
-                background-color: green;
+                background-color: #007bff;
             }
 
             .era.completed .questions-container {
-                background-color: green;
-            }
-            .questions-container.completed {
-                background-color: blue;
+                background-color: #82b1ff;
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
             }
 
             .questions-container.completed .question {
                 border: none;
-                background-color: transparent;
+                background-color: #4caf50;
+            }
+
+            .questions-container {
+                border-radius: 0;
+            }
+
+            .progressBar .era:first-child .questions-container {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+
+            .progressBar .era:last-child .questions-container {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
             }
         </style>
     </head>
     <body>
         <div>
-            <div>
-                <div id="question"></div>
-                <div id="choices"></div>
-                <button onclick="submitAnswer()">Submit</button>
+            <div class="quiz-container">
+                <div id="question" class="quiz-question"></div>
+                <div id="choices" class="quiz-choices"></div>
+                <button onclick="submitAnswer()" class="quiz-button">Submit</button>
             </div>
             <br />
             <div>
@@ -177,18 +309,33 @@
             let currentQuestion;
             let currentEra = 1;
             let correctAnswersCount = 0;
-            let answeredQuestionsIds = [];
+            let usedQuestionsIds = [];
 
             async function loadQuestion() {
                 const res = await fetch(`/questions?era=${currentEra}`);
                 const data = await res.json();
-                const unansweredQuestions = data.filter(q => !answeredQuestionsIds.includes(q.id));
+                const unansweredQuestions = data.filter(q => !usedQuestionsIds.includes(q.id));
                 if (unansweredQuestions.length === 0) {
-                    //Make handling for when there is no more questions.
+                    //Todo - Make a better game over solution
+                    alert("You did'nt make it - Try again");
+                    location.reload();
                     return;
                 }
                 currentQuestion = unansweredQuestions[Math.floor(Math.random() * unansweredQuestions.length)];
                 displayQuestion(currentQuestion);
+                highlightCurrentEra();
+            }
+
+            function highlightCurrentEra() {
+                const previouslyActiveEra = document.querySelector('.era.active');
+                if (previouslyActiveEra) {
+                    previouslyActiveEra.classList.remove('active');
+                }
+
+                const currentEraDiv = document.querySelector(`.era[data-era="${currentEra}"]`);
+                if (currentEraDiv) {
+                    currentEraDiv.classList.add('active');
+                }
             }
 
             function displayQuestion(question) {
@@ -226,12 +373,12 @@
                         era: currentQuestion.era,
                     }),
                 });
-
+                usedQuestionsIds.push(currentQuestion.id);
                 const data = await res.json();
                 if (data.data.correct) {
                     correctAnswersCount++;
                     updateProgressBar();
-                    answeredQuestionsIds.push(currentQuestion.id);
+
                     alert('Correct answer!');
                     if (correctAnswersCount == 4) {
                         correctAnswersCount = 0;
@@ -252,10 +399,18 @@
                 if (correctAnswersCount === 4) {
                     const questionsContainer = eraDiv.querySelector('.questions-container');
                     questionsContainer.classList.add('completed');
+                    eraDiv.classList.add('completed');
                 }
             }
 
             loadQuestion();
         </script>
+        <css-doodle>
+            :doodle { @grid: 25x25 / 100%; } :container { perspective: 10vmin; } @place-cell: center; @size: 40% 1px; will-change: transform, opacity;
+            transform-style: preserve-3d; background: linear-gradient(to left, @multi(@p([2-4]), @p(#00b8a9, #f8f3d4, #f6416c, #ffde7d)), transparent @r(50%));
+            animation: move @r(1s, 2s, .1) linear infinite; animation-delay: -@r(.1s, 2s); --trans: translateX(50%) rotateX(@r(-180deg, 180deg))
+            rotateY(@r(-180deg, 180deg)) rotateZ(@r(-180deg, 180deg)); transform-origin: 0 center; transform: var(--trans) scale(2); opacity: 0; @keyframes move
+            { 20% { opacity: 1; } 100% { transform: var(--trans) scale(0); } }
+        </css-doodle>
     </body>
 </html>
