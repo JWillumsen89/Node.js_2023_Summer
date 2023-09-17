@@ -729,11 +729,8 @@ const questions = [
     },
 ];
 
-app.get('/', (req, res) => {
-    res.send({ data: new Date() });
-});
 
-app.get('/questions', (req, res) => {
+app.get('/', (req, res) => {
     const era = Number(req.query.era);
 
     const eraNames = [
