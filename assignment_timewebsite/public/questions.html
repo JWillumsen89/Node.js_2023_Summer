@@ -370,6 +370,7 @@
             let currentEra = 1;
             let correctAnswersCount = 0;
             let usedQuestionsIds = [];
+            const totalEras = 10;
             const feedbackDialog = document.getElementById('feedback-dialog');
             const feedbackMessage = document.getElementById('feedback-message');
 
@@ -378,6 +379,12 @@
                 const data = await res.json();
                 const unansweredQuestions = data.filter(q => !usedQuestionsIds.includes(q.id));
 
+                if (currentEra > totalEras) {
+                    feedbackMessage.innerText = 'You made it back to the present!';
+                    feedbackDialog.showModal();
+                    document.getElementById('close-dialog').innerText = 'Wanna try again?';
+                    return;
+                }
                 if (unansweredQuestions.length === 0) {
                     feedbackMessage.innerText = "You did'nt make it back through time!";
                     feedbackDialog.showModal();
