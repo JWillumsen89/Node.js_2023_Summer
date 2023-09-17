@@ -240,6 +240,7 @@
 
             #feedback-message {
                 margin-bottom: 40px;
+                font-size: 40px;
             }
 
             input[type='radio'] {
@@ -370,9 +371,17 @@
             let currentEra = 1;
             let correctAnswersCount = 0;
             let usedQuestionsIds = [];
+            let isGameStarted = false;
+
             const totalEras = 10;
             const feedbackDialog = document.getElementById('feedback-dialog');
             const feedbackMessage = document.getElementById('feedback-message');
+
+            function displayStartMessage() {
+                feedbackMessage.innerText = 'Welcome to the Time Travel Quiz!\n\n Can you make it back to the present?\n\n Click "Start" to begin.';
+                document.getElementById('close-dialog').innerText = 'Start';
+                feedbackDialog.showModal();
+            }
 
             async function loadQuestion() {
                 const res = await fetch(`/questions?era=${currentEra}`);
@@ -391,6 +400,7 @@
                     document.getElementById('close-dialog').innerText = 'Try again';
                     return;
                 }
+                document.getElementById('close-dialog').innerText = 'Next Question';
                 currentQuestion = unansweredQuestions[Math.floor(Math.random() * unansweredQuestions.length)];
                 await displayQuestionWithTypewriter(currentQuestion);
                 highlightCurrentEra();
@@ -425,7 +435,7 @@
                         clearInterval(interval);
                         displayChoicesWithTypewriter(question.choices);
                     }
-                }, 50); //Speed for writing questions
+                }, 40); //Speed for writing questions
             }
 
             function displayChoicesWithTypewriter(choices) {
@@ -459,13 +469,13 @@
 
                         setTimeout(() => {
                             typeChoice(choiceIndex, choice, charIndex + 1);
-                        }, 50); // Letter typing speed
+                        }, 40); // Letter typing speed
                     } else {
                         choiceIndex++;
                         if (choiceIndex < choices.length) {
                             setTimeout(() => {
                                 typeChoice(choiceIndex, choices[choiceIndex], 0);
-                            }, 300); // Delay for when next choice is written.
+                            }, 250); // Delay for when next choice is written.
                         }
                     }
                 }
@@ -501,6 +511,12 @@
             }
 
             function handleDialogClose(event) {
+                if (!isGameStarted) {
+                    isGameStarted = true;
+                    loadQuestion();
+                    return;
+                }
+
                 if (feedbackMessage.innerText === "That's correct!") {
                     if (correctAnswersCount === 4) {
                         correctAnswersCount = 0;
@@ -533,7 +549,8 @@
                 }
             }
 
-            loadQuestion();
+            displayStartMessage();
+            
         </script>
         <css-doodle>
             :doodle { @grid: 25x25 / 100%; } :container { perspective: 10vmin; } @place-cell: center; @size: 40% 1px; will-change: transform, opacity;
