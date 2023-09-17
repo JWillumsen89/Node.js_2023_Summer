@@ -42,7 +42,7 @@ const questions = [
     },
     {
         id: 6,
-        question: 'Which of these is not a famous ancient Mesopotamian city: Uruk, Akkad, Atlantis, Babylon?',
+        question: 'Which of these is not a famous ancient Mesopotamian city?',
         choices: ['Uruk', 'Akkad', 'Atlantis', 'Babylon'],
         answer: 'Atlantis',
         era: 'Ancient Mesopotamia',

@@ -59,6 +59,7 @@
             }
 
             .quiz-container {
+                position: relative;
                 max-width: 600px;
                 margin: 50px auto;
                 padding: 20px;
@@ -82,9 +83,9 @@
                 margin-bottom: 20px;
             }
 
-            .quiz-button {
+            button {
                 display: block;
-                width: 100%;
+                width: 200px;
                 padding: 10px 15px;
                 background-color: #555;
                 color: #ffffff;
@@ -93,17 +94,19 @@
                 border-radius: 5px;
                 cursor: pointer;
                 transition: background-color 0.3s;
+                margin-left: auto;
+                margin-right: auto;
             }
 
-            .quiz-button:hover {
+            button:hover {
                 background-color: #777;
             }
 
-            .quiz-button:active {
+            button:active {
                 background-color: #333;
             }
 
-            .quiz-button:focus {
+            button:focus {
                 outline: none;
                 box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
             }
@@ -127,21 +130,27 @@
             }
 
             .era-title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 margin-bottom: 10px;
                 text-align: center;
                 font-weight: bold;
                 font-family: 'Orbitron', sans-serif;
                 color: #eaeaea;
                 font-size: 10px;
+                border-radius: 10px;
+                height: 30px;
                 transition: box-shadow 0.3s ease, font-weight 0.3s ease;
             }
 
             .era.active .era-title {
                 font-weight: bold;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 1);
+                background-color: rgba(0, 123, 255, 0.5);
             }
             .era.active .questions-container {
-                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 1);
             }
 
             .questions-container {
@@ -199,6 +208,41 @@
                 border-top-right-radius: 10px;
                 border-bottom-right-radius: 10px;
             }
+
+            dialog {
+                position: absolute;
+                top: 50px;
+                left: 50%;
+                transform: translate(-50%, 0);
+                max-width: 600px;
+                width: 100%;
+                background-color: #222;
+                border: none;
+                border-radius: 8px;
+                height: 300px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                color: #eaeaea;
+                font-family: 'Orbitron', sans-serif;
+            }
+
+            .dialog-content {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            dialog div {
+                text-align: center;
+            }
+
+            #feedback-message {
+                margin-bottom: 20px;
+            }
         </style>
     </head>
     <body>
@@ -208,6 +252,13 @@
                 <div id="choices" class="quiz-choices"></div>
                 <button onclick="submitAnswer()" class="quiz-button">Submit</button>
             </div>
+            <dialog id="feedback-dialog">
+                <div class="dialog-content">
+                    <p id="feedback-message"></p>
+                    <button id="close-dialog">Next Question</button>
+                </div>
+            </dialog>
+
             <br />
             <div>
                 <div class="progressBar">
@@ -310,19 +361,22 @@
             let currentEra = 1;
             let correctAnswersCount = 0;
             let usedQuestionsIds = [];
+            const feedbackDialog = document.getElementById('feedback-dialog');
+            const feedbackMessage = document.getElementById('feedback-message');
 
             async function loadQuestion() {
                 const res = await fetch(`/questions?era=${currentEra}`);
                 const data = await res.json();
                 const unansweredQuestions = data.filter(q => !usedQuestionsIds.includes(q.id));
+
                 if (unansweredQuestions.length === 0) {
-                    //Todo - Make a better game over solution
-                    alert("You did'nt make it - Try again");
-                    location.reload();
+                    feedbackMessage.innerText = "You did'nt make it back through time!";
+                    feedbackDialog.showModal();
+                    document.getElementById('close-dialog').innerText = 'Try again';
                     return;
                 }
                 currentQuestion = unansweredQuestions[Math.floor(Math.random() * unansweredQuestions.length)];
-                displayQuestion(currentQuestion);
+                await displayQuestionWithTypewriter(currentQuestion);
                 highlightCurrentEra();
             }
 
@@ -338,25 +392,68 @@
                 }
             }
 
-            function displayQuestion(question) {
+            async function displayQuestionWithTypewriter(question) {
                 const questionDiv = document.getElementById('question');
-                questionDiv.textContent = question.question;
+                const questionText = question.question;
+                questionDiv.textContent = '';
 
                 const choicesDiv = document.getElementById('choices');
                 choicesDiv.innerHTML = '';
-                question.choices.forEach(choice => {
-                    const radioBtn = document.createElement('input');
-                    radioBtn.type = 'radio';
-                    radioBtn.name = 'choice';
-                    radioBtn.value = choice;
 
-                    const label = document.createElement('label');
-                    label.appendChild(radioBtn);
-                    label.appendChild(document.createTextNode(choice));
+                let charIndex = 0;
+                const interval = setInterval(() => {
+                    if (charIndex < questionText.length) {
+                        questionDiv.textContent += questionText.charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        clearInterval(interval);
+                        displayChoicesWithTypewriter(question.choices);
+                    }
+                }, 50); //Speed for writing question
+            }
 
-                    choicesDiv.appendChild(label);
-                    choicesDiv.appendChild(document.createElement('br'));
-                });
+            function displayChoicesWithTypewriter(choices) {
+                const choicesDiv = document.getElementById('choices');
+
+                let choiceIndex = 0;
+
+                if (choices.length > 0) {
+                    typeChoice(0, choices[0], 0);
+                }
+
+                function typeChoice(choiceIndex, choice, charIndex) {
+                    console.log(choice);
+                    if (charIndex === 0) {
+                        const radioBtn = document.createElement('input');
+                        radioBtn.type = 'radio';
+                        radioBtn.name = 'choice';
+                        radioBtn.value = choice;
+
+                        const label = document.createElement('label');
+
+                        label.appendChild(radioBtn);
+                        label.appendChild(document.createTextNode(' '));
+                        choicesDiv.appendChild(label);
+                    }
+
+                    if (charIndex < choice.length) {
+                        const label = choicesDiv.lastChild;
+
+                        label.appendChild(document.createTextNode(choice[charIndex]));
+
+                        setTimeout(() => {
+                            typeChoice(choiceIndex, choice, charIndex + 1);
+                        }, 50); // Letter typing speed
+                    } else {
+                        choicesDiv.appendChild(document.createElement('br'));
+                        choiceIndex++;
+                        if (choiceIndex < choices.length) {
+                            setTimeout(() => {
+                                typeChoice(choiceIndex, choices[choiceIndex], 0);
+                            }, 300); // Delay for when next choice is written.
+                        }
+                    }
+                }
             }
 
             async function submitAnswer() {
@@ -375,21 +472,39 @@
                 });
                 usedQuestionsIds.push(currentQuestion.id);
                 const data = await res.json();
+
                 if (data.data.correct) {
                     correctAnswersCount++;
                     updateProgressBar();
 
-                    alert('Correct answer!');
-                    if (correctAnswersCount == 4) {
+                    feedbackMessage.innerText = "That's correct!";
+                    feedbackDialog.showModal();
+                } else {
+                    feedbackMessage.innerText = "That's the wrong answer!";
+                    feedbackDialog.showModal();
+                }
+            }
+
+            function handleDialogClose(event) {
+                if (feedbackMessage.innerText === "That's correct!") {
+                    if (correctAnswersCount === 4) {
                         correctAnswersCount = 0;
                         currentEra++;
                     }
                     loadQuestion();
-                } else {
-                    alert('Wrong answer.');
+                } else if (feedbackMessage.innerText === "That's the wrong answer!") {
                     loadQuestion();
+                } else {
+                    location.reload();
                 }
             }
+
+            const closeDialogButton = document.getElementById('close-dialog');
+            closeDialogButton.addEventListener('click', () => {
+                feedbackDialog.close();
+            });
+
+            feedbackDialog.addEventListener('close', handleDialogClose);
 
             function updateProgressBar() {
                 const eraDiv = document.querySelector(`.era[data-era="${currentEra}"]`);
