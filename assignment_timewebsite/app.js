@@ -730,7 +730,7 @@ const questions = [
 ];
 
 
-app.get('/', (req, res) => {
+app.get('/questions', (req, res) => {
     const era = Number(req.query.era);
 
     const eraNames = [
@@ -768,7 +768,7 @@ app.post('/validate', (req, res) => {
     }
 });
 
-app.get('/questionsite', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/questions.html');
 });
 
