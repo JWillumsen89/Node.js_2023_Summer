@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
 
+//This servers static.
+app.use(express.static('public'));
+
+const { getWelcomeMessage } = require('./util/welcomeMessageUtil.js');
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/home.html');
 });
@@ -9,13 +14,10 @@ app.get('/secondPage', (req, res) => {
     res.sendFile(__dirname + '/public/secondPage.html');
 });
 
-app.get('/welcomemessage', (req, res) => {
+app.get('/welcomeMessage', (req, res) => {
     const clientName = req.query.user;
-    if (!clientName) {
-        res.send({ data: `Hello there, stranger.` });
-    } else {
-        res.send({ data: `Hello there, ${req.query.user}.` });
-    }
+    const welcomeMessage = getWelcomeMessage(clientName);
+    res.send({ data: welcomeMessage });
 });
 
 const PORT = 8080;
