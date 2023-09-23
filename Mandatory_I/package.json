@@ -1,0 +1,24 @@
+{
+  "name": "mandatory_i",
+  "version": "0.0.1",
+  "description": "This is the first mandatory assignment for nodejs at KEA",
+  "type": "module",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JWillumsen89/Node.js_2023_Summer.git"
+  },
+  "author": "Jonathan Willumsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JWillumsen89/Node.js_2023_Summer/issues"
+  },
+  "homepage": "https://github.com/JWillumsen89/Node.js_2023_Summer#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
