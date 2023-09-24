@@ -1,85 +1,92 @@
-const sections = document.querySelectorAll('.toc-section');
-const spyLinks = document.querySelectorAll('.spy-link');
-const subSections = document.querySelectorAll('.toc-subsection');
-const spySubLinks = document.querySelectorAll('.spy-sublink');
+document.addEventListener('DOMContentLoaded', function () {
+    const nav = document.querySelector('nav > ul');
 
-function highlightActiveLinks() {
-    let currentSection = '';
-    let currentSubSection = '';
+    function createNavigationLink(id, textContent, className, iconClass) {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${id}`;
+        a.className = className;
+        a.title = textContent;
+        a.innerHTML = `<i class="${iconClass}"></i> ${textContent}`;
 
-    const threshold = window.innerHeight * 0.5;
+        li.appendChild(a);
+        return li;
+    }
 
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset + threshold >= sectionTop && pageYOffset + threshold < sectionTop + sectionHeight) {
-            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-        }
-    });
+    function handleSectionTitles() {
+        const mainTitles = document.querySelectorAll('.window-main-title');
 
-    subSections.forEach(subSection => {
-        const sectionTop = subSection.offsetTop;
-        const sectionHeight = subSection.clientHeight;
-        if (pageYOffset + threshold >= sectionTop && pageYOffset + threshold < sectionTop + sectionHeight) {
-            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-        }
-    });
+        mainTitles.forEach(mainTitle => {
+            const mainLi = createNavigationLink(mainTitle.id, mainTitle.textContent, 'spy-link', 'fas fa-folder');
+            nav.appendChild(mainLi);
 
-    spyLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').substring(1) === currentSection) {
-            link.classList.add('active');
-        }
-    });
+            const ul = document.createElement('ul');
+            mainLi.appendChild(ul);
 
-    spySubLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').substring(1) === currentSubSection) {
-            link.classList.add('active');
-        }
-    });
-}
-
-function scrollToSection(targetId) {
-    const targetSection = document.getElementById(targetId);
-    if (targetSection) {
-        const targetTop = targetSection.offsetTop;
-
-        window.scrollTo({
-            top: targetTop - 50,
-            behavior: 'smooth',
+            const subTitles = mainTitle.parentElement.querySelectorAll('.window-sub-title');
+            subTitles.forEach(subTitle => {
+                const subLi = createNavigationLink(subTitle.id, subTitle.textContent, 'spy-sublink', 'fas fa-folder');
+                ul.appendChild(subLi);
+            });
         });
     }
-}
 
-window.addEventListener('scroll', highlightActiveLinks);
-
-spyLinks.forEach(link => {
-    link.addEventListener('click', e => {
-        e.preventDefault();
-
-        const targetId = link.getAttribute('href').substring(1);
-
-        spyLinks.forEach(link => {
-            link.classList.remove('active');
+    function determineActiveSection(sections, threshold) {
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY + threshold >= sectionTop && scrollY + threshold < sectionTop + sectionHeight) {
+                currentSection = section.querySelector('.window-main-title, .window-sub-title').getAttribute('id');
+            }
         });
-        link.classList.add('active');
+        return currentSection;
+    }
 
-        scrollToSection(targetId);
-    });
-});
+    function highlightActiveLinks() {
+        const threshold = window.innerHeight * 0.5;
+        const currentSection = determineActiveSection(document.querySelectorAll('.toc-section'), threshold);
+        const currentSubSection = determineActiveSection(document.querySelectorAll('.toc-subsection'), threshold);
 
-spySubLinks.forEach(link => {
-    link.addEventListener('click', e => {
-        e.preventDefault();
+        const updateLinkState = (links, currentId) => {
+            links.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentId) {
+                    link.classList.add('active');
+                }
+            });
+        };
 
-        const targetId = link.getAttribute('href').substring(1);
+        updateLinkState(document.querySelectorAll('.spy-link'), currentSection);
+        updateLinkState(document.querySelectorAll('.spy-sublink'), currentSubSection);
+    }
 
-        spySubLinks.forEach(link => {
-            link.classList.remove('active');
+    function scrollToSection(targetId) {
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            window.scrollTo({
+                top: targetSection.offsetTop - 80,
+                behavior: 'smooth',
+            });
+        }
+    }
+
+    function attachLinkClickEvent(links) {
+        links.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+
+                links.forEach(link => link.classList.remove('active'));
+                link.classList.add('active');
+
+                scrollToSection(targetId);
+            });
         });
-        link.classList.add('active');
+    }
 
-        scrollToSection(targetId);
-    });
+    handleSectionTitles();
+    window.addEventListener('scroll', highlightActiveLinks);
+    attachLinkClickEvent(document.querySelectorAll('.spy-link'));
+    attachLinkClickEvent(document.querySelectorAll('.spy-sublink'));
 });
