@@ -1,9 +1,9 @@
 import express from 'express';
 const app = express();
 
-import path from 'path';
-
 app.use(express.static('public'));
+
+import path from 'path';
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve('./public/html/frontpage.html'));
