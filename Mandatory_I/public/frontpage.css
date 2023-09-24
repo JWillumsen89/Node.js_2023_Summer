@@ -16,6 +16,7 @@ nav {
   background-color: #1A1A1A;
   border-right: 2px solid #515454;
   overflow-y: auto;
+  padding-top: 20px;
 }
 
 nav ul {
