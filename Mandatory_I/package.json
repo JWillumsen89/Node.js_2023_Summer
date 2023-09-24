@@ -1,8 +1,7 @@
 {
   "name": "mandatory_i",
   "version": "0.0.1",
-  "description": "This is the first mandatory assignment for nodejs at KEA",
-  "type": "module",
+  "description": "Mandatory assignment I",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
