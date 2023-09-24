@@ -3,7 +3,7 @@ const app = express();
 
 import path from 'path';
 
-app.use(express.static('static'));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve('./public/html/frontpage.html'));
