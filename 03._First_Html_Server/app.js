@@ -28,6 +28,20 @@ app.get('/doorman/:key', (req, res) => {
     res.send({ data: 'You have not provided the correct key' });
 });
 
+
+//Proxy server that fetches a site and shows it.
+app.get('/proxyserver', (req, res) => {
+    fetch('http://www.google.com')
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+        })
+        .then(data => {
+            res.send(data);
+        });
+});
+
 const PORT = 8080;
 
 app.listen(PORT, error => {
