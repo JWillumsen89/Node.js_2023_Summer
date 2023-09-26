@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="./home.css" />
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>First HTML Server</title>
-    </head>
-    <body>
-        <h1 id="title">Home</h1>
-        <p id="welcomeMessage">Home</p>
-        <input id="clientName" type="text" required />
-        <button id="sendButton" onclick="sendName()">Send Name</button>
-        <script src="./home.js"></script>
-    </body>
+
+<head>
+    <link rel="stylesheet" href="./home.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--This is one way to redirect-->
+    <!--<meta http-equiv="refresh" content="3;url=/secondPage" />-->
+    <title>First HTML Server</title>
+</head>
+
+<body>
+    <h1 id="title">Home</h1>
+    <p id="welcomeMessage">Home</p>
+    <input id="clientName" type="text" required />
+    <button id="sendButton" onclick="sendName()">Send Name</button>
+    <script src="./home.js"></script>
+    <script>
+        //This is two other ways to redirect
+        //setTimeout(() => window.location.href = '/secondPage', 3000);
+        //setTimeout(() => window.location.replace = '/secondPage', 3000);
+    </script>
+</body>
+
 </html>

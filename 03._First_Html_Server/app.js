@@ -20,12 +20,18 @@ app.get('/welcomeMessage', (req, res) => {
     res.send({ data: welcomeMessage });
 });
 
+app.get('/doorman/:key', (req, res) => {
+    if (req.params.key === 'sesameopenup') {
+        return res.redirect('/welcomeMessage');
+    }
+    res.send({ data: 'You have not provided the correct key' });
+});
+
 const PORT = 8080;
 
 app.listen(PORT, error => {
     if (error) {
-        console.log('Error starting the server', error);
-        return;
+        return console.log('Error starting the server', error);
     }
     console.log('Server is running on port', PORT);
 });
