@@ -20,6 +20,7 @@ app.get('/welcomeMessage', (req, res) => {
     res.send({ data: welcomeMessage });
 });
 
+//Client server model, you can only send one response per request. You cant set headers when they have already been sent.
 app.get('/doorman/:key', (req, res) => {
     if (req.params.key === 'sesameopenup') {
         return res.redirect('/welcomeMessage');

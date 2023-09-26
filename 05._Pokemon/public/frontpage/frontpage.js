@@ -19,12 +19,12 @@ fetch(pokemonUrl + randomPokemonId)
         return response.json();
     })
     .then(result => {
-        console.log(result);
-        pokemonName = result.name.charAt(0).toUpperCase() + result.name.slice(1);
-        //pokemonSpriteUrl = result.sprites.versions['generation-i']['red-blue']['back_default'];
+        //pokemonName = result.name.charAt(0).toUpperCase() + result.name.slice(1);
+        pokemonName = result.name.replace(/\w/, c => c.toUpperCase());
         pokemonSpriteUrl = result.sprites.other['official-artwork']['front_default'];
-        console.log(pokemonSpriteUrl);
+
         const imageWrapper = document.getElementById('image-wrapper');
+
         imageWrapper.innerHTML = `
         <img src="${pokemonSpriteUrl}" alt="${pokemonName}">`;
         document.getElementById('pokemon-name').innerText = pokemonName;
