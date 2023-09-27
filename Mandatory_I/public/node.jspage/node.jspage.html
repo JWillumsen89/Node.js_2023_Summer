@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link href="/page.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <ul>
+
+        </ul>
+    </nav>
+
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-1">Main Title 1</div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-1">Sub Title 1.1 Test of the title length</div>
+            <pre class="code-snippet">
+                window.addEventListener('scroll', () => {
+                    let currentSection = "";
+                    let currentSubSection = "";
+        
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.clientHeight;
+                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
+                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
+                        }
+                    });
+        
+                    subSections.forEach(subSection => {
+                        const sectionTop = subSection.offsetTop;
+                        const sectionHeight = subSection.clientHeight;
+                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
+                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
+                        }
+                    });
+        
+                    spyLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === currentSection) {
+                            link.classList.add('active');
+                        }
+                    });
+        
+                    spySubLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === currentSubSection) {
+                            link.classList.add('active');
+                        }
+                    });
+                });
+            </pre>
+        </div>
+        <div class="window-description">Description
+        </div>
+
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-2">Sub Title 1.2</div>
+            <pre class="code-snippet">
+                window.addEventListener('scroll', () => {
+                    let currentSection = "";
+                    let currentSubSection = "";
+        
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.clientHeight;
+                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
+                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
+                        }
+                    });
+        
+                    subSections.forEach(subSection => {
+                        const sectionTop = subSection.offsetTop;
+                        const sectionHeight = subSection.clientHeight;
+                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
+                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
+                        }
+                    });
+        
+                    spyLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === currentSection) {
+                            link.classList.add('active');
+                        }
+                    });
+        
+                    spySubLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === currentSubSection) {
+                            link.classList.add('active');
+                        }
+                    });
+                });
+            </pre>
+        </div>
+        <div class="window-description">Description
+        </div>
+    </div>
+
+    <!-- Terminal Snippet Window -->
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-2">Main Title 2</div>
+        <div class="window-description">
+            Description
+        </div>
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-1">Sub Title 2.1</div>
+            <pre class="terminal-snippet">
+
+Sure! Here are some dummy terminal commands to give your site an authentic feeling. These are inspired by common UNIX-style commands and actions:
+
+bash
+Copy code
+$ echo "Hello, World!"
+Hello, World!
+
+$ pwd
+/home/user/documents/project
+
+$ ls -la
+total 28
+drwxr-xr-x  5 user user 4096 Sep 22 10:00 .
+drwxr-xr-x 12 user user 4096 Sep 22 09:30 ..
+-rw-r--r--  1 user user  513 Sep 22 09:58 index.html
+drwxr-xr-x  2 user user 4096 Sep 22 10:00 css
+drwxr-xr-x  2 user user 4096 Sep 22 10:00 js
+drwxr-xr-x  2 user user 4096 Sep 22 10:00 img
+
+$ cd css/
+            </pre>
+            <div class="window-description">Description
+            </div>
+        </div>
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-2">Sub Title 2.2</div>
+            <pre class="terminal-snippet">
+                $ cat style.css
+/* Some CSS code... */
+
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+  
+    modified:   style.css
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add style.css
+$ git commit -m "Updated styles for dark theme"
+[main 7f8c6d0] Updated styles for dark theme
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+ 
+$ git push origin main
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To github.com:user/project.git
+   a3c6f4b..7f8c6d0  main -> main
+            </pre>
+            <div class="window-description">Description
+            </div>
+        </div>
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-3">Sub Title 2.3</div>
+            <pre class="terminal-snippet">
+                $ cat style.css
+/* Some CSS code... */
+
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+  
+    modified:   style.css
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add style.css
+$ git commit -m "Updated styles for dark theme"
+[main 7f8c6d0] Updated styles for dark theme
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+ 
+$ git push origin main
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To github.com:user/project.git
+   a3c6f4b..7f8c6d0  main -> main
+            </pre>
+            <div class="window-description">Description
+            </div>
+        </div>
+        <div id="content-spacer"></div>
+    </div>
+    <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/scrollspy.js"></script>
+</body>
