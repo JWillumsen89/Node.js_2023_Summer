@@ -5,22 +5,25 @@ import express from 'express';
 const app = express();
 
 app.use(express.static('public'));
-//Cant use __dirname anymore, because its not defined. Use import path from "path" instead
-import path from 'path';
 
 import { randomIntFromInterval } from './util/randomUtil.js';
 
+// ==================================== Read Pages ====================================
+
+import { frontpagePage, battlePage, contactPage } from './util/preparePages.js';
+
 // ==================================== HTML ====================================
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve('./public/frontpage/frontpage.html'));
+    // res.sendFile(path.resolve('./public/frontpage/frontpage.html'));
+    res.send(frontpagePage);
 });
 
 app.get('/battle', (req, res) => {
-    res.sendFile(path.resolve('./public/battle/battle.html'));
+    res.send(battlePage);
 });
 
 app.get('/contact', (req, res) => {
-    res.sendFile(path.resolve('./public/contact/contact.html'));
+    res.send(contactPage);
 });
 
 // ==================================== ROUTES ====================================
@@ -60,7 +63,7 @@ app.get('/battlepokemon', (req, res) => {
 });
 
 //const PORT = Number(process.env.PORT);
-const PORT = Number(process.env.PORT) || 8080; 
+const PORT = Number(process.env.PORT) || 8080;
 
 app.listen(PORT, () => {
     console.log('Server is running on port', PORT);
