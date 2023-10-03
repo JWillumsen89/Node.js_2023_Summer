@@ -178,9 +178,6 @@
                   
             </pre>
         </div>
-
-
-
     </div>
     <div class="window toc-section">
         <div class="window-main-title" id="main-title-3">3. Objects</div>
@@ -602,7 +599,7 @@
             </pre>
         </div>
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-5-3">Using Filter()</div>
+            <div class="window-sub-title" id="sub-title-6-3">Using Filter()</div>
             <div class="window-description">This example demonstrates how to use filter() to create a new list with
                 trolls with an odd troll level.
             </div>
@@ -616,6 +613,141 @@
         // [ { name: 'anonymous', trollLevel: 14 },
         //   { name: 'kroelleline', trollLevel: 32 } ]                
                                                  
+            </pre>
+        </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-7">Variables I</div>
+        <div class="window-main-description">In JavaScript, there are many data types and ways to create and manipulate
+            them.
+            A variable can be assigned as a constant (const) or a let variable. A constant can not be reassigned, but a
+            let variable can.
+            There is also Data Types, which is a way to classify data. There are primitive data types and complex data
+            types.
+            Some of the built in data types are: String, Number, Boolean, Null, Undefined, Symbol, Object, Array,
+            Function and Date.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-7-1">const, let and String examples</div>
+            <div class="window-description">
+                In this example i show how to declare a constant and a variable. I also show how to concatenate strings
+                with the comma operator and the plus operator.
+                There is also examples of how to use the backtick operator to create template literals and why you would
+                use single or double quotes.
+            </div>
+            <pre class="code-snippet">
+
+
+    // Declare constant and variable
+    const scheduledBreakTime = "09:27";
+    let consoleLogCounter = 0;
+    
+    // Logging with a comma to separate values
+    console.log("Lets take a break!!", scheduledBreakTime); 
+    // Output: Lets take a break!! 09:27
+    
+    consoleLogCounter++;
+    
+    // Type coercion example: 2 + "2" will result in the string "22"
+    
+    // Creating and logging strings:
+    
+    // Using double quotes - Here you can single quotes inside the string.
+    console.log("This is the first '''' way"); 
+    // Output: This is the first '''' way
+    
+    // Using single quotes - Here you can double quotes inside the string.
+    console.log('This is the second """" way'); 
+    // Output: This is the second """" way
+    
+    // Using backticks (template literals) - Here you can use both single, double quotes inside the string 
+    // and also use ${expressions} to insert expressions into the string.
+    console.log(`This is the third """''' way ${2 + 2}`); 
+    // Output: This is the third """''' way 4
+    
+    consoleLogCounter += 3;
+    
+    // Logging the counter value
+    console.log(consoleLogCounter);
+    // Output: 4
+                                                                    
+            </pre>
+        </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-8">Variables II</div>
+        <div class="window-main-description">In JavaScript, there are many data types and ways to create and manipulate
+            them.
+            A variable can be assigned as a constant (const) or a let variable. A constant can not be reassigned, but a
+            let variable can.
+            There is also Data Types, which is a way to classify data. There are primitive data types and complex data
+            types.
+            Some of the built in data types are: String, Number, Boolean, Null, Undefined, Symbol, Object, Array,
+            Function and Date.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-8-1">Variable Declarations and Scopes</div>
+            <div class="window-description">
+                In this example,we look into some of the key concepts related to variable declarations and scopes.
+                Strict mode, which is a way yo ensure that the code is written in a way that is more secure and less filled work errors. Look into the differences between var, let, const. We also look into the difference between function and block scopes. We also look into variable shadows and how to avoid common mistakes with async code.
+            </div>
+            <pre class="code-snippet">
+
+
+    "use strict";  // This is for enforcing strict mode, which helps in catching common coding mistakes.
+
+    // Avoid using global variables or 'var'. Var should only be used in legacy systems/code.
+
+    var globalVariable = "This is an example of using var.";
+    console.log(globalVariable);  // Output: "This is an example of using var."
+    
+    // 'const' declares a variable that can't be reassigned, but the content of an object or array can be modified.
+    const isThisConstant = [];
+    isThisConstant.push(1, 2, 3);
+    console.log(isThisConstant);  // Output: [1, 2, 3]
+    
+    const isThisAlsoConstant = {};
+    isThisAlsoConstant.name = "Jonathan";
+    //It's possible to add key-value pairs to a constant object, you just can't reassign the object to another value.
+    console.log(isThisAlsoConstant);  // Output: {name: "Jonathan"}
+    
+    // Function scopes are isolated and variables declared within cannot be accessed outside.
+    function anotherScope() {
+        // This is a function scope.
+    }
+    
+    // Block scopes are defined by curly braces {}.
+    {
+        console.log("Hello, I'm in a block scope");  // Output: "Hello, I'm in a block scope"
+    }
+    
+    // Variable shadows: Variables with the same name can exist in nested scopes without conflict.
+    {
+        let someVariable = true;
+    
+        {
+        let someVariable = false;
+        // This 'someVariable' is different from the outer block's 'someVariable'.
+        }
+    
+        console.log(someVariable);  // Output: true
+    }
+    
+    // Loops: Using 'let' in loops to avoid common mistakes with async code.
+    for (let i = 0; i <= 5; i++) {
+        setTimeout(() => {
+        console.log(i);  // Outputs numbers 0 to 5, each after a second.
+        }, 1000);
+    }            
+    
+    //And not 'var'.
+
+    for (var i = 0; i <= 5; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, 1000);
+    }
+                                                        
             </pre>
         </div>
     </div>

@@ -10,6 +10,7 @@ import {
     contactpagePage,
     loginpagePage,
     adminpagePage,
+    gitpagePage,
 } from './util/preparePages.js';
 
 app.use(express.static('public'));
@@ -45,6 +46,8 @@ app.get('/frontend', (req, res) => res.sendFile(path.resolve('./public/pages/fro
 app.get('/login', (req, res) => res.send(loginpagePage));
 
 app.get('/contact', (req, res) => res.send(contactpagePage));
+
+app.get('/git', (req, res) => res.send(gitpagePage));
 
 app.get('/adminpage', (req, res) => {
     if (req.session.isAuthenticated) res.send(adminpagePage);

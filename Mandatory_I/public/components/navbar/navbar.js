@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="nav-item-dropdown">
                         <span class="nav-item">Subjects</span>
                         <div class="dropdown-content">
+                            <a href="/javascriptfundamentals">Javascript Fundamentals</a>
                             <a href="/node.js">Node.js</a>
                             <a href="/express.js">Express.js</a>
-                            <a href="/javascriptfundamentals">Javascript Fundamentals</a>
+                            <a href="/git">Git</a>
                         </div>
                     </div>
                     <a href="/contact" class="nav-item">Contact</a>

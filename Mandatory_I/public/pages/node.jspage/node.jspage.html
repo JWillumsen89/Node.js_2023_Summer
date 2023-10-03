@@ -19,196 +19,239 @@
     </nav>
 
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-1">Main Title 1</div>
+        <div class="window-main-title" id="main-title-1">Node.js - setup</div>
+        <div class="window-main-description">Node.js is and open-source, cross-platform runtime environment that will
+            let you execute Javascript outside of a web browser.
+            Built on Chrome's V8 Javascript engine and is used for developing server-side applications.
+            Easy to scale and is used by many large companies such as Netflix, Uber, and Paypal. In Node.js there is
+            also npm which is a package manager that will let you install and manage packages.
+            <br><br>Let's Begin to build a Node.js project!
+        </div>
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-1-1">Sub Title 1.1 Test of the title length</div>
+            <div class="window-sub-title" id="sub-title-1-1">Create Directory for your project</div>
+            <div class="window-description">To setup your project you will first have to find a suitable location for
+                the new project.
+                Once you have found a suitable location you can create a new directory for your project
+                and cd to the directory.
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #First create the directory for your project
+    mkdir "my-project"
+
+    #then cd into the directory
+    cd .\my-project\
+
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-2">Initialize your project with 'npm init'</div>
+            <div class="window-description">Running 'npm init' in your project will create a package.json file that will
+                contain information about your project and its dependencies.
+                <br><br>Run 'npm init' in your project directory and follow the prompts to create your package.json
+                file.
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #Start the npm init process by typing in the following command
+    npm init
+
+    #You will now be prompted some questions about your project and have to fill in the information
+    This utility will walk you through creating a package.json file.
+    It only covers the most common items, and tries to guess sensible defaults.
+
+    See `npm help init` for definitive documentation on these fields
+    and exactly what they do.
+
+    Use `npm install <pkg>` afterwards to install a package and
+    save it as a dependency in the package.json file.
+
+    Press ^C at any time to quit.
+    #Here you set the name of your project
+    package name: (test)
+    #And here the version number of your project
+    version: (1.0.0)
+    #Here you can write a description of your project
+    description:
+    #Here you can set the entry point of your project - Most projects it will be app.js, but this is all about preference
+    entry point: (index.js)
+    #Here you can add test commands for your project
+    test command:
+    #Here you can set the git repository for your project
+    git repository:
+    #Here you can set the keywords for your project
+    keywords:
+    #Here you can set the author of your project
+    author:
+    #Here you can set the license for your project
+    license: (ISC)
+
+    #And at the and you will be asked if the information is correct
+    About to write to C:\Users\Jhon2\Desktop\Programmering\node.js\test\package.json:
+
+    {
+    "name": "test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+    }
+
+    #Confirm your information by typing yes
+    Is this OK? (yes)
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-3-1">package.json File</div>
+            <div class="window-description">You will now have a package.json file in your project directory that will
+                contain information about your project and its dependencies.
+                <br><br>Here is an example of a package.json file:
+            </div>
             <pre class="code-snippet">
-                window.addEventListener('scroll', () => {
-                    let currentSection = "";
-                    let currentSubSection = "";
-        
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        const sectionHeight = section.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-                        }
-                    });
-        
-                    subSections.forEach(subSection => {
-                        const sectionTop = subSection.offsetTop;
-                        const sectionHeight = subSection.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-                        }
-                    });
-        
-                    spyLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-        
-                    spySubLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSubSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
+
+
+    { 
+        "name": "Project",
+        "version": "0.0.1",
+        "description": "Project",
+        "type": "module",
+        "main": "app.js",
+        "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1",
+        },
+        "repository": {
+            "type": "git",
+            "url": //Your url could look something like this: "git+https://github.com/JWillumsen89/Node.js_2023_Summer.git"
+        },
+        "author": "Author Name",
+        "license": "Desired License",
+        "bugs": {
+            "url": //Your url could look something like this: "https://github.com/User/Node.js/issues"
+        },
+        "homepage": //Your url could look something like this: "https://github.com/User/Node.js#readme",
+        "dependencies": {
+        }
+    }
+                  
             </pre>
         </div>
-        <div class="window-description">Description
-        </div>
-
-
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-1-2">Sub Title 1.2</div>
+            <div class="window-sub-title" id="sub-title-4-1">Install dependencies</div>
+            <div class="window-description">You will now need to install the needed dependencies for your project.
+                This can be done in multiple ways. Here I will show some examples of how to install the Express.js
+                dependency.
+            </div>
             <pre class="code-snippet">
-                window.addEventListener('scroll', () => {
-                    let currentSection = "";
-                    let currentSubSection = "";
-        
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        const sectionHeight = section.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-                        }
-                    });
-        
-                    subSections.forEach(subSection => {
-                        const sectionTop = subSection.offsetTop;
-                        const sectionHeight = subSection.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-                        }
-                    });
-        
-                    spyLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-        
-                    spySubLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSubSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
-            </pre>
-        </div>
-        <div class="window-description">Description
-        </div>
-    </div>
 
-    <!-- Terminal Snippet Window -->
-    <div class="window toc-section">
-        <div class="window-main-title" id="main-title-2">Main Title 2</div>
-        <div class="window-description">
-            Description
-        </div>
+    //In your package.json file you can add the dependencies like this and then run 'npm install'.
+    { 
+        "name": "Project",
+        "version": "0.0.1",
+        "description": "Project",
+        "type": "module",
+        "main": "app.js",
+        "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1",
+        },
+        "repository": {
+            "type": "git",
+            "url": ""
+        },
+        "author": "Author Name",
+        "license": "Desired License",
+        "bugs": {
+            "url": ""
+        },
+        "homepage": "",
 
-        <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-1">Sub Title 2.1</div>
+        //This will install the latest version of Express.js when you run the command 'npm install' or 'npm i', the 'i' is short for 'install'.
+        "dependencies": {
+            "express": "^4.17.1"
+        }
+    }
+                              
+                        </pre>
             <pre class="terminal-snippet">
 
-Sure! Here are some dummy terminal commands to give your site an authentic feeling. These are inspired by common UNIX-style commands and actions:
 
-bash
-Copy code
-$ echo "Hello, World!"
-Hello, World!
+    #Here you will simple run the command 'npm install' or 'npm i' to install the dependencies in your package.json file.
+    npm install
 
-$ pwd
-/home/user/documents/project
+    #Or
+    npm i
+                        
+                                    </pre>
+            <pre class="terminal-snippet">
 
-$ ls -la
-total 28
-drwxr-xr-x  5 user user 4096 Sep 22 10:00 .
-drwxr-xr-x 12 user user 4096 Sep 22 09:30 ..
--rw-r--r--  1 user user  513 Sep 22 09:58 index.html
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 css
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 js
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 img
 
-$ cd css/
+    #A dependency can also be installed by running the following command:
+    npm install express
+
+    #Or
+    npm i express
+
+    #Or
+    npm i express@4.17.1
+
+    #All of these will add the Express.js dependency to your project or other dependencies if you change the name.
+
             </pre>
-            <div class="window-description">Description
+            <div class="window-description">Next step will be to create a file called app.js in your project directory.
+            </div>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-5-1">Create app.js and run files with node.js</div>
+            <div class="window-description">I this example I will show how to create the app.js file and run it with
+                node.js.
+                <br><br>First create the app.js file in your project directory and add the following code to the file.
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #For creating the app.js file, write this line in the terminal.
+    touch app.js
+
+    #This creates the app.js file in your project directory.
+                  
+            </pre>
+            <div class="window-description">Now you have a app.js file where you can write Javascript code in it and run
+                the file with node.js.
+                <br><br>Here is an example of a very simple app.js file:
+            </div>
+            <pre class="code-snippet">
+
+
+    const name = 'John';
+
+    function sayHi() {
+        console.log('Hi, ' + name);
+    }
+
+    sayHi();
+                              
+                        </pre>
+            <pre class="terminal-snippet">
+
+
+    #To run the app.js file with node.js, write this line in the terminal.
+    node app.js
+    
+    #Output: Hi, John
+                                                </pre>
+            <div class="window-description">Next step will be to import Express.js and setup the server.
+                <a href="/express.js">All of this will be explained in the next section - Express.js.</a>
             </div>
         </div>
 
-        <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-2">Sub Title 2.2</div>
-            <pre class="terminal-snippet">
-                $ cat style.css
-/* Some CSS code... */
-
-$ git status
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-  
-    modified:   style.css
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git add style.css
-$ git commit -m "Updated styles for dark theme"
-[main 7f8c6d0] Updated styles for dark theme
- 1 file changed, 12 insertions(+), 2 deletions(-)
- 
-$ git push origin main
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:user/project.git
-   a3c6f4b..7f8c6d0  main -> main
-            </pre>
-            <div class="window-description">Description
-            </div>
-        </div>
-
-        <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-3">Sub Title 2.3</div>
-            <pre class="terminal-snippet">
-                $ cat style.css
-/* Some CSS code... */
-
-$ git status
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-  
-    modified:   style.css
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git add style.css
-$ git commit -m "Updated styles for dark theme"
-[main 7f8c6d0] Updated styles for dark theme
- 1 file changed, 12 insertions(+), 2 deletions(-)
- 
-$ git push origin main
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:user/project.git
-   a3c6f4b..7f8c6d0  main -> main
-            </pre>
-            <div class="window-description">Description
-            </div>
-        </div>
-        <div id="content-spacer"></div>
     </div>
     <script src="/components/navbar/navbar.js"></script>
     <script src="/components/scrollspy/scrollspy.js"></script>
+    <script src="../commentsColor.js"></script>
 </body>

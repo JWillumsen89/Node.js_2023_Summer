@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$TAB_TITLE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link href="/assets/css/page.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <ul>
+
+        </ul>
+    </nav>
+
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-1">Working with Git in the terminal</div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-1">Setup Git in your project</div>
+            <div class="window-description">First you have to install the .git file in your project directory. This can
+                be
+                done by running the following command in your project directory:
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #To initialize git in your project directory run the following command
+    git init
+
+            </pre>
+        </div>
+
+
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-2">Pushing to your repository</div>
+            <div class="window-description">Next step will be to add all your files to the staging area.
+                Commit your changes and push them to your repository.
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #To add all your files to the staging area run the following command
+    git add -A 
+    #The -A flag will add all your files to the staging area. 
+    #You can also add files individually by typing in the file name instead of the -A flag.
+
+    #To commit your changes run the following command
+    git commit -m "Your commit message"
+
+    #Link your local repository to your remote repository by running the following command
+    git remote add origin your-repo-url.git
+
+    #To push your changes to your repository for the first time run the following command
+    git push -u origin main
+
+    #After that you can just run the following command to push your changes to your repository
+    git push
+
+    #You can also pull the latest changes from your repository by running the following command
+    git pull
+
+    #If you want to reset the staging area to the last commit run the following command
+    git reset
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-2">Other useful Git commands</div>
+            <div class="window-description">These are some other useful Git commands that you might need.
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #To clone a repository run the following command
+    git clone your-repo-url.git
+
+    #You can show all the branches for your repository by running the following command
+    git branch
+
+    #You can create a new branch by running the following command
+    git branch branch-name
+
+    #You can switch to a branch by running the following command
+    git checkout branch-name
+
+    #You can delete a branch by running the following command
+    git branch -d branch-name
+
+    #You can merge a branch into your main branch by running the following command
+    git merge branch-name
+
+    #Fetching will download the latest changes from your repository without merging them into your local files
+    git fetch
+   
+            </pre>
+        </div>
+
+    </div>
+    <script src="/components/navbar/navbar.js"></script>
+    <script src="/components/scrollspy/scrollspy.js"></script>
+    <script src="../commentsColor.js"></script>
+</body>

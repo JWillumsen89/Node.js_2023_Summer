@@ -15,8 +15,12 @@ export const javascriptfundamentalspagePage = renderPage(javascriptfundamentalsp
 const contactpage = readPage('./public/pages/contactpage/contactpage.html');
 export const contactpagePage = renderPage(contactpage, { tabTitle: 'Mandatory I | Contact' });
 
+const gitpage = readPage('./public/pages/gitpage/gitpage.html');
+export const gitpagePage = renderPage(gitpage, { tabTitle: 'Mandatory I | Git' });
+
 const loginpage = readPage('./public/pages/loginpage/loginpage.html');
 export const loginpagePage = renderPage(loginpage, { tabTitle: 'Mandatory I | Login' });
 
 const adminpage = readPage('./public/pages/adminpage/adminpage.html');
 export const adminpagePage = renderPage(adminpage, { tabTitle: 'Mandatory I | Admin' });
+

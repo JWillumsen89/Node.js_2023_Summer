@@ -1,17 +1,26 @@
-document.querySelectorAll('.code-snippet').forEach(el => {
-    const lines = el.innerHTML.split('\n');
-    el.innerHTML = lines
-        .map(line => {
-            if (line.trim().startsWith('//')) {
-                // Full comment line
-                return '<span class="full-comment-line">' + line + '</span>';
-            } else if (line.includes('//')) {
-                // Inline comment
-                const parts = line.split('//');
-                return parts[0] + '<span class="inline-comment">//' + parts[1] + '</span>';
-            } else {
-                return line;
+function highlightCodeComments() {
+    const codeSnippets = document.querySelectorAll('.code-snippet, .terminal-snippet');
+    codeSnippets.forEach(snippet => {
+        const lines = snippet.innerHTML.split('\n');
+        if (snippet.classList.contains('code-snippet')) {
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim().startsWith('//')) {
+                    lines[i] = lines[i].replace(/(\/\/.*)/, '<span class="full-comment-line">$1</span>');
+                } else if (lines[i].includes('//')) {
+                    lines[i] = lines[i].replace(/(\/\/.*)/, '<span class="inline-comment">$1</span>');
+                }
             }
-        })
-        .join('\n');
-});
+        } else if (snippet.classList.contains('terminal-snippet')) {
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim().startsWith('#')) {
+                    lines[i] = lines[i].replace(/(#.*)/, '<span class="full-comment-line">$1</span>');
+                } else {
+                    lines[i] = lines[i].replace(/\b(cd|mkdir|ls|rm|npm|node)\b/g, '<span class="keyword">$1</span>');
+                }
+            }
+        }
+        snippet.innerHTML = lines.join('\n');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', highlightCodeComments);

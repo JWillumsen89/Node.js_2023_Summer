@@ -222,17 +222,28 @@ nav ul ul li>a.active {
 }
 
 .inline-comment {
-  color: #C0B080;
+  color: #878787;
+  font-style: italic;
 }
 
 .full-comment-line {
-  color: #C0B080;
+  color: #878787;
+  font-style: italic;
 }
 
 .comment {
   margin-top: 10px;
   font-style: italic;
 }
+
+.keyword {
+  color: #D2691E;
+}
+
+.quoted-text {
+  color: #32CD32;  /* A more subtle shade of green. */
+}
+
 
 #content-spacer {
   height: 500px;
