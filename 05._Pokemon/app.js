@@ -28,12 +28,6 @@ app.get('/contact', (req, res) => {
 
 // ==================================== ROUTES ====================================
 
-const pikachu = {
-    url: 'blabla',
-    name: 'Pikachu',
-    strength: 8,
-};
-
 let currentPokemon;
 
 app.get('/battlepokemon', (req, res) => {
