@@ -2,6 +2,16 @@ import express from 'express';
 const app = express();
 import session from 'express-session';
 
+import {
+    homepagePage,
+    nodejspagePage,
+    expressjspagePage,
+    javascriptfundamentalspagePage,
+    contactpagePage,
+    loginpagePage,
+    adminpagePage,
+} from './util/preparePages.js';
+
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,56 +30,25 @@ const users = [
         username: 'test',
         password: 'password123',
     },
-    {
-        username: 'test2',
-        password: 'password456',
-    },
 ];
 
-import {
-    homepagePage,
-    nodejspagePage,
-    expressjspagePage,
-    javascriptfundamentalspagePage,
-    contactpagePage,
-    loginpagePage,
-    adminpagePage,
-} from './util/preparePages.js';
+app.get('/', (req, res) => res.send(homepagePage));
 
-app.get('/', (req, res) => {
-    res.send(homepagePage);
-});
+app.get('/node.js', (req, res) => res.send(nodejspagePage));
 
-app.get('/node.js', (req, res) => {
-    res.send(nodejspagePage);
-});
+app.get('/express.js', (req, res) => res.send(expressjspagePage));
 
-app.get('/express.js', (req, res) => {
-    res.send(expressjspagePage);
-});
+app.get('/javascriptfundamentals', (req, res) => res.send(javascriptfundamentalspagePage));
 
-app.get('/javascriptfundamentals', (req, res) => {
-    res.send(javascriptfundamentalspagePage);
-});
+app.get('/frontend', (req, res) => res.sendFile(path.resolve('./public/pages/frontendpage/frontendpage.html')));
 
-app.get('/frontend', (req, res) => {
-    res.sendFile(path.resolve('./public/pages/frontendpage/frontendpage.html'));
-});
+app.get('/login', (req, res) => res.send(loginpagePage));
 
-app.get('/login', (req, res) => {
-    res.send(loginpagePage);
-});
-
-app.get('/contact', (req, res) => {
-    res.send(contactpagePage);
-});
+app.get('/contact', (req, res) => res.send(contactpagePage));
 
 app.get('/adminpage', (req, res) => {
-    if (req.session.isAuthenticated) {
-        res.send(adminpagePage);
-    } else {
-        res.redirect('/login');
-    }
+    if (req.session.isAuthenticated) res.send(adminpagePage);
+    else res.redirect('/login');
 });
 
 app.get('/logout', (req, res) => {
