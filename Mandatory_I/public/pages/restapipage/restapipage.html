@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$TAB_TITLE</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <link href="/assets/css/page.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav>
+    <ul>
+
+    </ul>
+  </nav>
+
+  <div class="window toc-section">
+    <div class="window-main-title" id="main-title-1">REST API design and conventions</div>
+    <div class="window-main-description">REST stands for Representational State Transfer. It is an architectural
+      style for
+      designing APIs. REST is not a standard, but a set of rules that you should follow when designing your API.
+      In this
+      section we will go through the basics of REST and how to design your API according to REST conventions.
+    </div>
+    <div class="content toc-subsection">
+      <div class="window-sub-title" id="sub-title-1-1">Designing a REST API</div>
+      <div class="window-description">When designing a REST API you should follow these conventions:
+        <ul>
+          <li>Use nouns instead of verbs in your endpoint URLs</li>
+          <li>Use plural nouns instead of singular nouns</li>
+          <li>Use HTTP methods to specify the action you are taking</li>
+          <li>Use sub-resources for relations</li>
+          <li>Use HTTP status codes to indicate the status of your request</li>
+        </ul>
+        <p>Here is an example of a REST API design:</p>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>HTTP Methods</th>
+              <th>Endpoints</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GET</td>
+              <td>/mountains</td>
+            </tr>
+            <tr>
+              <td>GET</td>
+              <td>/mountains/random</td>
+            </tr>
+            <tr>
+              <td>GET</td>
+              <td>/mountains/:id</td>
+            </tr>
+            <tr>
+              <td>GET</td>
+              <td>/mountains/max-height/:max-height</td>
+            </tr>
+            <tr>
+              <td>GET</td>
+              <td>/mountains/min-height/:min-height</td>
+            </tr>
+            <tr>
+              <td>GET</td>
+              <td>/mountains/country/:country</td>
+            </tr>
+            <tr>
+              <td>POST</td>
+              <td>/mountains</td>
+            </tr>
+            <tr>
+              <td>PUT</td>
+              <td>/mountains/:id</td>
+            </tr>
+            <tr>
+              <td>PATCH</td>
+              <td>/mountains/:id</td>
+            </tr>
+            <tr>
+              <td>DELETE</td>
+              <td>/mountains/:id</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="content-spacer"></div>
+  </div>
+  <script src="/components/navbar/navbar.js"></script>
+  <script src="/components/scrollspy/scrollspy.js"></script>
+  <script src="../commentsColor.js"></script>
+</body>

@@ -18,9 +18,11 @@ export const contactpagePage = renderPage(contactpage, { tabTitle: 'Mandatory I 
 const gitpage = readPage('./public/pages/gitpage/gitpage.html');
 export const gitpagePage = renderPage(gitpage, { tabTitle: 'Mandatory I | Git' });
 
+const restapipage = readPage('./public/pages/restapipage/restapipage.html');
+export const restapipagePage = renderPage(restapipage, { tabTitle: 'Mandatory I | REST API' });
+
 const loginpage = readPage('./public/pages/loginpage/loginpage.html');
 export const loginpagePage = renderPage(loginpage, { tabTitle: 'Mandatory I | Login' });
 
 const adminpage = readPage('./public/pages/adminpage/adminpage.html');
 export const adminpagePage = renderPage(adminpage, { tabTitle: 'Mandatory I | Admin' });
-

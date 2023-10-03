@@ -11,6 +11,7 @@ import {
     loginpagePage,
     adminpagePage,
     gitpagePage,
+    restapipagePage,
 } from './util/preparePages.js';
 
 app.use(express.static('public'));
@@ -48,6 +49,8 @@ app.get('/login', (req, res) => res.send(loginpagePage));
 app.get('/contact', (req, res) => res.send(contactpagePage));
 
 app.get('/git', (req, res) => res.send(gitpagePage));
+
+app.get('/restapi', (req, res) => res.send(restapipagePage));
 
 app.get('/adminpage', (req, res) => {
     if (req.session.isAuthenticated) res.send(adminpagePage);
