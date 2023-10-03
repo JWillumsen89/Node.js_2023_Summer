@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <a href="/node.js">Node.js</a>
                             <a href="/express.js">Express.js</a>
                             <a href="/git">Git</a>
-                            <a href="/restapi">REST API</a>
+                            <a href="/restapi">REST API design</a>
                         </div>
                     </div>
                     <a href="/contact" class="nav-item">Contact</a>

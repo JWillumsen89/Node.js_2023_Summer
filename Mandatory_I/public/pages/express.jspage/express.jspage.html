@@ -19,196 +19,219 @@
     </nav>
 
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-1">Main Title 1</div>
+        <div class="window-main-title" id="main-title-1">Create a Server instance with Express</div>
+        <div class="window-main-description">
+            Express is a minimal and flexible Node.js web application framework that provides a robust set of features
+            for web and mobile applications.</div>
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-1-1">Sub Title 1.1 Test of the title length</div>
+            <div class="window-sub-title" id="sub-title-1-1">Setting up a server - CommonJS modules vs ECMAScript
+                modules </div>
+            <div class="window-description">Setting up a server can either be done with CommonJS modules or ECMAScript
+                modules. CommonJS modules are the default in Node.js, but ECMAScript modules are the future. ECMAScript
+                modules are the default in browsers, but not in Node.js. In this section we will go through both
+                approaches. The reason to choose one over the other is that CommonJS modules are easier to use, but
+                ECMAScript modules are more modern, will be the standard in the future
+                and resemble the way modules are used in the browser.
+                <br><br>
+                Now we are ready to create a server instance. We will do this in two different ways.
+                First we will do it with CommonJS modules and then we will do it with ECMAScript modules.
+            </div>
             <pre class="code-snippet">
-                window.addEventListener('scroll', () => {
-                    let currentSection = "";
-                    let currentSubSection = "";
-        
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        const sectionHeight = section.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-                        }
-                    });
-        
-                    subSections.forEach(subSection => {
-                        const sectionTop = subSection.offsetTop;
-                        const sectionHeight = subSection.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-                        }
-                    });
-        
-                    spyLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-        
-                    spySubLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSubSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
-            </pre>
-        </div>
-        <div class="window-description">Description
-        </div>
 
 
-        <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-1-2">Sub Title 1.2</div>
-            <pre class="code-snippet">
-                window.addEventListener('scroll', () => {
-                    let currentSection = "";
-                    let currentSubSection = "";
-        
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        const sectionHeight = section.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-                        }
-                    });
-        
-                    subSections.forEach(subSection => {
-                        const sectionTop = subSection.offsetTop;
-                        const sectionHeight = subSection.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-                        }
-                    });
-        
-                    spyLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-        
-                    spySubLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSubSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
+    //Here is how to do it with CommonJS modules
+
+    //Here you import the express module.
+    const express = require('express');
+
+    //Here you create an instance of the express application.
+    const app = express();
+    
+    //Here you set the port number, that your server will run on.
+    const PORT = 8080;
+
+    //Here you make your app listen on the port you specified and run the server
+    app.listen(PORT, () => {
+        console.log('Server is running on port', PORT);
+    });
+
             </pre>
-        </div>
-        <div class="window-description">Description
+            <div class="window-description">When using ECMAScript you need to make a modification to your package.json
+                file. You need to add the following line to the package.json file: "type": "module". This tells Node.js
+                that you want to use ECMAScript modules.
+            </div>
+            <pre class="code-snippet">
+
+
+    { 
+        "name": "Project",
+        "version": "0.0.1",
+        "description": "Project",
+        //Here you tell Node.js that you want to use ECMAScript modules, by adding the following line: "type": "module".
+        "type": "module",
+        "main": "app.js",
+        "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1",
+        },
+        "repository": {
+            "type": "git",
+            "url": //Your url could look something like this: "git+https://github.com/JWillumsen89/Node.js_2023_Summer.git"
+        },
+        "author": "Author Name",
+        "license": "Desired License",
+        "bugs": {
+            "url": //Your url could look something like this: "https://github.com/User/Node.js/issues"
+        },
+        "homepage": //Your url could look something like this: "https://github.com/User/Node.js#readme",
+        "dependencies": {
+        }
+    }
+            
+                        </pre>
+            <div class="window-description">Here I will show how to setup the server instance with ECMAScript modules.
+            </div>
+            <pre class="code-snippet">
+    //Here you see the difference between CommonJS modules and ECMAScript modules.
+    //With CommonJS modules you use require() to import modules and with ECMAScript modules you use import.
+    import express from 'express';
+    const app = express();
+
+    const PORT = 8080;
+
+    app.listen(PORT, () => {
+        console.log('Server is running on port', PORT);
+    });
+
+                        </pre>
         </div>
     </div>
 
-    <!-- Terminal Snippet Window -->
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-2">Main Title 2</div>
+        <div class="window-main-title" id="main-title-2">GET and POST Requests</div>
         <div class="window-description">
-            Description
+            Get requests are used to retrieve data from a server and POST requests are used to send data to a server.
+            In this section we will go through how to make GET and POST
+            requests with Postman and in express.
         </div>
 
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-1">Sub Title 2.1</div>
-            <pre class="terminal-snippet">
-
-Sure! Here are some dummy terminal commands to give your site an authentic feeling. These are inspired by common UNIX-style commands and actions:
-
-bash
-Copy code
-$ echo "Hello, World!"
-Hello, World!
-
-$ pwd
-/home/user/documents/project
-
-$ ls -la
-total 28
-drwxr-xr-x  5 user user 4096 Sep 22 10:00 .
-drwxr-xr-x 12 user user 4096 Sep 22 09:30 ..
--rw-r--r--  1 user user  513 Sep 22 09:58 index.html
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 css
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 js
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 img
-
-$ cd css/
-            </pre>
-            <div class="window-description">Description
+            <div class="window-sub-title" id="sub-title-2-1">GET Requests with Postman</div>
+            <div class="window-description">Postman is a tool you can use to handle HTTP requests. You can download
+                Postman <a href="https://www.postman.com/downloads/">here</a>.
+                In this example we will make a get request to the following url: http://localhost:8080/mountains.
+                <br><br>
+                Here is a textual description of how to make get requests with Postman.
+                <br><br>
+                <ol>
+                    <li>Open Postman</li>
+                    <li>Create a New Request</li>
+                    <li>Set the GET request in the drop down</li>
+                    <li>Enter the url: http://localhost:8080/mountains</li>
+                    <li>Add headers (If necessary)</li>
+                    <li>Send the request</li>
+                    <li>Retrieve the response</li>
+                </ol>
             </div>
         </div>
 
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-2">Sub Title 2.2</div>
-            <pre class="terminal-snippet">
-                $ cat style.css
-/* Some CSS code... */
-
-$ git status
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-  
-    modified:   style.css
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git add style.css
-$ git commit -m "Updated styles for dark theme"
-[main 7f8c6d0] Updated styles for dark theme
- 1 file changed, 12 insertions(+), 2 deletions(-)
- 
-$ git push origin main
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:user/project.git
-   a3c6f4b..7f8c6d0  main -> main
-            </pre>
-            <div class="window-description">Description
+            <div class="window-sub-title" id="sub-title-2-2">POST Requests with Postman</div>
+            <div class="window-description">In this example we will make a post request to the following url:
+                http://localhost:8080/mountains.
+                <br><br>
+                Here is a textual description of how to make post requests with Postman.
+                <br><br>
+                <ol>
+                    <li>Open Postman</li>
+                    <li>Create a New Request</li>
+                    <li>Set the Post request in the drop down</li>
+                    <li>Enter the url: http://localhost:8080/mountains</li>
+                    <li>Add headers - Set Content-Type: application/json and Authorization if an access token is needed
+                    </li>
+                    <li>Enter the request body in JSON format</li>
+                    <li>Send the request</li>
+                    <li>Retrieve the response</li>
+                </ol>
             </div>
         </div>
-
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-3">Sub Title 2.3</div>
-            <pre class="terminal-snippet">
-                $ cat style.css
-/* Some CSS code... */
+            <div class="window-sub-title" id="sub-title-2-3">GET Requests in express</div>
+            <div class="window-description">Here is how to make get requests in express. We will use the same example
+                as in the previous section. We will make a get request to the following url:
+                http://localhost:8080/mountains
+            </div>
+            <pre class="code-snippet">
+    import express from 'express';
+    const app = express();
 
-$ git status
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-  
-    modified:   style.css
+    //When you set the endpoint it automatically knows what the rest of the url is.
+    //So the url in this case is: http://localhost:8080/mountains
+    app.get('/mountains', (req, res) => {
+        res.send('Here is a list of mountains');
+    });
 
-no changes added to commit (use "git add" and/or "git commit -a")
+    const PORT = 8080;
 
-$ git add style.css
-$ git commit -m "Updated styles for dark theme"
-[main 7f8c6d0] Updated styles for dark theme
- 1 file changed, 12 insertions(+), 2 deletions(-)
- 
-$ git push origin main
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:user/project.git
-   a3c6f4b..7f8c6d0  main -> main
+    app.listen(PORT, () => {
+        console.log('Server is running on port', PORT);
+    });
             </pre>
-            <div class="window-description">Description
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-4">POST Requests in express</div>
+            <div class="window-description">Here is how to make a POST request in express. We will use the same example
+                as in the previous section. We will make a post request to the following url:
+                http://localhost:8080/mountains
+                <pre class="code-snippet">
+    import express from 'express';
+    const app = express();
+
+    //Here is a simple get request example
+    //When you set the endpoint it automatically knows what the rest of the url is.
+    //So the url in this case is: http://localhost:8080/mountains
+    app.get('/mountains', (req, res) => {
+        res.send('Here is a list of mountains');
+    });
+
+    //Here is a simple post request example
+    app.post('/mountains', async (req, res) => {
+        const { name, height, country, firstAscent } = req.body;
+    
+        try {
+            const result = await schema.validateAsync({ name, height, country, firstAscent });
+    
+            const mountain = mountains.find(m => m.name === name);
+    
+            if (mountain) {
+                res.status(409).send({ error: 'Mountain already exists' });
+                return;
+            }
+    
+            const newMountain = {
+                id: ++currentMaxId,
+                ...result,
+            };
+    
+            mountains.push(newMountain);
+    
+            console.log('New mountain has been created');
+            res.status(201).send(newMountain);
+        } catch (error) {
+            res.status(400).send({ error: error.details[0].message });
+        }
+    });
+
+    const PORT = 8080;
+
+    app.listen(PORT, () => {
+        console.log('Server is running on port', PORT);
+    });
+        </pre>
             </div>
         </div>
-        <div id="content-spacer"></div>
     </div>
+    <div id="content-spacer"></div>
     <script src="/components/navbar/navbar.js"></script>
     <script src="/components/scrollspy/scrollspy.js"></script>
+    <script src="../commentsColor.js"></script>
 </body>
