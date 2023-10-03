@@ -56,7 +56,6 @@ app.get('/battlepokemon', (req, res) => {
     }
 });
 
-//const PORT = Number(process.env.PORT);
 const PORT = Number(process.env.PORT) || 8080;
 
 app.listen(PORT, () => {
