@@ -41,9 +41,9 @@ body {
 
 nav {
   position: fixed;
-  top: 85px;
+  top: 90px;
   left: 0;
-  width: 250px;
+  width: 380px;
   height: 100vh;
   background-color: #1A1A1A;
   border-right: 2px solid #515454;
@@ -57,17 +57,15 @@ nav ul {
   margin: 0;
 }
 
-nav li>a {
+nav li > a {
   color: #C7C9CB;
-  padding: 10px 20px;
+  padding: 1px 20px;
   display: block;
   text-decoration: none;
   border: 1px solid transparent;
   transition: background-color 0.3s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
+  white-space: normal;
+  overflow: visible;
 }
 
 nav li>a:hover {
@@ -109,7 +107,7 @@ nav ul ul li>a.active {
   margin-top: 120px;
   margin-bottom: 40px;
   border-radius: 10px;
-  margin-left: 270px;
+  margin-left: 400px;
   margin-right: 20px;
   padding: 20px;
 }
@@ -125,7 +123,7 @@ nav ul ul li>a.active {
   background: linear-gradient(to bottom, #666, #515454);
   border: 1px solid #333;
   box-shadow: inset 0 0 5px #000, 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 1.4em;
+  font-size: 1.7em;
   padding: 10px 15px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -136,19 +134,33 @@ nav ul ul li>a.active {
 .window-sub-title {
   background: linear-gradient(to bottom, #555, #464849);
   border: 1px solid #333;
-  font-size: 1.05em;
+  font-size: 1.3em;
   border-top: 1px solid #3C3F41;
   text-shadow: 1px 1px 1px #000;
   padding: 8px 12px;
+  margin-bottom: 20px;
 }
 
 .window-description {
   padding: 10px 15px;
+  min-height: 80px;
   background-color: #3C3F41;
   border-bottom: 1px solid #515454;
-  color: #878C91;
+  color: #A0A4A7;
   font-style: italic;
-  margin-bottom: 10px;
+  margin-top: 25px;
+  font-size: 1.15em;
+}
+
+.window-main-description {
+  padding: 10px 15px;
+  background-color: #3C3F41;
+  border-bottom: 1px solid #515454;
+  color: #A0A4A7;
+  font-style: italic;
+  margin-top: 25px;
+  font-size: 1.4em;
+  font-weight: bold;
 }
 
 .toc-subsection {
@@ -158,7 +170,7 @@ nav ul ul li>a.active {
   margin-top: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  min-height: 600px;
+  min-height: 300px;
 }
 
 .toc-subsection h2,
@@ -191,20 +203,31 @@ nav ul ul li>a.active {
 
 .code-snippet,
 .terminal-snippet {
+  margin-top: 25px;
+  min-height: 280px;
   background-color: #222;
   padding: 10px 12px;
   border-radius: 5px;
   white-space: pre-wrap;
-  font-size: 0.9em;
+  font-size: 1.3em;
   width: calc(100% - 24px)
+
 }
 
 .code-snippet {
-  color: #4C8F5C;
+  color: #008000;
 }
 
 .terminal-snippet {
-  color: #C7C9CB;
+  color: #A0A080;
+}
+
+.inline-comment {
+  color: #C0B080;
+}
+
+.full-comment-line {
+  color: #C0B080;
 }
 
 .comment {

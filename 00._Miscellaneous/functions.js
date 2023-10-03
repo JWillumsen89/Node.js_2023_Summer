@@ -8,8 +8,10 @@ function getRandomInt(min, max) {
 //Prints the reference
 console.log(getRandomInt);
 
-//Prints the return value, you do have to have arguments in js.
+// Prints the return value. In JavaScript, you can call a function without supplying all its arguments, 
+// but it might lead to unexpected results if the function expects them.
 console.log(getRandomInt());
+
 
 const getRandomIntAnonymousFunction = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min) + min);

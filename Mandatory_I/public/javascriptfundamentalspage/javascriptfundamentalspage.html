@@ -7,8 +7,7 @@
     <title>Javascript Fundamentals</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <link href="/page.css" rel="stylesheet">
+    <link href="/assets/css/page.css" rel="stylesheet">
 </head>
 
 <body>
@@ -19,196 +18,609 @@
     </nav>
 
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-1">Main Title 1</div>
-        <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-1-1">Sub Title 1.1 Test of the title length</div>
-            <pre class="code-snippet">
-                window.addEventListener('scroll', () => {
-                    let currentSection = "";
-                    let currentSubSection = "";
-        
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        const sectionHeight = section.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-                        }
-                    });
-        
-                    subSections.forEach(subSection => {
-                        const sectionTop = subSection.offsetTop;
-                        const sectionHeight = subSection.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-                        }
-                    });
-        
-                    spyLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-        
-                    spySubLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSubSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
-            </pre>
+        <div class="window-main-title" id="main-title-1">1. Basics</div>
+        <div class="window-main-description">This section covers some of the basics of JavaScript. We will have a look
+            at variable declaration and the console. There will be an example of the difference between using template
+            literals and comma-separated values in the console.log() function.
         </div>
-        <div class="window-description">Description
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-1">Console and Variables</div>
+            <div class="window-description">This example and these code snippets emphasize the difference between using
+                literals and comma-separated values in the console.log() function. The first example uses template
+                literals, which are enclosed in backticks (`). The second example uses comma-separated values, which are
+                separated by commas (,). The output of both examples is the same, but the template literals are easier
+                to read and write.
+            </div>
+            <pre class="code-snippet">
+
+
+    const firstName = "Anders";
+    const lastName = "Latif";
+                
+    // Using template literals
+    console.log(`My first name is ${firstName} and my last name is ${lastName}`)
+    // Output: My first name is Anders and my last name is Latif
+                
+    // Using comma-separated values
+    console.log("My first name is", firstName,"and my last name is", lastName)
+    // Output: My first name is Anders and my last name is Latif
+                
+            </pre>
+
         </div>
 
 
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-1-2">Sub Title 1.2</div>
+            <div class="window-sub-title" id="sub-title-1-2">Numbers and Strings</div>
+            <div class="window-description">In this example the importance of type conversion is shown and also
+                different ways to convert a string into a number. It also showcase how Number() and parseInt() handles
+                non-numeric characters differently.
+            </div>
             <pre class="code-snippet">
-                window.addEventListener('scroll', () => {
-                    let currentSection = "";
-                    let currentSubSection = "";
-        
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        const sectionHeight = section.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSection = section.querySelector('.window-main-title').getAttribute('id');
-                        }
-                    });
-        
-                    subSections.forEach(subSection => {
-                        const sectionTop = subSection.offsetTop;
-                        const sectionHeight = subSection.clientHeight;
-                        if (pageYOffset >= sectionTop && pageYOffset < (sectionTop + sectionHeight)) {
-                            currentSubSection = subSection.querySelector('.window-sub-title').getAttribute('id');
-                        }
-                    });
-        
-                    spyLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-        
-                    spySubLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentSubSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
+
+
+    const year = "2022";
+    const number = 1;
+    
+    // Convert string to a number and then add
+    const result1 = Number(year) + number;  // Using Number()
+    console.log(result1);  // Output: 2023
+    
+    const result2 = parseInt(year) + number;  // Using parseInt()
+    console.log(result2);  // Output: 2023
+    
+    const result3 = +year + number;  // Using the unary + operator
+    console.log(result3);  // Output: 2023
+    
+    // Example of how Number() and parseInt() handle non-numeric characters
+    console.log(Number("32566dsf6546"))  // Output: NaN
+    console.log(parseInt("659746ad644"))  // Output: 659746
+                
             </pre>
-        </div>
-        <div class="window-description">Description
         </div>
     </div>
-
-    <!-- Terminal Snippet Window -->
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-2">Main Title 2</div>
-        <div class="window-description">
-            Description
+        <div class="window-main-title" id="main-title-2">2. Strings</div>
+        <div class="window-main-description">
+            Here I will show some examples of how to work with strings. I will show how to convert a string to a number,
+            how to get the length of a string, how to get a character by index, how to replace a character in a string
+            and how to get a substring and how to manipulate a string with the replace() method.
         </div>
 
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-1">Sub Title 2.1</div>
-            <pre class="terminal-snippet">
-
-Sure! Here are some dummy terminal commands to give your site an authentic feeling. These are inspired by common UNIX-style commands and actions:
-
-bash
-Copy code
-$ echo "Hello, World!"
-Hello, World!
-
-$ pwd
-/home/user/documents/project
-
-$ ls -la
-total 28
-drwxr-xr-x  5 user user 4096 Sep 22 10:00 .
-drwxr-xr-x 12 user user 4096 Sep 22 09:30 ..
--rw-r--r--  1 user user  513 Sep 22 09:58 index.html
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 css
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 js
-drwxr-xr-x  2 user user 4096 Sep 22 10:00 img
-
-$ cd css/
-            </pre>
-            <div class="window-description">Description
+            <div class="window-sub-title" id="sub-title-2-1">Add numbers from string to float</div>
+            <div class="window-description"> In many situation while programming, you mau encounter numbers that are
+                represented as strings. This example demonstrates how you can add two float numbers that
+                initially were strings and also that the result is rounded to one decimal.
             </div>
+            <pre class="code-snippet">
+
+
+    const numberOne = "1.10";
+    const numberTwo = "2.30";
+    
+    const result1 = Number(numberOne) + Number(numberTwo);
+    console.log(result1);  // Output: 3.4
+                
+            </pre>
         </div>
 
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-2">Sub Title 2.2</div>
-            <pre class="terminal-snippet">
-                $ cat style.css
-/* Some CSS code... */
-
-$ git status
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-  
-    modified:   style.css
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git add style.css
-$ git commit -m "Updated styles for dark theme"
-[main 7f8c6d0] Updated styles for dark theme
- 1 file changed, 12 insertions(+), 2 deletions(-)
- 
-$ git push origin main
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:user/project.git
-   a3c6f4b..7f8c6d0  main -> main
-            </pre>
-            <div class="window-description">Description
+            <div class="window-sub-title" id="sub-title-2-2">Add the numbers and the total with 2 decimals</div>
+            <div class="window-description">This example also demonstrates how you can add two float numbers that
+                initially were strings, but this time it shows how you can set the number of decimals in the result with
+                the toFixed() method.
             </div>
+            <pre class="code-snippet">
+
+
+    const anotherNumberOne = "1.10";
+    const anotherNumberTwo = "2.30";
+    
+    const result2 = Number(anotherNumberOne) + Number(anotherNumberTwo);
+    const resultDecimals = result2.toFixed(2);
+    
+    console.log(resultDecimals);  // Output: 3.40
+                
+            </pre>
         </div>
 
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-3">Sub Title 2.3</div>
-            <pre class="terminal-snippet">
-                $ cat style.css
-/* Some CSS code... */
+            <div class="window-sub-title" id="sub-title-2-3">Decimals and average</div>
+            <div class="window-description">This example shows you in a practical way how to calculate the average of a
+                group of numbers,
+                in this example, three numbers and
+                also how to round the result to 5 decimals with the toFixed() method.</div>
+            <pre class="code-snippet">
 
-$ git status
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-  
-    modified:   style.css
 
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git add style.css
-$ git commit -m "Updated styles for dark theme"
-[main 7f8c6d0] Updated styles for dark theme
- 1 file changed, 12 insertions(+), 2 deletions(-)
- 
-$ git push origin main
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:user/project.git
-   a3c6f4b..7f8c6d0  main -> main
+    const one = 10;
+    const two = 45;
+    const three = 98;
+    
+    const result3 = (one + two + three) / 3;
+    
+    console.log(result3.toFixed(5));  // Output: 51.00000
+                
             </pre>
-            <div class="window-description">Description
-            </div>
         </div>
-        <div id="content-spacer"></div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-4">Get the character by index</div>
+            <div class="window-description">In this example, I show you how the charAt() method works. The charAt()
+                method returns the character at the specified index in a string. It also illustrate the principle of
+                zero-indexing, the index of the first character is 0,
+                the second character is 1 and so on.</div>
+            <pre class="code-snippet">
+
+
+    const letters = "abc";
+
+    const letterC = letters.charAt(2);
+
+    console.log(letterC);  // Output: c
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-5">Replace</div>
+            <div class="window-description">Here we are shown how string manipulation works. The replace() method
+                replaces a specified value with another value in a string. In this example, the letter "j" is replaced
+                with "J".
+            </div>
+            <pre class="code-snippet">
+
+
+    const fact = "You are learning javascript!";
+
+    const replacedLetter = fact.replace("j", "J");
+    
+    console.log(replacedLetter);  // Output: "You are learning Javascript!"
+                  
+            </pre>
+        </div>
+
+
+
     </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-3">3. Objects</div>
+        <div class="window-main-description">In JavaScript, objects are a core component and are used to store data in
+            a structured way. In this section, I will show you how to create an object, how to access the properties of
+            an object and how to add properties to an object.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-3-1">Retrieve value from object by key</div>
+            <div class="window-description">This example demonstrates how you can output the value from an object by
+                using the key.
+            </div>
+            <pre class="code-snippet">
+
+
+    const myObj = { message: "Hello, earthling! I bring peace." };
+
+    // Log the message 
+    console.log(myObj.message);  // Output: "Hello, earthling! I bring peace."                
+                
+            </pre>
+
+        </div>
+
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-3-2">Defining an object</div>
+            <div class="window-description">Here we will have a look at how to create an object. We will create an
+                object that has a name and an age property. We will also have a look at how to access the properties of
+                an object.
+            </div>
+            <pre class="code-snippet">
+
+
+    // Create an object that has your name and age. 
+    const me = {
+        name: "Jonathan",
+        age: 34
+    }
+    
+    console.log(me);             // Output: { name: "Jonathan", age: 34 }
+    console.log(me.name);       // Output: Jonathan
+    console.log(me.age);        // Output: 34
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-3-3">Add a property</div>
+            <div class="window-description">This example show how to add a property dynamically to an object after it
+                have been created and again how to access the property.
+            </div>
+            <pre class="code-snippet">
+
+
+    const stackOverflow = {};
+
+    // Add a property to the object
+    stackOverflow["isAllowed"] = true;
+    
+    console.log(stackOverflow.isAllowed);  // Output: true                
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-3-4">Remove a property</div>
+            <div class="window-description">We will now have a look at how to remove a property from an object. We will
+                create an object that has a description property. We will then remove the description property from the
+                object.
+            </div>
+            <pre class="code-snippet">
+
+
+    const thisSong = { description: "The best song in the world." };
+
+    // Modify the object's properties
+    delete thisSong.description;
+    thisSong.about = "Just a tribute";
+    
+    console.log(thisSong);  // Output: { about: "Just a tribute" }
+                 
+            </pre>
+        </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-4">4. Arrays</div>
+        <div class="window-main-description">In JavaScript, arrays are a way store data in a ordered list. In this
+            section, I will show you how to create an array, how to access the elements of an array, how to add
+            elements to an array and how to manipulate an array and how to remove data from an array.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-1">Array Positioning 1</div>
+            <div class="window-description">This example demonstrates how you use array indexing and find() method to
+                access a specific element in an array.
+            </div>
+            <pre class="code-snippet">
+
+
+    const letters = ["a", "b", "c"];
+
+    const letterB = letters.find((element) => element === "b");
+    console.log(letterB); // Output: b
+    
+    const letterB2 = letters[1];
+    console.log(letterB2); // Output: b                           
+                
+            </pre>
+
+        </div>
+
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-2">Array Positioning 2</div>
+            <div class="window-description">In this example I show how to add objects to an array and how to access the
+                objects in the array.
+            </div>
+            <pre class="code-snippet">
+
+
+    const friends = [];
+    const object1 = { name: "Jack", age: 30 };
+    const object2 = { name: "Will", age: 18 };
+    const object3 = { name: "Elisabeth", age: 16 };
+    friends.push(object1, object2, object3);
+    
+    console.log(friends); 
+    // Output: 
+    // [
+    //   { name: 'Jack', age: 30 },
+    //   { name: 'Will', age: 18 },
+    //   { name: 'Elisabeth', age: 16 }
+    // ]                            
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-3">Get the index of first occurrence of that value</div>
+            <div class="window-description">This example demonstrates how you can get the index of the first occurrence
+                of a value in an array.
+            </div>
+            <pre class="code-snippet">
+
+
+    const significantMathNumbers = [0, 2.718, 3.14159, 1729];
+    const index = significantMathNumbers.indexOf(1729);
+    console.log(index); // Output: 3                              
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-4">Inserting elements</div>
+            <div class="window-description">This example demonstrates how you can insert elements into an array. The
+                splice() method inserts elements into an array at a specified index.
+            </div>
+            <pre class="code-snippet">
+
+
+    const diet = ["tomato", "cucumber", "rocket"];
+    diet.splice(2, 0, "Hamburger", "Soda", "Pizza");
+    console.log(diet);
+    // Output:
+    // [ 'tomato', 'cucumber', 'Hamburger', 'Soda', 'Pizza', 'rocket' ]                              
+                 
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-5">Remove element</div>
+            <div class="window-description">This example demonstrates how you can remove elements from an array. The
+                pop() method removes the last element from an array.
+            </div>
+            <pre class="code-snippet">
+
+
+    const diet = ["tomato", "cucumber", "rocket"];
+    diet.splice(2, 0, "Hamburger", "Soda", "Pizza");
+    diet.pop();
+    console.log(diet);
+    // Output:
+    // [ 'tomato', 'cucumber', 'Hamburger', 'Soda', 'Pizza' ]                                         
+                 
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-6">Copy array</div>
+            <div class="window-description">This example shows how to copy an array. The slice() method returns a
+                shallow copy of a portion of an array into a new array object.
+            </div>
+            <pre class="code-snippet">
+
+
+    const diet = ["tomato", "cucumber", "rocket"];
+    diet.splice(2, 0, "Hamburger", "Soda", "Pizza");
+    diet.pop();
+    const dinnerTray = diet.slice();
+    console.log(dinnerTray); 
+    // Output:
+    // [ 'tomato', 'cucumber', 'Hamburger', 'Soda', 'Pizza' ]                                                      
+                 
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-7">For loop</div>
+            <div class="window-description">This example shows how to use a for loop to print the the wanted elements
+                of an array. Here I print the elements with an even index.
+            </div>
+            <pre class="code-snippet">
+
+
+    const lettersExpanded = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    for(let i = 1; i < lettersExpanded.length; i += 2) {
+        console.log(lettersExpanded[i]); 
+    }
+    // Output:
+    // b
+    // d
+    // f
+    // h                                                                 
+                 
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-4-8">For loop and if statement</div>
+            <div class="window-description">This example shows how to use a for loop and an if statement to print the
+                the wanted elements of an array. Here I print the elements with an even index and the elements that are
+                greater than 6 or below 0. The discarded numbers are pushed to a new array.
+            </div>
+            <pre class="code-snippet">
+
+
+    const numbers = [5, 3, 2, 7, 11, 12, 0, -20, 6];
+    const discardedNumbers = [];
+    
+    for(let i = 0; i < numbers.length; i++) {
+        if(numbers[i] > 6 || numbers[i] < 0) {
+        console.log(numbers[i]); 
+        } else {
+        discardedNumbers.push(numbers[i]);
+        }
+    }
+    // Output for numbers above 6 or below 0:
+    // 7
+    // 11
+    // 12
+    // -20
+    
+    console.log(discardedNumbers); 
+    // Output for the array of discarded numbers:
+    // [ 5, 3, 2, 0, 6 ]                                                                              
+                 
+            </pre>
+        </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-5">Functions</div>
+        <div class="window-main-description">In JavaScript, functions can be defined in many ways. In this section, I
+            will show you how to create a function, how to call a function and how to pass arguments to a function.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-5-1">Function Hoisting</div>
+            <div class="window-description">
+                In JavaScript, function declarations are hoisted, allowing them to be called before they appear in the
+                code. This example illustrates this concept of hoisting. Additionally, the example differentiates
+                between logging a function reference versus its return value when no arguments are provided. Not
+                supplying the expected arguments can often lead to unexpected outcomes, such as returning `NaN`.
+            </div>
+            <pre class="code-snippet">
+
+
+    console.log(getRandomInt()); // Output: NaN (because no arguments are provided)
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max + 1 - min) + min);
+    }
+    
+    console.log(getRandomInt); // Output: [Function: getRandomInt]
+    console.log(getRandomInt()); // Output: NaN (no arguments)                                          
+                
+            </pre>
+
+        </div>
+
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-5-2">Different Function Definitions</div>
+            <div class="window-description">This example demonstrates the different ways to define a function. The first
+                example is an anonymous Function which assign an anonymous function to a constant, the second example is
+                an arrow function with return were the body is enclosed in {} and therefore requires an explicit return
+                and the third
+                example is an arrow function without return and a concise body, there are no curly braces, and the
+                function's result is directly returned without the return keyword. This is a shorthand that makes arrow
+                functions concise for single-expression functions, the last one is a way to add the result of a function
+                directly to a variable.
+            </div>
+            <pre class="code-snippet">
+
+
+    const getRandomIntAnonymousFunction = function (min, max) {
+        return Math.floor(Math.random() * (max + 1 - min) + min);
+    }
+    
+    const getRandomIntArrowFunction = (min, max) => {
+        return Math.floor(Math.random() * (max + 1 - min) + min);
+    }
+    
+    const getRandomIntArrowFunctionWithoutReturn = (min, max) => 
+        Math.floor(Math.random() * (max + 1 - min) + min);
+    
+    const result = getRandomIntArrowFunction(1, 100);
+    console.log(result); // Output: Random number between 1 and 100                                   
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-5-3">Using Callbacks</div>
+            <div class="window-description">This example demonstrates how to use callbacks. A callback is a function
+                passed as an argument to another function. This technique allows a function to call another function.
+            </div>
+            <pre class="code-snippet">
+
+
+    function sayHello(callback) {
+        console.log("Hi, this is before callback!");
+        callback();
+    }
+        
+    function myCallback() {
+        console.log("Hi, this is inside the callback!");
+    }
+        
+    sayHello(myCallback); 
+    // Output: 
+    // Hi, this is before callback!
+    // Hi, this is inside the callback!
+                                                 
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-5-4">Generic Function with Callback</div>
+            <div class="window-description">This example demonstrates how to use a generic function with a callback.
+                The generic function is called genericActionPerformer and it takes two arguments, a genericAction and a
+                name. The genericAction is a callback function that takes a name as an argument and returns a string.
+                The genericActionPerformer function returns the result of the genericAction function.
+            </div>
+            <pre class="code-snippet">
+
+
+    function genericActionPerformer(genericAction, name) {
+        return genericAction(name);
+    }
+        
+    const jump = (name) => `${name} is jumping`;
+    console.log(genericActionPerformer(jump, "Lasse")); // Output: Lasse is jumping
+    
+    const run = (name) => `${name} is running`;
+    console.log(genericActionPerformer(run, "Jonathan")); // Output: Jonathan is running
+    
+    function run2(name) {
+        return `${name} is running`;
+    }
+    console.log(genericActionPerformer(run2, "Thomas")); // Output: Thomas is running
+    
+    // Desired result using arrow function:
+    console.log(genericActionPerformer((name) => `${name} is sleeping`, "Daniel")); // Output: Daniel is sleeping
+                                              
+            </pre>
+        </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-6">Loops and Functional Programming</div>
+        <div class="window-main-description">In JavaScript, there are many methods available to perform loops over
+            arrays or lists. Among them there are methods like, 'forEach', 'map', 'filter', 'find', 'sort' and 'reduce'.
+            These methods uses the principles of functional programming, which is allowing you to work with data in a
+            declarative way.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-6-1">Trolls example</div>
+            <div class="window-description">
+                Here we have a list of trolls, this list is an array of objects. Each object has a name and a trollLevel
+                property.
+                Throughout this example i will show how you can modify with some different methods.
+            </div>
+            <pre class="code-snippet">
+
+
+    const trolls = [
+        { name: 'anonymous', trollLevel: 9 },
+        { name: 'kroelleboelle', trollLevel: 22 },
+        { name: 'kroelleline', trollLevel: 27 },
+    ];                                                    
+                
+            </pre>
+
+        </div>
+
+
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-6-2">Using map() to create a upgraded List</div>
+            <div class="window-description">This example demonstrates how you can change values in an array of objects.
+                The map() method creates a new array populated with the results of calling a provided function on every
+                element in the calling array.
+            </div>
+            <pre class="code-snippet">
+
+
+    const upgradedTrolls = trolls.map(troll => {
+        troll.trollLevel += 5;
+        return troll;
+    });   
+        
+    // does the same as above, here is multiple expressions, but the last one is the one returned.
+    const upgradedTrolls = trolls.map(troll => ((troll.trollLevel += 5), troll));
+
+    //Another kind of syntax
+    //Here we return an javascript object by encapsuling the the object with ()
+    const doubleUpgradedTrolls = trolls.map(troll => ({
+        name: troll.name,
+        trollLevel: (troll.trollLevel += 5),
+    }));
+                
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-5-3">Using Filter()</div>
+            <div class="window-description">This example demonstrates how to use filter() to create a new list with
+                trolls with an odd troll level.
+            </div>
+            <pre class="code-snippet">
+
+
+        const oddNumberTrollLevelTrolls = trolls.filter(troll => troll.trollLevel % 2 === 1);
+
+        console.log(oddNumberTrollLevelTrolls); 
+        // Output:
+        // [ { name: 'anonymous', trollLevel: 14 },
+        //   { name: 'kroelleline', trollLevel: 32 } ]                
+                                                 
+            </pre>
+        </div>
+    </div>
+    <div id="content-spacer"></div>
     <script src="/assets/js/navbar.js"></script>
     <script src="/assets/js/scrollspy.js"></script>
+    <script src="/assets/js/commentsColor.js"></script>
 </body>

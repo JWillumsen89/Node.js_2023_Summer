@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const targetSection = document.getElementById(targetId);
         if (targetSection) {
             window.scrollTo({
-                top: targetSection.offsetTop - 80,
+                top: targetSection.offsetTop - 120,
                 behavior: 'smooth',
             });
         }
