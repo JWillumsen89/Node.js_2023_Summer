@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>$TAB_TITLE</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="/assets/css/page.css" rel="stylesheet">
@@ -37,12 +37,14 @@
           <input type="text" id="username" name="username" placeholder="Enter username"
             style="width: 100%; padding: 8px; border: 1px solid #515454; border-radius: 5px; background-color: #3C3F41; color: #C7C9CB;">
         </div>
+        <div id="username-error" style="color: red; margin-top: 5px;"></div>
 
         <div style="margin: 10px 15px;">
           <label for="password" style="display: block; margin-bottom: 5px;">Password:</label>
           <input type="password" id="password" name="password" placeholder="Enter password"
             style="width: 100%; padding: 8px; border: 1px solid #515454; border-radius: 5px; background-color: #3C3F41; color: #C7C9CB;">
         </div>
+        <div id="password-error" style="color: red; margin-top: 5px;"></div>
 
         <button type="submit"
           style="background-color: #555; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; margin-left: 15px;">Login</button>
@@ -50,7 +52,8 @@
     </div>
   </div>
 
-  <script src="/assets/js/navbar.js"></script>
+  <script src="/components/navbar/navbar.js"></script>
+  <script src="./pages/loginpage/loginpage.js"></script>
 </body>
 
 </html>

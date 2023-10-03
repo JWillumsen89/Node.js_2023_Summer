@@ -57,7 +57,7 @@ nav ul {
   margin: 0;
 }
 
-nav li > a {
+nav li>a {
   color: #C7C9CB;
   padding: 1px 20px;
   display: block;
@@ -211,7 +211,6 @@ nav ul ul li>a.active {
   white-space: pre-wrap;
   font-size: 1.3em;
   width: calc(100% - 24px)
-
 }
 
 .code-snippet {

@@ -15,8 +15,6 @@ app.use(
     })
 );
 
-import path from 'path';
-
 const users = [
     {
         username: 'test',
@@ -28,37 +26,47 @@ const users = [
     },
 ];
 
+import {
+    homepagePage,
+    nodejspagePage,
+    expressjspagePage,
+    javascriptfundamentalspagePage,
+    contactpagePage,
+    loginpagePage,
+    adminpagePage,
+} from './util/preparePages.js';
+
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve('./public/homepage/homepage.html'));
+    res.send(homepagePage);
 });
 
 app.get('/node.js', (req, res) => {
-    res.sendFile(path.resolve('./public/node.jspage/node.jspage.html'));
+    res.send(nodejspagePage);
 });
 
 app.get('/express.js', (req, res) => {
-    res.sendFile(path.resolve('./public/express.jspage/express.jspage.html'));
+    res.send(expressjspagePage);
 });
 
 app.get('/javascriptfundamentals', (req, res) => {
-    res.sendFile(path.resolve('./public/javascriptfundamentalspage/javascriptfundamentalspage.html'));
+    res.send(javascriptfundamentalspagePage);
 });
 
 app.get('/frontend', (req, res) => {
-    res.sendFile(path.resolve('./public/frontendpage/frontendpage.html'));
+    res.sendFile(path.resolve('./public/pages/frontendpage/frontendpage.html'));
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.resolve('./public/loginpage/loginpage.html'));
+    res.send(loginpagePage);
 });
 
 app.get('/contact', (req, res) => {
-    res.sendFile(path.resolve('./public/contactpage/contactpage.html'));
+    res.send(contactpagePage);
 });
 
 app.get('/adminpage', (req, res) => {
     if (req.session.isAuthenticated) {
-        res.sendFile(path.resolve('./public/adminpage/adminpage.html'));
+        res.send(adminpagePage);
     } else {
         res.redirect('/login');
     }
@@ -92,14 +100,14 @@ app.post('/login', (req, res) => {
             req.session.isAuthenticated = true;
             res.redirect('/adminpage');
         } else {
-            res.status(401).send({ success: false, message: 'Incorrect password.' });
+            res.redirect('/login?error=password');
         }
     } else {
-        res.status(404).send({ success: false, message: 'User not found.' });
+        res.redirect('/login?error=username');
     }
 });
 
-const PORT = 8080;
+const PORT = Number(process.env.PORT) || 8080;
 
 app.listen(PORT, () => {
     console.log('Server is running on port', PORT);
