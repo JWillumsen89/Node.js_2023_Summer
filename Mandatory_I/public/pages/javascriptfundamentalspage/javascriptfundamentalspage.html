@@ -430,7 +430,7 @@
         </div>
     </div>
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-5">Functions</div>
+        <div class="window-main-title" id="main-title-5">5. Functions</div>
         <div class="window-main-description">In JavaScript, functions can be defined in many ways. In this section, I
             will show you how to create a function, how to call a function and how to pass arguments to a function.
         </div>
@@ -545,7 +545,7 @@
         </div>
     </div>
     <div class="window toc-section">
-        <div class="window-main-title" id="main-title-6">Loops and Functional Programming</div>
+        <div class="window-main-title" id="main-title-6">6. Loops and Functional Programming</div>
         <div class="window-main-description">In JavaScript, there are many methods available to perform loops over
             arrays or lists. Among them there are methods like, 'forEach', 'map', 'filter', 'find', 'sort' and 'reduce'.
             These methods uses the principles of functional programming, which is allowing you to work with data in a
@@ -606,14 +606,135 @@
             <pre class="code-snippet">
 
 
-        const oddNumberTrollLevelTrolls = trolls.filter(troll => troll.trollLevel % 2 === 1);
+    const oddNumberTrollLevelTrolls = trolls.filter(troll => troll.trollLevel % 2 === 1);
 
-        console.log(oddNumberTrollLevelTrolls); 
-        // Output:
-        // [ { name: 'anonymous', trollLevel: 14 },
-        //   { name: 'kroelleline', trollLevel: 32 } ]                
+    console.log(oddNumberTrollLevelTrolls); 
+    // Output:
+    // [ { name: 'anonymous', trollLevel: 14 },
+    //   { name: 'kroelleline', trollLevel: 32 } ]                
                                                  
             </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-6-4">When to use what</div>
+            <div class="window-description">This example will show when to use what. Map, filter, reduce and find. I
+                will also show how to use the sort() method. All of this is a part of how to make functional
+                programming.
+            </div>
+            <div class="window-description">Map is used when you want to modify the data in the array.
+                <br><br>In this example we have an array of numbers that we want to double.
+                It will result in a new array with the doubled numbers.
+            </div>
+            <pre class="code-snippet">
+
+
+    //Array of numbers
+    const numbers = [1, 2, 3, 4, 5];
+
+    //The new array with the manipulated data
+    const doubled = numbers.map(number => number * 2);
+
+    console.log(doubled);
+    //Output: [2, 4, 6, 8, 10]
+    
+            </pre>
+            <div class="window-description">Filter is used when you want to filter out data from the array.
+                <br><br>In this example we have an array of numbers that we want to filter out the odd numbers.
+                It will result in a new array with the even numbers.
+            </div>
+            <pre class="code-snippet">
+
+
+    //Array of numbers
+    const numbers = [1, 2, 3, 4, 5];
+
+    //The new array with the manipulated data
+    const evenNumbers = numbers.filter(number => number % 2 === 0);
+
+    console.log(evenNumbers);
+    //Output: [2, 4]
+    
+            </pre>
+            <div class="window-description">Reduce is used when you want to reduce the data in the array to a single
+                value.
+                <br><br>In this example we have an array of numbers that we want to reduce to a single value.
+                It will result in a single value.
+            </div>
+            <pre class="code-snippet">
+
+
+    //Array of numbers
+    const numbers = [1, 2, 3, 4, 5];
+
+    //The new array with the manipulated data
+    const singleValue = numbers.reduce((accumulator, currentValue) => accumulator + currentValue);
+
+    console.log(singleValue);
+    //Output: 15
+    
+            </pre>
+            <div class="window-description">Sort is used to sort the data in the array.
+                <br><br>In this example we have an array of numbers that we want to sort.
+                It will result in a sorted array.
+            </div>
+            <pre class="code-snippet">
+
+
+    //Array of numbers
+    const randomNumbers = [5, 1, 3, 2, 4];
+
+    //Here we sort the array
+    randomNumbers.sort();
+    
+    console.log(randomNumbers);
+    //Output: [1, 2, 3, 4, 5]
+
+    //Array of names
+    const randomNames = ["Jonathan", "Thomas", "Daniel", "Lasse", "Andreas"];
+
+    //Here we sort the array
+    randomNames.sort();
+
+    console.log(randomNames);
+    //Output: ["Andreas", "Daniel", "Jonathan", "Lasse", "Thomas"]
+    
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-6-5">Functional Programming</div>
+            <div class="window-description">Functional Programming is a way to work with data in a declarative way. It
+                is a way to work with data in a way that is more readable and easier to understand. It is a way to
+                write code that is more maintainable and easier to debug. It also shows what you want to achieve instead
+                of conventional loops that shows how you want to achieve it. Here is Filter, Map, Reduce and Find some
+                good examples of functional programming.
+                When you implement functional programming, make sure to keep it simple and handle one thing at a time.
+                So you don't end up with some unwanted side effects.
+                This is important because you want to make sure that the code is easy to read and understand and does
+                what it is supposed to do.
+            </div>
+            <pre class="code-snippet">
+
+
+    //Simple function that shows how to make functional programming
+
+    function doubleNumbers(numbers) {
+        return numbers.map(num => num * 2);
+    }
+    
+    const originalNumbers = [1, 2, 3];
+
+    //You parse in an array of numbers and get a new array with the numbers doubled back.
+    const doubled = doubleNumbers(originalNumbers);
+
+    console.log(doubled);
+    //Output: [2, 4, 6]
+    
+
+                                                 
+            </pre>
+            <div class="window-description">It keeps it very simple, you know what you want to achieve and it is easy
+                to read and understand.
+            </div>
         </div>
     </div>
     <div class="window toc-section">
@@ -673,23 +794,49 @@
                                                                     
             </pre>
         </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-8-1">Date</div>
+            <div class="window-description">
+                In this example I will show how to use Date, how to show the current day, month and year. I will also show you have to show the time for different timezones.
+            </div>
+            <pre class="code-snippet">
+
+
+    //This will output the Locale date and time.
+    console.log(Date()); // Output: 2021-03-01T09:27:00.000Z
+
+    //This will output the UTC Timestamp
+    console.log(Date.now()); // Output: 1614583620000
+
+    //This will output the Epoch Timestamp/Unix - In seconds
+    console.log(Date.now() / 1000); // Output: 1614583620
+
+    //Lets use the new Date() to return the current month name.
+    console.log(new Date().toLocaleString('default', { month: 'long' })); // Output: October
+
+    //If you change default to dk, you will get the danish month name.
+    console.log(new Date().toLocaleString('dk', { month: 'long' })); // Output: oktober
+
+    //Lets use the new Date() to return the current day name.
+    console.log(new Date().toLocaleString('default', { weekday: 'long' })); // Output: Monday
+
+    //Again if you want the danish name you will change the default value
+    console.log(new Date().toLocaleString('dk', { weekday: 'long' })); // Output: mandag
+
+                                                                    
+            </pre>
+        </div>
     </div>
     <div class="window toc-section">
         <div class="window-main-title" id="main-title-8">Variables II</div>
-        <div class="window-main-description">In JavaScript, there are many data types and ways to create and manipulate
-            them.
-            A variable can be assigned as a constant (const) or a let variable. A constant can not be reassigned, but a
-            let variable can.
-            There is also Data Types, which is a way to classify data. There are primitive data types and complex data
-            types.
-            Some of the built in data types are: String, Number, Boolean, Null, Undefined, Symbol, Object, Array,
-            Function and Date.
-        </div>
         <div class="content toc-subsection">
             <div class="window-sub-title" id="sub-title-8-1">Variable Declarations and Scopes</div>
             <div class="window-description">
                 In this example,we look into some of the key concepts related to variable declarations and scopes.
-                Strict mode, which is a way yo ensure that the code is written in a way that is more secure and less filled work errors. Look into the differences between var, let, const. We also look into the difference between function and block scopes. We also look into variable shadows and how to avoid common mistakes with async code.
+                Strict mode, which is a way yo ensure that the code is written in a way that is more secure and less
+                filled work errors. Look into the differences between var, let, const. We also look into the difference
+                between function and block scopes. We also look into variable shadows and how to avoid common mistakes
+                with async code.
             </div>
             <pre class="code-snippet">
 

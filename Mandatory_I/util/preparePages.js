@@ -26,3 +26,6 @@ export const loginpagePage = renderPage(loginpage, { tabTitle: 'Mandatory I | Lo
 
 const adminpage = readPage('./public/pages/adminpage/adminpage.html');
 export const adminpagePage = renderPage(adminpage, { tabTitle: 'Mandatory I | Admin' });
+
+const miscellaneouspage = readPage('./public/pages/miscellaneouspage/miscellaneouspage.html');
+export const miscellaneouspagePage = renderPage(miscellaneouspage, { tabTitle: 'Mandatory I | Miscellaneous' });

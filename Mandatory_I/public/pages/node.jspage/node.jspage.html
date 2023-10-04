@@ -260,6 +260,33 @@
                 file/files, README.md file, and a LICENSE file. But it can vary from module to module.
             </div>
         </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-7">Nodemon</div>
+            <div class="window-description">Nodemon is a tool that helps develop node.js based applications by
+                automatically restarting the server when changes are being made, which is very useful when developing a
+                node.js project.
+                It also provides feedback about the status of the application and will let you know if there are any
+                errors.
+                Actually nodemon can also be used for other languages than node.js, but it is mostly used for node.js.
+                Though nodemon is a good tool, its not recommended to use it in production, since it's a development
+                tool, that takes up a lot of memory.
+            </div>
+            <pre class="terminal-snippet">
+
+    #To install nodemon in your project you will have to type in this line:
+    npm install -g nodemon
+    #The -g stands for global, which means that it will be installed globally on your computer.
+
+    #If you just want to install nodemon as a development dependency, you can type in this line:
+    npm install --save-dev nodemon
+
+    #When using it in your project you will have to type in this line:
+    nodemon [name_of_your_project_file].js
+
+
+
+            </pre>
+        </div>
 
     </div>
     <div id="content-spacer"></div>
