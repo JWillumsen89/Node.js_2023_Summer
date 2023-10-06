@@ -29,3 +29,9 @@ export const adminpagePage = renderPage(adminpage, { tabTitle: 'Mandatory I | Ad
 
 const miscellaneouspage = readPage('./public/pages/miscellaneouspage/miscellaneouspage.html');
 export const miscellaneouspagePage = renderPage(miscellaneouspage, { tabTitle: 'Mandatory I | Miscellaneous' });
+
+const javascriptenhancedpage = readPage('./public/pages/javascriptenhancedpage/javascriptenhancedpage.html');
+export const javascriptenhancedpagePage = renderPage(javascriptenhancedpage, { tabTitle: 'Mandatory I | Javascript Enhanced' });
+
+const ssrvscsrpage = readPage('./public/pages/ssrvscsrpage/ssrvscsrpage.html');
+export const ssrvscsrpagePage = renderPage(ssrvscsrpage, { tabTitle: 'Mandatory I | SSR vs CSR' });

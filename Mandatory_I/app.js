@@ -7,12 +7,14 @@ import {
     nodejspagePage,
     expressjspagePage,
     javascriptfundamentalspagePage,
+    javascriptenhancedpagePage,
     contactpagePage,
     loginpagePage,
     adminpagePage,
     gitpagePage,
     restapipagePage,
-    miscellaneouspagePage
+    miscellaneouspagePage,
+    ssrvscsrpagePage,
 } from './util/preparePages.js';
 
 app.use(express.static('public'));
@@ -43,6 +45,8 @@ app.get('/express.js', (req, res) => res.send(expressjspagePage));
 
 app.get('/javascriptfundamentals', (req, res) => res.send(javascriptfundamentalspagePage));
 
+app.get('/javascriptenhanced', (req, res) => res.send(javascriptenhancedpagePage));
+
 app.get('/frontend', (req, res) => res.sendFile(path.resolve('./public/pages/frontendpage/frontendpage.html')));
 
 app.get('/login', (req, res) => res.send(loginpagePage));
@@ -52,6 +56,9 @@ app.get('/contact', (req, res) => res.send(contactpagePage));
 app.get('/git', (req, res) => res.send(gitpagePage));
 
 app.get('/restapi', (req, res) => res.send(restapipagePage));
+
+app.get('/ssrvscsr', (req, res) => res.send(ssrvscsrpagePage));
+app.get('/ssrvscsr', (req, res) => res.send(ssrvscsrpagePage));
 
 app.get('/miscellaneous', (req, res) => res.send(miscellaneouspagePage));
 

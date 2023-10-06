@@ -25,7 +25,7 @@
 
         </div>
         <div class="content toc-subsection">
-            <div class="window-sub-title" id="sub-title-2-1">What an URL consist of</div>
+            <div class="window-sub-title" id="sub-title-1-1">What an URL consist of</div>
             <div class="window-description">An URL consist of the following parts:
                 <ul>
                     <li>Protocol</li>
@@ -56,8 +56,30 @@
 
             </pre>
         </div>
-        <div id="content-spacer"></div>
     </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-2">Redirection Approaches</div>
+        <div class="window-main-description">
+            There is a couple of ways to redirect a html page. Here is some of the ways to it.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-1">Redirection Approaches</div>
+            <pre class="code-snippet">
+
+    //You set a meta tag in the head of the html page with this inside of it.
+    http-equiv="refresh" content="3;url=/secondPage"
+    //This is one way to redirect, but is not best way to redirect.
+
+    //This is two other ways to redirect, which is recommended to use.
+    setTimeout(() => window.location.href = '/secondPage', 3000);
+    setTimeout(() => window.location.replace = '/secondPage', 3000);
+
+    //The difference between these two is that the first one will add the page to the history, while the second one will not.
+
+            </pre>
+        </div>
+    </div>
+    <div id="content-spacer"></div>
     <script src="/components/navbar/navbar.js"></script>
     <script src="/components/scrollspy/scrollspy.js"></script>
     <script src="../commentsColor.js"></script>

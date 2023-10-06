@@ -287,7 +287,64 @@
 
             </pre>
         </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-2">Node.js - Miscellaneous</div>
+        <div class="window-main-description">Here we will go through subjects like, how to define and run scripts, how
+            to define environment variables natively in node.js and how code and its position affects application memory
+            and efficiency.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-1">Define and run scripts</div>
+            <div class="window-description">In node.js you can define scripts in your package.json file and run them in
+                the terminal.
+                <br><br>Here is an example of how to define and run scripts in node.js.
+            </div>
+            <pre class="code-snippet">
 
+
+    //In your package.json file you can define scripts like this.
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start:dev": "cross-env PORT=8080 nodemon app.js",
+        "start:prod": "cross-env PORT=80 node app.js"
+    },
+    //Here we have defined 3 scripts, test, start:dev, and start:prod.
+    //start:dev and start:prod are both scripts that set the PORT environment variable and then runs the app.js file with nodemon or node.
+
+            </pre>
+            <pre class="terminal-snippet">
+
+
+    #To run the scripts you will have to type in this line in the terminal.
+    npm run [name_of_script]
+
+    #So if you want to run the start:dev script you will have to type in this line in the terminal.
+    npm run start:dev
+
+            </pre>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-2-2">Set environment variables natively in node.js</div>
+            <div class="window-description">To set environment variables natively in node.js you will have to use the
+                process.env object.
+                <br><br>Here is an example of how to set environment variables natively in node.js.
+            </div>
+            <pre class="terminal-snippet">
+
+
+    #First we have to set an environment variable in the terminal - in powershell its done like this.
+    $env:DATABASE_URL = "mongodb://localhost:27017/DatabaseName"
+
+            </pre>
+            <pre class="code-snippet">
+
+    //You access the environment variables this way.
+    const databaseUrl = process.env.DATABASE_URL;
+    console.log(databaseUrl);
+
+            </pre>
+        </div>
     </div>
     <div id="content-spacer"></div>
     <script src="/components/navbar/navbar.js"></script>

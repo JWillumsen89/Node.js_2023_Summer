@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$TAB_TITLE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link href="/assets/css/page.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <ul>
+
+        </ul>
+    </nav>
+
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-1">SSR vs CSR</div>
+        <div class="window-main-description">SSR or Server Side Rendering is a technique that renders the page on the
+            server and sends the HTML to the client. The client then renders the page and displays it to the user.
+            <br><br>
+            CSR or Client Side Rendering is a technique that renders the page on the client. The client then renders the
+            page and displays it to the user.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-1">SSR - Server Side Rendering</div>
+            <div class="window-description">
+                This happens on the server, the server renders the page and sends the HTML to the client. The client
+                then renders the page and displays it to the user. It's recognized by web crawlers and search engines,
+                which makes it useful for SEO. It's also useful for the first page load, because the user doesn't have
+                to wait for the page to load before seeing the content. The downside is that it's slower than CSR,
+                because the server has to render the page and send the HTML to the client.
+            </div>
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-1-2">CSR - Client Side Rendering</div>
+            <div class="window-description">
+                Here the client renders the page and displays it to the user. It's faster than SSR, because the server
+                doesn't have to render the page and send the HTML to the client. The downside is that it's slower for
+                the first page load, because the user has to wait for the page to load before seeing the content. It's
+                also not recognized by web crawlers and search engines, which makes it useless for SEO.
+            </div>
+        </div>
+        <div id="content-spacer"></div>
+    </div>
+    <script src="/components/navbar/navbar.js"></script>
+    <script src="/components/scrollspy/scrollspy.js"></script>
+    <script src="../commentsColor.js"></script>
+</body>

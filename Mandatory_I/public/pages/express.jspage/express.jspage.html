@@ -133,7 +133,6 @@
                 </ol>
             </div>
         </div>
-
         <div class="content toc-subsection">
             <div class="window-sub-title" id="sub-title-2-2">POST Requests with Postman</div>
             <div class="window-description">In this example we will make a post request to the following url:
@@ -227,6 +226,42 @@
         console.log('Server is running on port', PORT);
     });
         </pre>
+            </div>
+        </div>
+    </div>
+    <div class="window toc-section">
+        <div class="window-main-title" id="main-title-3">Serving static files</div>
+        <div class="window-main-description">
+            Static files are files the server sends to the client without any processing. This could be files like HTML,
+            CSS, JavaScript, images, videos, etc.
+        </div>
+        <div class="content toc-subsection">
+            <div class="window-sub-title" id="sub-title-3-1">How to serve the static files from the 'public' directory
+            </div>
+            <div class="window-description">
+                We need to make sure in the app.js file that the server knows where to find the static files. We do this
+                by using the express.static() function. We pass the name of the directory as an argument to the
+                function.
+            </div>
+            <pre class="code-snippet">
+
+
+    import express from 'express';
+    const app = express();
+
+    // Here we serve static files from the "public" directory.
+    app.use(express.static('public'));
+
+    const PORT = Number(process.env.PORT) || 8080;
+
+    app.listen(PORT, () => {
+        console.log('Server is running on port', PORT);
+    });
+
+                        </pre>
+            <div class="window-description">
+                It's important to set this up correct, so that you don't show the wrong files to the client and so that
+                you don't expose any sensitive information.
             </div>
         </div>
     </div>

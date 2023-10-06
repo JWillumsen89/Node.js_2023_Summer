@@ -11,14 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="nav-item">Subjects</span>
                         <div class="dropdown-content">
                             <a href="/javascriptfundamentals">Javascript Fundamentals</a>
+                            <a href="/javascriptenhanced">Javascript Enhanced</a>
                             <a href="/node.js">Node.js</a>
                             <a href="/express.js">Express.js</a>
                             <a href="/git">Git</a>
                             <a href="/restapi">REST API CURD and design</a>
+                            <a href="/ssrvscsr">SSR vs CSR</a>
                             <a href="/miscellaneous">Miscellaneous</a>
                         </div>
                     </div>
-                    <a href="/contact" class="nav-item">Contact</a>
                     ${authButton}
                 </div>
             </navbar>
