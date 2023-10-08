@@ -8,7 +8,6 @@ import {
     expressjspagePage,
     javascriptfundamentalspagePage,
     javascriptenhancedpagePage,
-    contactpagePage,
     loginpagePage,
     adminpagePage,
     gitpagePage,
@@ -50,8 +49,6 @@ app.get('/javascriptenhanced', (req, res) => res.send(javascriptenhancedpagePage
 app.get('/frontend', (req, res) => res.sendFile(path.resolve('./public/pages/frontendpage/frontendpage.html')));
 
 app.get('/login', (req, res) => res.send(loginpagePage));
-
-app.get('/contact', (req, res) => res.send(contactpagePage));
 
 app.get('/git', (req, res) => res.send(gitpagePage));
 

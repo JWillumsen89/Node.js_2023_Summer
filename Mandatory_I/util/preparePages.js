@@ -12,9 +12,6 @@ export const expressjspagePage = renderPage(expressjspage, { tabTitle: 'Mandator
 const javascriptfundamentalspage = readPage('./public/pages/javascriptfundamentalspage/javascriptfundamentalspage.html');
 export const javascriptfundamentalspagePage = renderPage(javascriptfundamentalspage, { tabTitle: 'Mandatory I | Javascript Fundamentals' });
 
-const contactpage = readPage('./public/pages/contactpage/contactpage.html');
-export const contactpagePage = renderPage(contactpage, { tabTitle: 'Mandatory I | Contact' });
-
 const gitpage = readPage('./public/pages/gitpage/gitpage.html');
 export const gitpagePage = renderPage(gitpage, { tabTitle: 'Mandatory I | Git' });
 
