@@ -8,7 +8,6 @@
     let customFridgeMessage = '';
 
     function submitFridgeMessage() {
-        console.log(customFridgeMessage);
         fridgeMessages.set([...$fridgeMessages, `${child.name}: ${customFridgeMessage}`]);
         /*fridgeMessages.update(storeValue => {
             return [...storeValue, `${child.name}: ${customFridgeMessage}`];

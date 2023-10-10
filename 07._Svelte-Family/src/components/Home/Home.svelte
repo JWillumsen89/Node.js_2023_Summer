@@ -4,8 +4,6 @@
     console.log($fridgeMessages);
 </script>
 
-<h2>Svelte Family Home</h2>
-
 <h2>====================================</h2>
 {#each $fridgeMessages as message}
     <p>{message}</p>
