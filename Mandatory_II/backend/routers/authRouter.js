@@ -2,11 +2,12 @@ import { Router } from 'express';
 const router = Router();
 
 router.post('/auth/login', (req, res) => {
-    res.send({});
+    console.log(JSON.stringify(req.body));
+    res.send({ data: { message: 'Login successful', body: req.body } });
 });
 
 router.post('/auth/signup', (req, res) => {
-    res.send({});
+    res.send({ data: { message: 'Login successful', body: req.body } });
 });
 
 export default router;

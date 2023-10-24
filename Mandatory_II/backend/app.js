@@ -1,8 +1,10 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
 const app = express();
 
 import { rateLimit } from 'express-rate-limit';
 import cors from 'cors';
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
 app.use(cors());
 
 const allRoutesLimiter = rateLimit({
@@ -16,7 +18,7 @@ app.use(allRoutesLimiter);
 
 const authRateLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    limit: 50, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
     standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
 });

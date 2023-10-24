@@ -1,8 +1,9 @@
 <script>
+    import { LocalhostUrl } from '../../components/Urls.js';
     let data;
 
     async function fetchData() {
-        const response = await fetch('http://localhost:3000/message');
+        const response = await fetch(LocalhostUrl + '/message');
         data = await response.json();
         console.log(data);
     }
