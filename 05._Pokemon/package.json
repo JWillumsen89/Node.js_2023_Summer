@@ -30,6 +30,9 @@
   "homepage": "https://github.com/JWillumsen89/Node.js_2023_Summer#readme",
   "dependencies": {
     "cross-env": "^7.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "nodemailer": "^6.9.6",
+    "toastr": "^2.1.4"
   }
 }

@@ -1,17 +1,21 @@
 <h1>Contact</h1>
 
 
-<form action="/contact" method="post">
+<form id="contact-form" action="/contact" method="post">
   <label>Your Name</label>
-  <input placeholder="Enter your name..." type="text" required>
+  <input id="name" name="name" placeholder="Enter your name..." type="text" value="Test value">
 
   <label>Your Email</label>
-  <input placeholder="Enter your email..." type="email" required>
+  <input id="email" name="email" placeholder="Enter your email..." type="email" value="test@email.com">
 
   <label>Your Message</label>
-  <textarea style="resize: none;" cols="80" rows="20" placeholder="Enter your message..." type="text"
-    required></textarea>
+  <textarea id="message" name="message" style="resize: none;" cols="80" rows="20" placeholder="Enter your message..."
+    type="text">Test value</textarea>
 
 
   <button>Submit</button>
 </form>
+
+<button id="test-email-btn">Send Test Email</button>
+<script type="module" src="/pages/contact/contact.js"></script>
+<script type="module" src="/pages/contact/emailSender.js"></script>

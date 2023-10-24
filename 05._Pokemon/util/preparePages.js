@@ -7,4 +7,4 @@ const battle = readPage('./public/pages/battle/battle.html');
 export const battlePage = renderPage(battle, { tabTitle: 'Pokemon | Battle', cssLinks: '<link rel="stylesheet" href="/pages/battle/battle.css">' });
 
 const contact = readPage('./public/pages/contact/contact.html');
-export const contactPage = renderPage(contact);
+export const contactPage = renderPage(contact, { tabTitle: 'Pokemon | Contact', cssLinks: '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">' });
