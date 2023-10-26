@@ -21,20 +21,28 @@
             email: email,
         };
 
-        const response = await fetch(LocalhostUrl + '/auth/signup', {
+        fetch(LocalhostUrl + '/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-            console.log('Signed up successfully');
-            console.log(await response.json());
-        } else {
-            console.error('Signup failed:', await response.text());
-        }
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Signed up successfully');
+                    return response.json(); // Parse JSON response and forward it for the next then()
+                } else {
+                    // If response is not ok, throw an error to be caught in catch()
+                    return response.text().then(text => Promise.reject(text));
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Signup failed:', error);
+            });
     }
 </script>
 
@@ -47,17 +55,17 @@
 
     <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required value="test@test.dk"/>
+        <input type="email" id="email" name="email" required value="test@test.dk" />
     </div>
 
     <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required value="12345"/>
+        <input type="password" id="password" name="password" required value="12345" />
     </div>
 
     <div>
         <label for="passwordConfirmation">Confirm Password:</label>
-        <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="12345"/>
+        <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="12345" />
     </div>
 
     <button type="submit">Signup</button>

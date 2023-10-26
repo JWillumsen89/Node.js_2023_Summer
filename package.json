@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "express-session": "^1.17.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
