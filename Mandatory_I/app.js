@@ -55,7 +55,6 @@ app.get('/git', (req, res) => res.send(gitpagePage));
 app.get('/restapi', (req, res) => res.send(restapipagePage));
 
 app.get('/ssrvscsr', (req, res) => res.send(ssrvscsrpagePage));
-app.get('/ssrvscsr', (req, res) => res.send(ssrvscsrpagePage));
 
 app.get('/miscellaneous', (req, res) => res.send(miscellaneouspagePage));
 

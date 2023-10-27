@@ -38,7 +38,7 @@
                 }
             })
             .then(data => {
-                console.log(data);
+                console.log('Return data: ', data);
             })
             .catch(error => {
                 console.error('Signup failed:', error);

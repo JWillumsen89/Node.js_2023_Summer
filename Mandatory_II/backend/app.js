@@ -9,13 +9,19 @@ import { rateLimit } from 'express-rate-limit';
 
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:5173', // Your frontend's origin
+        credentials: true, // To handle cookies and authentication
+    })
+);
+
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true },
+        cookie: { secure: false },
     })
 );
 
@@ -28,11 +34,24 @@ const allRoutesLimiter = rateLimit({
 
 app.use(allRoutesLimiter);
 
-import { authRateLimiter } from './auth/middlewares/authMiddlewares.js';
+import { authRateLimiter, isAuthenticated } from './authentication/middlewares/authMiddlewares.js';
 app.use('/auth', authRateLimiter);
 
-import authRouter from './auth/routers/authRouter.js';
+import authRouter from './authentication/routers/authRouter.js';
 app.use(authRouter);
+
+app.get('/protected', isAuthenticated, (req, res, next) => {
+    res.send({ data: 'This is protected data - And the user is authenticated' });
+});
+
+app.get('/profile', isAuthenticated, (req, res) => {
+    res.send({ data: req.session.user });
+});
+
+import { requireRole } from './authorization/middlewares/authorizationMiddlewares.js';
+app.get('/admin/dashboard', isAuthenticated, requireRole('admin'), (req, res) => {
+    res.send({ data: 'This is the admin dashboard' });
+});
 
 app.get('/message', (req, res) => {
     res.json({ message: 'Hello World!', name: 'Mandatory II' });
