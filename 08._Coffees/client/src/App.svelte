@@ -3,6 +3,8 @@
     import Home from './pages/Home/Home.svelte';
     import CoffeeFacts from './pages/CoffeeFacts/CoffeeFacts.svelte';
     import CoffeeOverview from './pages/CoffeeOverview/CoffeeOverview.svelte';
+    import RegisterCoffeeLover from './pages/RegisterCoffeeLover/RegisterCoffeeLover.svelte';
+    import WhoDatCoffeeLover from './pages/WhoDatCoffeeLover/WhoDatCoffeeLover.svelte';
 </script>
 
 <Router>
@@ -10,10 +12,14 @@
         <Link to="/">Home</Link>
         <Link to="/coffeetypes">Coffee Overview</Link>
         <Link to="/coffeefacts">Coffee Facts</Link>
+        <Link to="/registercoffeelover">Register Coffee Lover</Link>
+        <Link to="/whodatcoffeelover">WhoDatCoffeeLover</Link>
     </nav>
     <div>
         <Route path="/" component={Home} />
         <Route path="/coffeetypes"><CoffeeOverview /></Route>
         <Route path="/coffeefacts"><CoffeeFacts /></Route>
+        <Route path="/registercoffeelover"><RegisterCoffeeLover /></Route>
+        <Route path="/whodatcoffeelover"><WhoDatCoffeeLover /></Route>
     </div>
 </Router>

@@ -5,7 +5,6 @@ import { authController } from '../controllers/authController.js';
 
 router.post('/auth/login', async (req, res) => {
     try {
-        console.log(JSON.stringify(req.body));
         await authController.login(req, req.body);
 
         console.log('Session user', req.session.user);
@@ -17,7 +16,6 @@ router.post('/auth/login', async (req, res) => {
 
 router.post('/auth/signup', async (req, res, next) => {
     try {
-        console.log(JSON.stringify(req.body));
         const createdData = await authController.signUp(req.body);
         res.send({ data: { message: 'Login successful', body: createdData } });
     } catch (error) {
@@ -30,6 +28,7 @@ router.post('/auth/logout', (req, res) => {
         if (err) {
             return res.status(500).send('Error while logging out');
         }
+        res.cookie('connect.sid', '', { expires: new Date(0), path: '/' });
         res.send({ message: 'Logged out successfully' });
     });
 });

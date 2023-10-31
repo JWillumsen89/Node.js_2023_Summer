@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/JWillumsen89/Node.js_2023_Summer/issues"
   },
-  "homepage": "https://github.com/JWillumsen89/Node.js_2023_Summer#readme"
+  "homepage": "https://github.com/JWillumsen89/Node.js_2023_Summer#readme",
+  "dependencies": {
+    "svelte-hamburgers": "^4.2.0"
+  }
 }

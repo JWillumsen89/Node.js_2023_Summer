@@ -17,8 +17,6 @@ export async function createUser(username, email, password, role = 'user') {
 
     const hashedPassword = await hashPassword(password);
 
-    console.log('Hashed password', hashedPassword);
-
     const newUser = {
         id: uuidv4(),
         username,
@@ -27,10 +25,9 @@ export async function createUser(username, email, password, role = 'user') {
         role,
     };
 
-    console.log('New user', newUser);
     users.push(newUser);
-    console.log('Users', users);
-    return newUser;
+    const { password: _, ...userWithoutPassword } = newUser;
+    return userWithoutPassword;
 }
 
 export async function loginUser(loginInput, password) {
@@ -42,5 +39,6 @@ export async function loginUser(loginInput, password) {
     if (!isPasswordValid) {
         throw new Error('Invalid password');
     }
-    return user;
+    const { password: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
 }

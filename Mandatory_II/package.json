@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "start": "concurrently \"cd client && npm run dev\" \"cd backend && nodemon.cmd app.js\""
+    "start": "concurrently \"cd client && npm run dev\" \"cd server && nodemon.cmd app.js\""
   }
 }
