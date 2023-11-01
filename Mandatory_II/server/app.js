@@ -34,8 +34,7 @@ const allRoutesLimiter = rateLimit({
 
 app.use(allRoutesLimiter);
 
-import { authRateLimiter, isAuthenticated } from './authentication/middlewares/authMiddlewares.js';
-app.use('/auth', authRateLimiter);
+import { isAuthenticated } from './authentication/middlewares/authMiddlewares.js';
 
 import authRouter from './authentication/routers/authRouter.js';
 app.use(authRouter);
@@ -48,10 +47,14 @@ app.get('/profile', isAuthenticated, (req, res) => {
     res.send({ data: req.session.user });
 });
 
+import adminRoleRouter from './authorization/roles/admin/routers/adminRoleRouter.js';
+app.use(adminRoleRouter);
+
+/*
 import { requireRole } from './authorization/middlewares/authorizationMiddlewares.js';
 app.get('/admin/dashboard', isAuthenticated, requireRole('admin'), (req, res) => {
     res.send({ data: 'This is the admin dashboard' });
-});
+});*/
 
 app.get('/message', (req, res) => {
     res.json({ message: 'Hello World!', name: 'Mandatory II' });

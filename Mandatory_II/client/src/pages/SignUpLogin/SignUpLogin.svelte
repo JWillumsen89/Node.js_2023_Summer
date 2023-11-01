@@ -2,9 +2,17 @@
     import { LocalhostUrl } from '../../components/Urls.js';
     import { writable, get } from 'svelte/store';
     import { user } from '../../stores/userStore.js';
-    import { useForm, validators, HintGroup, Hint, email, required } from 'svelte-use-form';
+    import { useNavigate, useLocation } from 'svelte-navigator';
 
     const isLogin = writable(true);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const currentUser = get(user);
+
+    if (currentUser.isLoggedIn) {
+        navigate('/', { replace: true });
+    }
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -46,25 +54,6 @@
         }
     }
 
-    async function handleLogout() {
-        try {
-            const response = await fetch(LocalhostUrl + '/auth/logout', {
-                method: 'POST',
-                credentials: 'include',
-            });
-            if (response.ok) {
-                console.log('Logged out successfully');
-                user.set({ isLoggedIn: false, user: null });
-                const currentUser = get(user);
-                console.log('Logged out - User data is null: ', currentUser);
-            } else {
-                console.error('Logout failed: ', await response.text());
-            }
-        } catch (error) {
-            console.error('Logout error: ', error);
-        }
-    }
-
     async function fetchProfileData() {
         try {
             const response = await fetch(LocalhostUrl + '/profile', {
@@ -77,25 +66,13 @@
                 //Setting the user in the store, so the user can be accessed from any component
                 user.set({ isLoggedIn: true, user: { id, username, email, role } });
 
+                const from = ($location.state && $location.state.from) || '/';
+                navigate(from, { replace: true });
+
                 const currentUser = get(user);
                 console.log('Logged in - User data: ', currentUser);
             } else {
                 console.error('Error fetching profile data: ', await response.text());
-            }
-        } catch (error) {
-            console.error('Fetch error: ', error);
-        }
-    }
-
-    async function fetchAdminDashboardData() {
-        try {
-            const response = await fetch(LocalhostUrl + '/admin/dashboard', {
-                credentials: 'include',
-            });
-            if (response.ok) {
-                console.log('Admin Dashboard Data: ', await response.json());
-            } else {
-                console.error('Error fetching admin dashboard data: ', await response.text());
             }
         } catch (error) {
             console.error('Fetch error: ', error);
@@ -134,6 +111,7 @@
                 const responseData = await response.json();
                 console.log('Signed up successfully');
                 console.log('Return data: ', responseData);
+                isLogin.set(true);
             } else {
                 const errorText = await response.text();
                 throw new Error(errorText);
@@ -186,10 +164,3 @@
         Already a member? <button on:click={toggleForm}>Login here</button>.
     {/if}
 </p>
-
-{#if $isLogin}
-    <button on:click={fetchProtectedData}>Fetch Protected Data</button>
-    <button on:click={handleLogout}>Logout</button>
-    <button on:click={fetchProfileData}>Fetch Profile Data</button>
-    <button on:click={fetchAdminDashboardData}>Fetch Admin Dashboard Data</button>
-{/if}

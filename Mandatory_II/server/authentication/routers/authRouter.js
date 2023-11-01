@@ -2,8 +2,9 @@ import { Router } from 'express';
 const router = Router();
 
 import { authController } from '../controllers/authController.js';
+import { authRateLimiter } from '../middlewares/authMiddlewares.js';
 
-router.post('/auth/login', async (req, res) => {
+router.post('/auth/login', authRateLimiter, async (req, res) => {
     try {
         await authController.login(req, req.body);
 
@@ -14,7 +15,7 @@ router.post('/auth/login', async (req, res) => {
     }
 });
 
-router.post('/auth/signup', async (req, res, next) => {
+router.post('/auth/signup', authRateLimiter, async (req, res, next) => {
     try {
         const createdData = await authController.signUp(req.body);
         res.send({ data: { message: 'Login successful', body: createdData } });
@@ -23,7 +24,7 @@ router.post('/auth/signup', async (req, res, next) => {
     }
 });
 
-router.post('/auth/logout', (req, res) => {
+router.post('/auth/logout', authRateLimiter, (req, res) => {
     req.session.destroy(err => {
         if (err) {
             return res.status(500).send('Error while logging out');
