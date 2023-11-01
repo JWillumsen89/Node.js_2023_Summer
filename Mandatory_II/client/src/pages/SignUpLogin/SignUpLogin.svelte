@@ -2,11 +2,10 @@
     import { LocalhostUrl } from '../../components/Urls.js';
     import { writable, get } from 'svelte/store';
     import { user } from '../../stores/userStore.js';
-    import { useNavigate, useLocation } from 'svelte-navigator';
+    import { navigate } from 'svelte-navigator';
+    import toast, { Toaster } from 'svelte-french-toast';
 
     const isLogin = writable(true);
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const currentUser = get(user);
 
@@ -21,36 +20,34 @@
             username: event.target.username.value,
             password: event.target.password.value,
         };
-
-        const response = await fetch(LocalhostUrl + '/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            credentials: 'include',
-        });
-        if (response.ok) {
-            console.log('Logged in successfully');
-            console.log(await response.json());
-            fetchProfileData();
-        } else {
-            console.error('Login failed: ', await response.text());
-        }
-    }
-
-    async function fetchProtectedData() {
         try {
-            const response = await fetch(LocalhostUrl + '/protected', {
+            const response = await fetch(LocalhostUrl + '/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
                 credentials: 'include',
             });
             if (response.ok) {
-                console.log('Data: ', await response.json());
+                console.log('Logged in successfully');
+                console.log(await response.json());
+                fetchProfileData();
+                toast.success('Successfully logged in!');
+                setTimeout(() => {
+                    navigate('/', { replace: true });
+                }, 1000);
             } else {
-                console.error('Error fetching protected data: ', await response.text());
+                const errorText = await response.text();
+                throw new Error(errorText);
             }
         } catch (error) {
-            console.error('Fetch error: ', error);
+            const errorMessage = JSON.parse(error.message);
+            if (errorMessage && errorMessage.error) {
+                toast.error(errorMessage.error);
+            } else {
+                toast.error('An unknown error occurred');
+            }
         }
     }
 
@@ -65,9 +62,6 @@
 
                 //Setting the user in the store, so the user can be accessed from any component
                 user.set({ isLoggedIn: true, user: { id, username, email, role } });
-
-                const from = ($location.state && $location.state.from) || '/';
-                navigate(from, { replace: true });
 
                 const currentUser = get(user);
                 console.log('Logged in - User data: ', currentUser);
@@ -89,6 +83,7 @@
 
         if (password !== passwordConfirmation) {
             console.error('Passwords do not match!');
+            toast.error('Passwords do not match!');
             return;
         }
 
@@ -111,13 +106,19 @@
                 const responseData = await response.json();
                 console.log('Signed up successfully');
                 console.log('Return data: ', responseData);
+                toast.success('Successfully signed up!');
                 isLogin.set(true);
             } else {
                 const errorText = await response.text();
                 throw new Error(errorText);
             }
         } catch (error) {
-            console.error('Signup failed:', error);
+            const errorMessage = JSON.parse(error.message);
+            if (errorMessage && errorMessage.error) {
+                toast.error(errorMessage.error);
+            } else {
+                toast.error('An unknown error occurred');
+            }
         }
     }
 
@@ -127,6 +128,7 @@
 </script>
 
 <h1>{$isLogin ? 'Login Page' : 'Signup Page'}</h1>
+<Toaster />
 
 <form on:submit={$isLogin ? handleSubmit : handleSignup}>
     <div>
@@ -159,8 +161,8 @@
 
 <p>
     {#if $isLogin}
-        Haven’t signed up yet? <button on:click={toggleForm}>Sign up here</button>.
+        Haven’t signed up yet? <button on:click={toggleForm}>Sign up here!</button>
     {:else}
-        Already a member? <button on:click={toggleForm}>Login here</button>.
+        Already a member? <button on:click={toggleForm}>Login here!</button>
     {/if}
 </p>

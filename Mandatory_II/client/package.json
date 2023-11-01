@@ -31,6 +31,8 @@
   },
   "homepage": "https://github.com/JWillumsen89/Node.js_2023_Summer#readme",
   "dependencies": {
+    "faker": "^6.6.6",
+    "svelte-french-toast": "^1.2.0",
     "svelte-hamburgers": "^4.2.0"
   }
 }

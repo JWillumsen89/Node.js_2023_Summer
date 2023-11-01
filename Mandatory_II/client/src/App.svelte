@@ -6,6 +6,7 @@
     import SignUpLogin from './pages/SignUpLogin/SignUpLogin.svelte';
     import AdminPage from './pages/Admin/AdminPage.svelte';
     import NoPermission from './pages/NoPermission/NoPermission.svelte';
+    import ProfilePage from './pages/Profile/ProfilePage.svelte';
 
     import { onMount } from 'svelte';
     import { checkSession } from './components/Authorization/Authorization';
@@ -32,6 +33,9 @@
 
             <PrivateRoute path="/admin" roles={adminRole}>
                 <AdminPage />
+            </PrivateRoute>
+            <PrivateRoute path="/profile" roles={userRole}>
+                <ProfilePage />
             </PrivateRoute>
         </div>
     </Router>

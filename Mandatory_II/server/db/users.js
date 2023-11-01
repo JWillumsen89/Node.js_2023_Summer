@@ -4,13 +4,34 @@ import { hashPassword, comparePassword } from '../utils/password.js';
 let users = [];
 
 function isUserExists(username, email) {
-    return users.some(user => user.username === username || user.email === email);
+    let userExists = {
+        username: false,
+        email: false,
+    };
+
+    users.forEach(user => {
+        if (user.username === username) {
+            userExists.username = true;
+        }
+        if (user.email === email) {
+            userExists.email = true;
+        }
+    });
+
+    return userExists;
 }
 
 export async function createUser(username, email, password, role = 'user') {
-    if (isUserExists(username, email)) {
-        throw new Error('Username or email already exists');
+    const existingUser = isUserExists(username, email);
+
+    if (existingUser.username && existingUser.email) {
+        throw new Error('Both username and email already exist');
+    } else if (existingUser.username) {
+        throw new Error('Username already exists');
+    } else if (existingUser.email) {
+        throw new Error('Email already exists');
     }
+
     if (username === 'Jonathan') {
         role = 'admin';
     }
@@ -33,7 +54,7 @@ export async function createUser(username, email, password, role = 'user') {
 export async function loginUser(loginInput, password) {
     const user = users.find(u => u.username === loginInput || u.email === loginInput);
     if (!user) {
-        throw new Error('User not found');
+        throw new Error('Username or email is incorrect');
     }
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
