@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { hashPassword, comparePassword } from '../utils/password.js';
+import { hashPassword, comparePassword, isValidPassword } from '../utils/password.js';
 import { db, storage, app } from '../db/firebase.js';
 import { doc, addDoc, getDocs, collection, updateDoc, deleteDoc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 /*
 let users = [];
 
@@ -69,7 +68,6 @@ export async function loginUser(loginInput, password) {
 */
 
 export async function createUser(username, email, password, role = 'user') {
-    // Check if user already exists
     const userQuery = query(collection(db, 'users'), where('username', '==', username));
     const querySnapshot = await getDocs(userQuery);
 
@@ -83,25 +81,24 @@ export async function createUser(username, email, password, role = 'user') {
     if (!emailQuerySnapshot.empty) {
         throw new Error('Email already exists');
     }
-
-    // Set 'admin' role for specific username
-    if (username === 'Jonathan') {
-        role = 'admin';
+    try {
+        if (isValidPassword(password)) {
+            console.log('Password is valid.');
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
 
-    // Hash the password
     const hashedPassword = await hashPassword(password);
 
-    // Create new user object
     const newUser = {
-        id: uuidv4(), // Although Firestore generates its own ID, you can use this if you want
+        id: uuidv4(),
         username,
         email,
         password: hashedPassword,
         role,
     };
 
-    // Add new user to Firestore
     await addDoc(collection(db, 'users'), newUser);
 
     const { password: _, ...userWithoutPassword } = newUser;
@@ -111,12 +108,10 @@ export async function createUser(username, email, password, role = 'user') {
 export async function loginUser(loginInput, password) {
     console.log('loginUser', loginInput, password);
 
-    // Query for username
     let userQuery = query(collection(db, 'users'), where('username', '==', loginInput));
     let querySnapshot = await getDocs(userQuery);
 
     if (querySnapshot.empty) {
-        // Query for email if username doesn't match
         userQuery = query(collection(db, 'users'), where('email', '==', loginInput));
         querySnapshot = await getDocs(userQuery);
         if (querySnapshot.empty) {

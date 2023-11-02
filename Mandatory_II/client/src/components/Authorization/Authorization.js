@@ -14,11 +14,9 @@ export async function checkSession() {
             //Setting the user in the store, so the user can be accessed from any component
             user.set({ isLoggedIn: true, user: { id, username, email, role } });
         } else {
-            //console.error('Error fetching profile data: ', await response.text());
-            console.log('Error fetching profile data: ', await response.text());
+            throw new Error('Error fetching profile data');
         }
     } catch (error) {
-        //  console.error('Fetch error: ', error);
-        console.log("Some error")
+        console.error(error);
     }
 }

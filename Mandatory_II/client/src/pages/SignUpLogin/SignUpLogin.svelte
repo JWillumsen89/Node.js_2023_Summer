@@ -146,13 +146,13 @@
 
         <div>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required value="12345" />
+            <input type="password" id="password" name="password" required value="123Jonathan" />
         </div>
 
         {#if !$isLogin}
             <div>
                 <label for="passwordConfirmation">Confirm Password:</label>
-                <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="12345" />
+                <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="123Jonathan" />
             </div>
         {/if}
     </div>
