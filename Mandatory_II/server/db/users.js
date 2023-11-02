@@ -1,6 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword, comparePassword } from '../utils/password.js';
-
+import { db, storage, app } from '../db/firebase.js';
+import { doc, addDoc, getDocs, collection, updateDoc, deleteDoc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+/*
 let users = [];
 
 function isUserExists(username, email) {
@@ -60,6 +63,77 @@ export async function loginUser(loginInput, password) {
     if (!isPasswordValid) {
         throw new Error('Invalid password');
     }
+    const { password: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+}
+*/
+
+export async function createUser(username, email, password, role = 'user') {
+    // Check if user already exists
+    const userQuery = query(collection(db, 'users'), where('username', '==', username));
+    const querySnapshot = await getDocs(userQuery);
+
+    if (!querySnapshot.empty) {
+        throw new Error('Username already exists');
+    }
+
+    const emailQuery = query(collection(db, 'users'), where('email', '==', email));
+    const emailQuerySnapshot = await getDocs(emailQuery);
+
+    if (!emailQuerySnapshot.empty) {
+        throw new Error('Email already exists');
+    }
+
+    // Set 'admin' role for specific username
+    if (username === 'Jonathan') {
+        role = 'admin';
+    }
+
+    // Hash the password
+    const hashedPassword = await hashPassword(password);
+
+    // Create new user object
+    const newUser = {
+        id: uuidv4(), // Although Firestore generates its own ID, you can use this if you want
+        username,
+        email,
+        password: hashedPassword,
+        role,
+    };
+
+    // Add new user to Firestore
+    await addDoc(collection(db, 'users'), newUser);
+
+    const { password: _, ...userWithoutPassword } = newUser;
+    return userWithoutPassword;
+}
+
+export async function loginUser(loginInput, password) {
+    console.log('loginUser', loginInput, password);
+
+    // Query for username
+    let userQuery = query(collection(db, 'users'), where('username', '==', loginInput));
+    let querySnapshot = await getDocs(userQuery);
+
+    if (querySnapshot.empty) {
+        // Query for email if username doesn't match
+        userQuery = query(collection(db, 'users'), where('email', '==', loginInput));
+        querySnapshot = await getDocs(userQuery);
+        if (querySnapshot.empty) {
+            throw new Error('Username or email is incorrect');
+        }
+    }
+
+    let user;
+    querySnapshot.forEach(doc => {
+        user = doc.data();
+    });
+
+    const isPasswordValid = await comparePassword(password, user.password);
+    if (!isPasswordValid) {
+        throw new Error('Invalid password');
+    }
+
     const { password: _, ...userWithoutPassword } = user;
     return userWithoutPassword;
 }
