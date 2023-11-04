@@ -2,8 +2,14 @@
     import { LocalhostUrl } from '../../components/Urls.js';
     import { writable, get } from 'svelte/store';
     import { user } from '../../stores/userStore.js';
+    import { pageTitle } from '../../stores/pageTitleStore.js';
+    import { dynamicTitlePart, getFullTitle } from '../../stores/htmlTitleStore.js';
     import { navigate } from 'svelte-navigator';
     import toast, { Toaster } from 'svelte-french-toast';
+
+    $: pageTitle.set($isLogin ? 'Login' : 'Signup');
+    $: dynamicTitlePart.set($pageTitle);
+    $: document.title = getFullTitle($dynamicTitlePart);
 
     const isLogin = writable(true);
 
@@ -30,9 +36,20 @@
                 credentials: 'include',
             });
             if (response.ok) {
+                const username = /** @type {HTMLInputElement} */ (document.getElementById('username'));
+                const password = /** @type {HTMLInputElement} */ (document.getElementById('password'));
+                const submitBtn = /** @type {HTMLInputElement} */ (document.getElementById('submit-btn'));
+
+                if (username && password) {
+                    username.disabled = true;
+                    password.disabled = true;
+                    submitBtn.disabled = true;
+                }
+
                 console.log('Logged in successfully');
                 console.log(await response.json());
                 fetchProfileData();
+
                 toast.success('Successfully logged in!');
                 setTimeout(() => {
                     navigate('/', { replace: true });
@@ -127,42 +144,110 @@
     }
 </script>
 
-<h1>{$isLogin ? 'Login Page' : 'Signup Page'}</h1>
-<Toaster />
+<div class="form-container">
+    <!--<h1>{$isLogin ? 'Login' : 'Signup'}</h1>-->
+    <Toaster />
 
-<form on:submit={$isLogin ? handleSubmit : handleSignup}>
-    <div>
-        <div>
-            <label for="username">Username{$isLogin ? ' or email' : ''}:</label>
-            <input type="text" id="username" name="username" required value="Jonathan" />
-        </div>
+    <form on:submit={$isLogin ? handleSubmit : handleSignup}>
+        <label for="username">Username{$isLogin ? ' or email' : ''}:</label>
+        <input type="text" id="username" name="username" required value="Jonathan" />
 
         {#if !$isLogin}
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required value="test@test.dk" />
-            </div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required value="test@test.dk" />
         {/if}
 
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required value="123Jonathan" />
-        </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required value="Jonathan123" />
 
         {#if !$isLogin}
-            <div>
-                <label for="passwordConfirmation">Confirm Password:</label>
-                <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="123Jonathan" />
-            </div>
+            <label for="passwordConfirmation">Confirm Password:</label>
+            <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="Jonathan123" />
         {/if}
-    </div>
-    <button type="submit">{$isLogin ? 'Login' : 'Signup'}</button>
-</form>
 
-<p>
-    {#if $isLogin}
-        Haven’t signed up yet? <button on:click={toggleForm}>Sign up here!</button>
-    {:else}
-        Already a member? <button on:click={toggleForm}>Login here!</button>
-    {/if}
-</p>
+        <button id="submit-btn" type="submit">{$isLogin ? 'Login' : 'Signup'}</button>
+    </form>
+
+    <p>
+        {#if $isLogin}
+            Haven’t signed up yet? <button class="toggle-form" on:click={toggleForm}>Sign up here!</button>
+        {:else}
+            Already a member? <button class="toggle-form" on:click={toggleForm}>Login here!</button>
+        {/if}
+    </p>
+</div>
+
+<style>
+    .form-container {
+        max-width: 400px;
+        margin: 80px auto 0;
+        padding: 20px;
+        background: #2d2d2d;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #fff;
+        margin: 5px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin: 10px 0 5px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: start;
+    }
+
+    input {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    input:active {
+        border-color: #ff9500; /* Replace with your desired color */
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #ff9500;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #cc7a00;
+    }
+
+    p {
+        text-align: center;
+        color: #fff;
+    }
+
+    button.toggle-form {
+        background: none;
+        border: none;
+        color: #ff9500;
+        padding: 0;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            margin-top: 20px;
+        }
+    }
+</style>

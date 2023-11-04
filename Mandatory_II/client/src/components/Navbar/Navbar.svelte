@@ -4,6 +4,7 @@
     import { quadOut } from 'svelte/easing';
     import { Link } from 'svelte-navigator';
     import { user } from '../../stores/userStore.js';
+    import { pageTitle } from '../../stores/pageTitleStore.js';
     import { writable, get } from 'svelte/store';
     import { LocalhostUrl } from '../../components/Urls.js';
     import { useNavigate } from 'svelte-navigator';
@@ -11,6 +12,8 @@
     const navigate = useNavigate();
 
     let open = false;
+    let avatarUrl;
+    $: title = $pageTitle;
 
     function closeMenu() {
         open = false;
@@ -39,7 +42,6 @@
     function getRandomAvatarUrl() {
         const avatarFunctions = [getAvatarUrl1, getAvatarUrl2, getAvatarUrl4, getAvatarUrl5, getAvatarUrl6];
 
-        // Select a random function
         const randomIndex = Math.floor(Math.random() * avatarFunctions.length);
         return avatarFunctions[randomIndex]();
     }
@@ -68,16 +70,32 @@
         const seed = Math.random().toString(36).substring(2, 15);
         return `https://robohash.org/${seed}.png?set=set4`;
     }
+
+    $: if ($user.isLoggedIn && !avatarUrl) {
+        avatarUrl = getRandomAvatarUrl();
+    }
+
+    function clickAvatar() {
+        console.log('Avatar clicked');
+        navigate('/profile', { replace: true });
+    }
+
+    function handleKeydown(event) {
+
+        if (event.key === 'Enter' || event.key === ' ') {
+            clickAvatar();
+        }
+    }
 </script>
 
 <div class="header">
-    <Hamburger bind:open --color="white" />
+    <Hamburger bind:open --color="#ff9500" />
+    <span class="page-title">{title}</span>
 
     {#if $user.isLoggedIn}
-        <div class="user-info">
-            <img class="avatar" src={getRandomAvatarUrl()} alt="User Avatar" />
+        <div class="user-info" role="button" tabindex="0" on:click={clickAvatar} on:keydown={handleKeydown}>
+            <img class="avatar" src={avatarUrl} alt="User Avatar" />
             <span>{$user.user.username}</span>
-            <!-- Assuming $user.user has a 'name' field -->
         </div>
     {/if}
 </div>
@@ -102,23 +120,65 @@
 {/if}
 
 <style>
+    span {
+        color: #ff9500;
+    }
+    hr {
+        border-color: #ff9500;
+    }
+    div {
+        text-align: center;
+        font-size: 1em;
+        letter-spacing: 0.15em;
+        padding: 0.2em;
+        padding-top: 0;
+        color: #eef;
+    }
+    p {
+        cursor: pointer;
+        width: max-content;
+        margin: 1rem auto;
+    }
+    p:hover {
+        text-decoration: underline;
+    }
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
+    }
+
+    .page-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 4em;
+        color: #ff9500;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        background: rgba(36, 36, 36, 0.5);
+        border-radius: 8px;
+        z-index: 10;
     }
 
     .user-info {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
     }
 
     .avatar {
-        width: 50px; /* Adjust size as needed */
+        width: 50px;
         height: 50px;
         border-radius: 50%;
         margin-right: 10px;
     }
-
-    /* Additional styles */
+    @media (max-width: 768px) {
+        .avatar {
+            width: 40px;
+            height: 40px;
+        }
+    }
 </style>

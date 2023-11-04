@@ -1,8 +1,12 @@
 <script>
     import { LocalhostUrl } from '../../components/Urls.js';
-    import { user } from '../../stores/userStore.js';
-    import { writable, get } from 'svelte/store';
     import { onMount } from 'svelte';
+    import { pageTitle } from '../../stores/pageTitleStore.js';
+    import { dynamicTitlePart, getFullTitle } from '../../stores/htmlTitleStore.js';
+
+    $: pageTitle.set('Admin Panel');
+    $: dynamicTitlePart.set($pageTitle);
+    $: document.title = getFullTitle($dynamicTitlePart);
 
     let adminData = [];
     let errorMessage = '';

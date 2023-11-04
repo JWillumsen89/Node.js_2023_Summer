@@ -1,5 +1,4 @@
 import { LocalhostUrl } from '../../components/Urls.js';
-import { get } from 'svelte/store';
 import { user } from '../../stores/userStore.js';
 
 export async function checkSession() {
@@ -7,16 +6,19 @@ export async function checkSession() {
         const response = await fetch(LocalhostUrl + '/profile', {
             credentials: 'include',
         });
+
         if (response.ok) {
             const responseData = await response.json();
             const { id, username, email, role } = responseData.data;
 
-            //Setting the user in the store, so the user can be accessed from any component
             user.set({ isLoggedIn: true, user: { id, username, email, role } });
+        } else if (response.status === 401) {
+            console.log('No active session');
+            user.set({ isLoggedIn: false, user: null });
         } else {
-            throw new Error('Error fetching profile data');
+            console.error('Error fetching profile data');
         }
     } catch (error) {
-        console.error(error);
+        console.error('There was a problem checking the session:', error);
     }
 }
