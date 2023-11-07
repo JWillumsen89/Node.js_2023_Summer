@@ -75,13 +75,12 @@
             });
             if (response.ok) {
                 const responseData = await response.json();
-                const { id, username, email, role } = responseData.data;
+                const userData = responseData.data;
 
                 //Setting the user in the store, so the user can be accessed from any component
-                user.set({ isLoggedIn: true, user: { id, username, email, role } });
+                user.set({ isLoggedIn: true, user: userData, avatar: '' });
 
                 const currentUser = get(user);
-                console.log('Logged in - User data: ', currentUser);
             } else {
                 console.error('Error fetching profile data: ', await response.text());
             }
@@ -108,6 +107,9 @@
             username: username,
             password: password,
             email: email,
+            role: 'user',
+            createdAt: new Date(),
+            updatedAt: new Date(),
         };
 
         try {
@@ -120,10 +122,10 @@
             });
 
             if (response.ok) {
+                toast.success('Successfully signed up!');
                 const responseData = await response.json();
                 console.log('Signed up successfully');
                 console.log('Return data: ', responseData);
-                toast.success('Successfully signed up!');
                 isLogin.set(true);
             } else {
                 const errorText = await response.text();

@@ -14,6 +14,7 @@
     let open = false;
     let avatarUrl;
     $: title = $pageTitle;
+    $: user.set({ ...$user, avatar: avatarUrl });
 
     function closeMenu() {
         open = false;
@@ -27,7 +28,7 @@
             });
             if (response.ok) {
                 console.log('Logged out successfully');
-                user.set({ isLoggedIn: false, user: null });
+                user.set({ isLoggedIn: false, user: null, avatar: '' });
                 navigate('/login-signup', { replace: true });
                 const currentUser = get(user);
                 console.log('Logged out - User data is null: ', currentUser);
@@ -81,7 +82,6 @@
     }
 
     function handleKeydown(event) {
-
         if (event.key === 'Enter' || event.key === ' ') {
             clickAvatar();
         }

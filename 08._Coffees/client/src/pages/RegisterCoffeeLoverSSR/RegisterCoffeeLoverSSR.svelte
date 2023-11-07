@@ -13,7 +13,7 @@
             body: JSON.stringify({ coffeeLover: coffeeLoverName }),
         });
         if (response.status === 200) {
-            navigate('/whodatcoffeelover');
+            navigate('/whodatcoffeeloverssr');
         }
     }
 </script>

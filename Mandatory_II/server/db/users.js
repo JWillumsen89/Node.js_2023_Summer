@@ -67,7 +67,7 @@ export async function loginUser(loginInput, password) {
 }
 */
 
-export async function createUser(username, email, password, role = 'user') {
+export async function createUser(username, email, password, role = 'user', createdAt, updatedAt) {
     const userQuery = query(collection(db, 'users'), where('username', '==', username));
     const querySnapshot = await getDocs(userQuery);
 
@@ -97,8 +97,10 @@ export async function createUser(username, email, password, role = 'user') {
         email,
         password: hashedPassword,
         role,
+        createdAt,
+        updatedAt,
     };
-
+    console.log(newUser);
     await addDoc(collection(db, 'users'), newUser);
 
     const { password: _, ...userWithoutPassword } = newUser;
