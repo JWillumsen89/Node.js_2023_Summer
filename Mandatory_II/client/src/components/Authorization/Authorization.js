@@ -11,10 +11,10 @@ export async function checkSession() {
             const responseData = await response.json();
             const { id, username, email, role } = responseData.data;
 
-            user.set({ isLoggedIn: true, user: { id, username, email, role } });
+            user.set({ isLoggedIn: true, user: { id, username, email, role }, avatar: '' });
         } else if (response.status === 401) {
             console.log('No active session');
-            user.set({ isLoggedIn: false, user: null });
+            user.set({ isLoggedIn: false, user: null, avatar: '' });
         } else {
             console.error('Error fetching profile data');
         }

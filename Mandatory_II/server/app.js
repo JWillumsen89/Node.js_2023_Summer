@@ -34,31 +34,14 @@ const allRoutesLimiter = rateLimit({
 
 app.use(allRoutesLimiter);
 
-import { isAuthenticated } from './authentication/middlewares/authMiddlewares.js';
-
 import authRouter from './authentication/routers/authRouter.js';
 app.use(authRouter);
 
-app.get('/protected', isAuthenticated, (req, res, next) => {
-    res.send({ data: 'This is protected data - And the user is authenticated' });
-});
+import userRoleRouter from './authorization/routers/userRoleRouter.js';
+app.use(userRoleRouter);
 
-app.get('/profile', isAuthenticated, (req, res) => {
-    res.send({ data: req.session.user });
-});
-
-import adminRoleRouter from './authorization/roles/admin/routers/adminRoleRouter.js';
+import adminRoleRouter from './authorization/routers/adminRoleRouter.js';
 app.use(adminRoleRouter);
-
-/*
-import { requireRole } from './authorization/middlewares/authorizationMiddlewares.js';
-app.get('/admin/dashboard', isAuthenticated, requireRole('admin'), (req, res) => {
-    res.send({ data: 'This is the admin dashboard' });
-});*/
-
-app.get('/message', (req, res) => {
-    res.json({ message: 'Hello World!', name: 'Mandatory II' });
-});
 
 app.get('*', (req, res) => {
     res.send('<h1>404 Page not found</h1>');

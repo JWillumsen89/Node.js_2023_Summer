@@ -7,6 +7,7 @@
     import AdminPage from './pages/Admin/AdminPage.svelte';
     import NoPermission from './pages/NoPermission/NoPermission.svelte';
     import ProfilePage from './pages/Profile/ProfilePage.svelte';
+    import PageNotFound from './pages/PageNotFound/PageNotFound.svelte';
 
     import { onMount } from 'svelte';
     import { checkSession } from './components/Authorization/Authorization';
@@ -30,6 +31,7 @@
             <Route path="/" component={Home} primary={false} />
             <Route path="/login-signup" component={SignUpLogin} primary={false} />
             <Route path="/no-permission" component={NoPermission} primary={false} />
+            <Route path="*" component={PageNotFound} primary={false}/>
 
             <PrivateRoute path="/admin" roles={adminRole}>
                 <AdminPage />
