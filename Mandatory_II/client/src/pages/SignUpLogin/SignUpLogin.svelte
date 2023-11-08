@@ -1,5 +1,5 @@
 <script>
-    import { LocalhostUrl } from '../../components/Urls.js';
+    import { BaseURL } from '../../components/Urls.js';
     import { writable, get } from 'svelte/store';
     import { user } from '../../stores/userStore.js';
     import { pageTitle } from '../../stores/pageTitleStore.js';
@@ -27,7 +27,7 @@
             password: event.target.password.value,
         };
         try {
-            const response = await fetch(LocalhostUrl + '/auth/login', {
+            const response = await fetch(BaseURL + '/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,9 +45,6 @@
                     password.disabled = true;
                     submitBtn.disabled = true;
                 }
-
-                console.log('Logged in successfully');
-                console.log(await response.json());
                 fetchProfileData();
 
                 toast.success('Successfully logged in!');
@@ -70,7 +67,7 @@
 
     async function fetchProfileData() {
         try {
-            const response = await fetch(LocalhostUrl + '/profile', {
+            const response = await fetch(BaseURL + '/profile', {
                 credentials: 'include',
             });
             if (response.ok) {
@@ -79,8 +76,6 @@
 
                 //Setting the user in the store, so the user can be accessed from any component
                 user.set({ isLoggedIn: true, user: userData, avatar: '' });
-
-                const currentUser = get(user);
             } else {
                 console.error('Error fetching profile data: ', await response.text());
             }
@@ -113,7 +108,7 @@
         };
 
         try {
-            const response = await fetch(LocalhostUrl + '/auth/signup', {
+            const response = await fetch(BaseURL + '/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -123,9 +118,6 @@
 
             if (response.ok) {
                 toast.success('Successfully signed up!');
-                const responseData = await response.json();
-                console.log('Signed up successfully');
-                console.log('Return data: ', responseData);
                 isLogin.set(true);
             } else {
                 const errorText = await response.text();
@@ -147,7 +139,6 @@
 </script>
 
 <div class="form-container">
-    <!--<h1>{$isLogin ? 'Login' : 'Signup'}</h1>-->
     <Toaster />
 
     <form on:submit={$isLogin ? handleSubmit : handleSignup}>
@@ -189,12 +180,6 @@
         border-radius: 8px;
     }
 
-    h1 {
-        text-align: center;
-        color: #fff;
-        margin: 5px;
-    }
-
     form {
         display: flex;
         flex-direction: column;
@@ -216,7 +201,7 @@
     }
 
     input:active {
-        border-color: #ff9500; /* Replace with your desired color */
+        border-color: #ff9500;
     }
 
     button {

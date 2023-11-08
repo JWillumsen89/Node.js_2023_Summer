@@ -1,9 +1,9 @@
-import { LocalhostUrl } from '../../components/Urls.js';
+import { BaseURL } from '../../components/Urls.js';
 import { user } from '../../stores/userStore.js';
 
 export async function checkSession() {
     try {
-        const response = await fetch(LocalhostUrl + '/profile', {
+        const response = await fetch(BaseURL + '/profile', {
             credentials: 'include',
         });
 

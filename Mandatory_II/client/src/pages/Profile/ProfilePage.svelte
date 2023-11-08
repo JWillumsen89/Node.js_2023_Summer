@@ -7,7 +7,6 @@
     $: pageTitle.set('Profile');
     $: dynamicTitlePart.set($pageTitle);
     $: document.title = getFullTitle($dynamicTitlePart);
-    console.log('User data in profile page: ', get(user));
 </script>
 <br>
 <img src={get(user).avatar} alt="Avatar" />

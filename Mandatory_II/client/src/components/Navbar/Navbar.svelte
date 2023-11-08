@@ -5,8 +5,7 @@
     import { Link } from 'svelte-navigator';
     import { user } from '../../stores/userStore.js';
     import { pageTitle } from '../../stores/pageTitleStore.js';
-    import { writable, get } from 'svelte/store';
-    import { LocalhostUrl } from '../../components/Urls.js';
+    import { BaseURL } from '../../components/Urls.js';
     import { useNavigate } from 'svelte-navigator';
 
     const navigate = useNavigate();
@@ -22,16 +21,13 @@
 
     async function handleLogout() {
         try {
-            const response = await fetch(LocalhostUrl + '/auth/logout', {
+            const response = await fetch(BaseURL + '/auth/logout', {
                 method: 'POST',
                 credentials: 'include',
             });
             if (response.ok) {
-                console.log('Logged out successfully');
                 user.set({ isLoggedIn: false, user: null, avatar: '' });
                 navigate('/login-signup', { replace: true });
-                const currentUser = get(user);
-                console.log('Logged out - User data is null: ', currentUser);
             } else {
                 console.error('Logout failed: ', await response.text());
             }
@@ -77,7 +73,6 @@
     }
 
     function clickAvatar() {
-        console.log('Avatar clicked');
         navigate('/profile', { replace: true });
     }
 
@@ -110,6 +105,9 @@
             {#if $user.user.role === 'admin' || $user.user.role === 'user'}
                 <p><Link to="/profile" on:click={closeMenu}>Profile</Link></p>
             {/if}
+        {/if}
+        <p><Link to="/contact" on:click={closeMenu}>Contact</Link></p>
+        {#if $user.isLoggedIn}
             <p><Link to="/login-signup" on:click={handleLogout}>Logout</Link></p>
         {:else}
             <p><Link to="/login-signup" on:click={closeMenu}>Login/Sign Up</Link></p>

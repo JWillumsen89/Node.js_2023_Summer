@@ -15,7 +15,7 @@ export function isValidPassword(password) {
     const hasUppercase = /[A-Z]/.test(password);
     const hasNumber = /\d/.test(password);
     /*
-    Outcomment this if i want to use special characters in passwords
+    Out comment this if i want to use special characters in passwords
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password); // Define special characters
 
     if (! (password.length >= minLength && hasLowercase && hasUppercase && hasNumber && hasSpecialChar)) {

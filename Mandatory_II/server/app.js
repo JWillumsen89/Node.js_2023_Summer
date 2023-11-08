@@ -1,5 +1,6 @@
 import express, { urlencoded } from 'express';
 const app = express();
+
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 
@@ -42,6 +43,9 @@ app.use(userRoleRouter);
 
 import adminRoleRouter from './authorization/routers/adminRoleRouter.js';
 app.use(adminRoleRouter);
+
+import emailSenderRouter from './emailSender/routers/emailSenderRouter.js';
+app.use(emailSenderRouter);
 
 app.get('*', (req, res) => {
     res.send('<h1>404 Page not found</h1>');

@@ -1,5 +1,5 @@
 <script>
-    import { LocalhostUrl } from '../../components/Urls.js';
+    import { BaseURL } from '../../components/Urls.js';
     import { onMount } from 'svelte';
     import { pageTitle } from '../../stores/pageTitleStore.js';
     import { dynamicTitlePart, getFullTitle } from '../../stores/htmlTitleStore.js';
@@ -13,7 +13,7 @@
 
     onMount(async () => {
         try {
-            const response = await fetch(LocalhostUrl + '/admin/data', {
+            const response = await fetch(BaseURL + '/admin/data', {
                 credentials: 'include',
             });
 
