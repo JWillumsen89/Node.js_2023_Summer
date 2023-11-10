@@ -13,7 +13,8 @@
     import { onMount } from 'svelte';
     import { checkSession } from './components/Authorization/Authorization';
     import { writable } from 'svelte/store';
-  
+    import toast, { Toaster } from 'svelte-french-toast';
+    import { notificationStore } from './stores/notificationStore.js';
 
     export const isSessionChecked = writable(false);
 
@@ -24,9 +25,22 @@
 
     const adminRole = ['admin'];
     const userRole = ['user', 'admin'];
+
+    notificationStore.subscribe(({ message, type }) => {
+        if (message) {
+            if (type === 'success') {
+                toast.success(message);
+            }
+            if (type === 'error') {
+                toast.error(message);
+            }
+            notificationStore.set({ message: '', type: '' });
+        }
+    });
 </script>
 
 {#if $isSessionChecked}
+    <Toaster />
     <Router>
         <Navbar />
         <div>
@@ -46,5 +60,3 @@
 {:else}
     <!--show a loading spinner-->
 {/if}
-
-

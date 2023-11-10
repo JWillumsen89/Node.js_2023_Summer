@@ -5,7 +5,7 @@
     import { pageTitle } from '../../stores/pageTitleStore.js';
     import { dynamicTitlePart, getFullTitle } from '../../stores/htmlTitleStore.js';
     import { navigate } from 'svelte-navigator';
-    import toast, { Toaster } from 'svelte-french-toast';
+    import { notificationStore } from '../../stores/notificationStore.js';
 
     $: pageTitle.set($isLogin ? 'Login' : 'Sign up');
     $: dynamicTitlePart.set($pageTitle);
@@ -46,8 +46,7 @@
                     submitBtn.disabled = true;
                 }
                 fetchProfileData();
-
-                toast.success('Successfully logged in!');
+                notificationStore.set({ message: 'Successfully logged in!', type: 'success' });
                 setTimeout(() => {
                     navigate('/', { replace: true });
                 }, 1000);
@@ -58,9 +57,9 @@
         } catch (error) {
             const errorMessage = JSON.parse(error.message);
             if (errorMessage && errorMessage.error) {
-                toast.error(errorMessage.error);
+                notificationStore.set({ message: errorMessage.error, type: 'error' });
             } else {
-                toast.error('An unknown error occurred');
+                notificationStore.set({ message: 'An unknown error occurred', type: 'error' });
             }
         }
     }
@@ -94,7 +93,7 @@
 
         if (password !== passwordConfirmation) {
             console.error('Passwords do not match!');
-            toast.error('Passwords do not match!');
+            notificationStore.set({ message: 'Passwords do not match!', type: 'error' });
             return;
         }
 
@@ -117,7 +116,7 @@
             });
 
             if (response.ok) {
-                toast.success('Successfully signed up!');
+                notificationStore.set({ message: 'Successfully signed up!', type: 'success' });
                 isLogin.set(true);
             } else {
                 const errorText = await response.text();
@@ -126,9 +125,9 @@
         } catch (error) {
             const errorMessage = JSON.parse(error.message);
             if (errorMessage && errorMessage.error) {
-                toast.error(errorMessage.error);
+                notificationStore.set({ message: errorMessage.error, type: 'error' });
             } else {
-                toast.error('An unknown error occurred');
+                notificationStore.set({ message: 'An unknown error occurred', type: 'error' });
             }
         }
     }
@@ -139,8 +138,6 @@
 </script>
 
 <div class="form-container">
-    <Toaster />
-
     <form on:submit={$isLogin ? handleSubmit : handleSignup}>
         <label for="username">Username{$isLogin ? ' or email' : ''}:</label>
         <input type="text" id="username" name="username" required value="Jonathan" />

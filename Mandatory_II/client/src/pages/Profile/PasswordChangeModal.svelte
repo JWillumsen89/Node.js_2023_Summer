@@ -1,15 +1,63 @@
 <script>
     import { closeModal } from 'svelte-modals';
+    import { user } from '../../stores/userStore.js';
+    import { get } from 'svelte/store';
+    import { notificationStore } from '../../stores/notificationStore.js';
+    import { BaseURL } from '../../components/Urls.js';
 
     export let isOpen;
     export let title;
+
+    async function checkAndChangePassword(event) {
+        event.preventDefault();
+        const username = get(user).user.username;
+        const currentPassword = event.target.currentPassword.value;
+        const newPassword = event.target.newPassword.value;
+        const confirmNewPassword = event.target.confirmNewPassword.value;
+
+        const data = {
+            username,
+            currentPassword,
+            newPassword,
+        };
+
+        if (newPassword !== confirmNewPassword) {
+            console.error('Passwords do not match!');
+            notificationStore.set({ message: 'New passwords do not match!', type: 'error' });
+            return;
+        }
+
+        try {
+            const response = await fetch(BaseURL + '/auth/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                credentials: 'include',
+            });
+            if (response.ok) {
+                notificationStore.set({ message: 'Password successfully changed!', type: 'success' });
+            } else {
+                const errorText = await response.text();
+                throw new Error(errorText);
+            }
+        } catch (error) {
+            const errorMessage = JSON.parse(error.message);
+            if (errorMessage && errorMessage.error) {
+                notificationStore.set({ message: errorMessage.error, type: 'error' });
+            } else {
+                notificationStore.set({ message: 'An unknown error occurred', type: 'error' });
+            }
+        }
+    }
 </script>
 
 {#if isOpen}
     <div role="dialog" class="modal">
         <div class="contents form-container">
             <h2>{title}</h2>
-            <form>
+            <form on:submit={checkAndChangePassword}>
                 <div class="form-group">
                     <label for="currentPassword">Current Password:</label>
                     <input id="currentPassword" type="password" placeholder="Current Password" autofocus />
@@ -30,99 +78,6 @@
         </div>
     </div>
 {/if}
-
-<!--
-<style>
-    .modal {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        pointer-events: none;
-        z-index: 50;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    .contents {
-        width: 400px;
-        min-width: 250px;
-        border-radius: 6px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        pointer-events: auto;
-        background: #2d2d2d; /* Match the form container background */
-        color: white; /* Text color for better visibility on dark background */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Similar shadow effect */
-        border: none; /* Remove any border */
-    }
-
-    .form-group {
-        margin-bottom: 15px; /* Space between each form group */
-    }
-
-    .form-group label {
-        display: block; /* Make the label take the full width */
-        margin-bottom: 5px; /* Space between label and input field */
-        color: #fff; /* Label text color */
-        font-size: 14px; /* Adjust the font size as needed */
-    }
-
-    h2 {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #ff9500;
-    }
-
-    input[type='password'] {
-        width: calc(45%); /* Adjust width to account for padding */
-        padding: 12px 10px; /* More padding for a better look */
-        margin-bottom: 15px; /* Consistent margin between inputs */
-        border-radius: 4px; /* Rounded corners */
-        border: 1px solid #555; /* Subtle border to make inputs stand out */
-        background-color: #333; /* Darker background for the inputs */
-        color: #fff; /* Light text for better visibility */
-        font-size: 16px;
-    }
-
-    input[type='password']:focus {
-        border-color: #ff9500; /* Highlight color when focused */
-        outline: none; /* Remove default outline */
-        box-shadow: 0 0 3px #ff9500; /* Subtle glow effect */
-    }
-
-    .actions {
-        display: flex;
-    }
-
-    .actions button {
-        /* Style to match the site's button styling */
-        padding: 10px 20px;
-        background-color: #ff9500; /* Primary button color */
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-right: 10px; /* Spacing between buttons */
-    }
-
-    .actions button:last-child {
-        background-color: #404040; /* Different color for the cancel button */
-    }
-
-    .actions button:hover {
-        /* Hover effect */
-        background-color: #cc7a00; /* Darker shade for primary button */
-    }
-    /* Additional global style to override default link color if needed */
-</style>-->
 
 <style>
     .modal {

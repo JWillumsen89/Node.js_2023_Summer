@@ -18,7 +18,7 @@ router.post('/auth/login', authRateLimiter, async (req, res) => {
 router.post('/auth/signup', authRateLimiter, async (req, res, next) => {
     try {
         const createdData = await authController.signUp(req.body);
-        res.send({ data: { message: 'Login successful', body: createdData } });
+        res.send({ data: { message: 'Sign up successful', body: createdData } });
     } catch (error) {
         res.status(400).send({ error: error.message });
     }
@@ -32,6 +32,15 @@ router.post('/auth/logout', authRateLimiter, (req, res) => {
         res.cookie('connect.sid', '', { expires: new Date(0), path: '/' });
         res.send({ message: 'Logged out successfully' });
     });
+});
+
+router.post('/auth/change-password', authRateLimiter, async (req, res) => {
+    try {
+        await authController.checkAndChangePassword(req.body);
+        res.send({ data: { message: 'Password changed successfully' } });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
 });
 
 export default router;

@@ -126,11 +126,53 @@ export async function loginUser(loginInput, password) {
         user = doc.data();
     });
 
-    const isPasswordValid = await comparePassword(password, user.password);
-    if (!isPasswordValid) {
+    const isCurrentPasswordValid = await comparePassword(password, user.password);
+    if (!isCurrentPasswordValid) {
         throw new Error('Invalid password');
     }
 
     const { password: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+}
+
+export async function checkAndChangePassword(username, oldPassword, newPassword) {
+    let userQuery = query(collection(db, 'users'), where('username', '==', username));
+    let querySnapshot = await getDocs(userQuery);
+
+    console.log('querySnapshot', querySnapshot);
+
+    let user;
+    let userDocId;
+    querySnapshot.forEach(doc => {
+        user = doc.data();
+        userDocId = doc.id;
+    });
+    console.log('user', user)
+
+    const isCurrentPasswordValid = await comparePassword(oldPassword, user.password);
+    if (!isCurrentPasswordValid) {
+        throw new Error('Invalid password');
+    }
+
+    try {
+        if (isValidPassword(newPassword)) {
+            console.log('Password is valid.');
+        }
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    const updatedUser = {
+        ...user,
+        password: hashedPassword,
+    };
+
+    const userRef = doc(db, 'users', userDocId);
+    await updateDoc(userRef, updatedUser);
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+
     return userWithoutPassword;
 }

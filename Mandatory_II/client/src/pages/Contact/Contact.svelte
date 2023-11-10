@@ -1,6 +1,6 @@
 <script>
     import { BaseURL } from '../../components/Urls.js';
-    import toast, { Toaster } from 'svelte-french-toast';
+    import { notificationStore } from '../../stores/notificationStore.js';
     import { navigate } from 'svelte-navigator';
     import { pageTitle } from '../../stores/pageTitleStore.js';
     import { dynamicTitlePart, getFullTitle } from '../../stores/htmlTitleStore.js';
@@ -17,8 +17,6 @@
         username = $user.user.username;
         email = $user.user.email;
     }
-
-    $: isUsernameAndEmailFilled = username !== '' && email !== '';
 
     let isSubmitting = false;
 
@@ -43,7 +41,7 @@
             });
 
             if (response.ok) {
-                toast.success('Message sent successfully!');
+                notificationStore.set({ message: 'Message sent successfully!', type: 'success' });
                 setTimeout(() => {
                     navigate('/', { replace: true });
                 }, 1000);
@@ -54,9 +52,9 @@
         } catch (error) {
             const errorMessage = JSON.parse(error.message);
             if (errorMessage && errorMessage.error) {
-                toast.error(errorMessage.error);
+                notificationStore.set({ message: errorMessage.error, type: 'error' });
             } else {
-                toast.error('An unknown error occurred');
+                notificationStore.set({ message: 'An unknown error occurred', type: 'error' });
             }
         }
         isSubmitting = false;
@@ -64,8 +62,6 @@
 </script>
 
 <div class="form-container">
-    <Toaster />
-
     <form on:submit={handleContactSubmit}>
         <label for="name">Name:</label>
         <input
@@ -75,7 +71,7 @@
             required
             placeholder="Enter full name..."
             bind:value={username}
-            disabled={isSubmitting || isUsernameAndEmailFilled}
+            disabled={isSubmitting || $user.isLoggedIn}
         />
 
         <label for="email">Email:</label>
@@ -86,7 +82,7 @@
             required
             placeholder="Enter email..."
             bind:value={email}
-            disabled={isSubmitting || isUsernameAndEmailFilled}
+            disabled={isSubmitting || $user.isLoggedIn}
         />
 
         <label for="subject">Subject:</label>
@@ -167,7 +163,7 @@
     input:disabled,
     textarea:disabled {
         background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.1));
-        color:#888;
+        color: #888;
     }
 
     button {
