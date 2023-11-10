@@ -10,13 +10,15 @@
     $: dynamicTitlePart.set($pageTitle);
     $: document.title = getFullTitle($dynamicTitlePart);
 
-    let name = '';
+    let username = '';
     let email = '';
 
     $: if ($user.isLoggedIn) {
-        name = $user.user.username;
+        username = $user.user.username;
         email = $user.user.email;
     }
+
+    $: isUsernameAndEmailFilled = username !== '' && email !== '';
 
     let isSubmitting = false;
 
@@ -66,10 +68,26 @@
 
     <form on:submit={handleContactSubmit}>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required placeholder="Enter full name..." bind:value={name} disabled={isSubmitting} />
+        <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Enter full name..."
+            bind:value={username}
+            disabled={isSubmitting || isUsernameAndEmailFilled}
+        />
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required placeholder="Enter email..." bind:value={email} disabled={isSubmitting} />
+        <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="Enter email..."
+            bind:value={email}
+            disabled={isSubmitting || isUsernameAndEmailFilled}
+        />
 
         <label for="subject">Subject:</label>
         <input type="text" id="subject" name="subject" required placeholder="Enter subject..." value="Test subject" disabled={isSubmitting} />
@@ -113,21 +131,43 @@
         text-align: start;
     }
 
-    input,
-    textarea {
+    input {
+        width: 100%;
         padding: 10px;
-        border: 1px solid #444;
+        box-sizing: border-box;
         border-radius: 4px;
-        margin-bottom: 15px;
-        font-size: 14px;
-        background: #333;
+        border: 1px solid #555;
+        background-color: #333;
         color: #fff;
+        font-size: 14px;
+    }
+    textarea {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid #555;
+        background-color: #333;
+        color: #fff;
+        font-size: 14px;
     }
 
-    input:focus,
-    textarea:focus {
-        outline: none;
+    input:focus {
         border-color: #ff9500;
+        outline: none;
+        box-shadow: 0 0 3px #ff9500;
+    }
+
+    textarea:focus {
+        border-color: #ff9500;
+        outline: none;
+        box-shadow: 0 0 3px #ff9500;
+    }
+
+    input:disabled,
+    textarea:disabled {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.1));
+        color:#888;
     }
 
     button {

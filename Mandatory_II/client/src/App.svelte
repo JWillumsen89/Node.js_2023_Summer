@@ -13,6 +13,7 @@
     import { onMount } from 'svelte';
     import { checkSession } from './components/Authorization/Authorization';
     import { writable } from 'svelte/store';
+  
 
     export const isSessionChecked = writable(false);
 
@@ -32,7 +33,7 @@
             <Route path="/" component={Home} primary={false} />
             <Route path="/login-signup" component={SignUpLogin} primary={false} />
             <Route path="/no-permission" component={NoPermission} primary={false} />
-            <Route path="*" component={PageNotFound} primary={false}/>
+            <Route path="*" component={PageNotFound} primary={false} />
             <Route path="/contact" component={Contact} primary={false} />
             <PrivateRoute path="/admin" roles={adminRole}>
                 <AdminPage />
@@ -45,3 +46,5 @@
 {:else}
     <!--show a loading spinner-->
 {/if}
+
+

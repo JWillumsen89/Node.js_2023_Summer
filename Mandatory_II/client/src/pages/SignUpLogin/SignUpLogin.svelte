@@ -7,7 +7,7 @@
     import { navigate } from 'svelte-navigator';
     import toast, { Toaster } from 'svelte-french-toast';
 
-    $: pageTitle.set($isLogin ? 'Login' : 'Signup');
+    $: pageTitle.set($isLogin ? 'Login' : 'Sign up');
     $: dynamicTitlePart.set($pageTitle);
     $: document.title = getFullTitle($dynamicTitlePart);
 
@@ -158,7 +158,7 @@
             <input type="password" id="passwordConfirmation" name="passwordConfirmation" required value="Jonathan123" />
         {/if}
 
-        <button id="submit-btn" type="submit">{$isLogin ? 'Login' : 'Signup'}</button>
+        <button id="submit-btn" type="submit">{$isLogin ? 'Login' : 'Sign up'}</button>
     </form>
 
     <p>
@@ -193,15 +193,25 @@
     }
 
     input {
+        width: 100%;
         padding: 10px;
-        border: none;
+        box-sizing: border-box;
         border-radius: 4px;
-        margin-bottom: 5px;
+        border: 1px solid #555;
+        background-color: #333;
+        color: #fff;
         font-size: 14px;
     }
 
-    input:active {
+    input:focus {
         border-color: #ff9500;
+        outline: none;
+        box-shadow: 0 0 3px #ff9500;
+    }
+
+    input:disabled {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.1));
+        color: #888;
     }
 
     button {

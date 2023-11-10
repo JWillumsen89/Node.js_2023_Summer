@@ -7,6 +7,7 @@
     import { pageTitle } from '../../stores/pageTitleStore.js';
     import { BaseURL } from '../../components/Urls.js';
     import { useNavigate } from 'svelte-navigator';
+    import toast, { Toaster } from 'svelte-french-toast';
 
     const navigate = useNavigate();
 
@@ -27,7 +28,7 @@
             });
             if (response.ok) {
                 user.set({ isLoggedIn: false, user: null, avatar: '' });
-                navigate('/login-signup', { replace: true });
+                toast.success('Successfully logged out!');
             } else {
                 console.error('Logout failed: ', await response.text());
             }
