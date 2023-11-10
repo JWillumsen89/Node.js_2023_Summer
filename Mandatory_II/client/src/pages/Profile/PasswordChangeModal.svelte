@@ -38,6 +38,7 @@
             });
             if (response.ok) {
                 notificationStore.set({ message: 'Password successfully changed!', type: 'success' });
+                closeModal();
             } else {
                 const errorText = await response.text();
                 throw new Error(errorText);
