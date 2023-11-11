@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "start": "concurrently \"cd client && npm run dev\" \"cd server && nodemon.cmd app.js\""
+    "start": "concurrently \"cd client && npm run dev\" \"cd server && nodemon.cmd app.js\"",
+    "start-device": "powershell -ExecutionPolicy Bypass -File start-dev.ps1"
   }
 }

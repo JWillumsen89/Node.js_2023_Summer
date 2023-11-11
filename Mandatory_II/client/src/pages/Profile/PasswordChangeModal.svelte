@@ -61,7 +61,7 @@
             <form on:submit={checkAndChangePassword}>
                 <div class="form-group">
                     <label for="currentPassword">Current Password:</label>
-                    <input id="currentPassword" type="password" placeholder="Current Password" autofocus />
+                    <input id="currentPassword" type="password" placeholder="Current Password" />
                 </div>
                 <div class="form-group">
                     <label for="newPassword">New Password:</label>
@@ -113,6 +113,7 @@
         text-align: center;
         font-size: 24px;
         margin-bottom: 20px;
+        margin-top: 0;
         color: #ff9500;
     }
 
@@ -181,6 +182,9 @@
     @media (max-width: 768px) {
         .contents {
             margin-top: 20px;
+            width: 70%
         }
+
+
     }
 </style>

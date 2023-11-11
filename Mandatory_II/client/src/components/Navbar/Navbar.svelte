@@ -175,6 +175,33 @@
         margin-right: 10px;
     }
     @media (max-width: 768px) {
+        .page-title {
+            z-index: 10;
+            margin-top: -10px;
+            font-size: 2em;
+        }
+        .header {
+            position: relative;
+            padding-top: 30px;
+        }
+        .user-info {
+            position: absolute;
+            top: -20px;
+            right: 0;
+            margin: 5px;
+            z-index: 20;
+        }
+
+        .user-info span {
+            margin-top: 10px; /* Adjust this value as needed to lower the username */
+            display: block; /* This will ensure the span takes the full width it needs */
+        }
+        div {
+            font-size: 0.8em;
+        }
+        p {
+            margin: 0.5rem auto;
+        }
         .avatar {
             width: 40px;
             height: 40px;

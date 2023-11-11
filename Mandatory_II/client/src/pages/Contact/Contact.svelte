@@ -167,6 +167,7 @@
     }
 
     button {
+        margin-top: 15px;
         padding: 10px 20px;
         background-color: #ff9500;
         color: #fff;
@@ -188,6 +189,10 @@
     @media (max-width: 768px) {
         .form-container {
             margin-top: 20px;
+        }
+
+        textarea {
+            height: 100px;
         }
     }
 </style>

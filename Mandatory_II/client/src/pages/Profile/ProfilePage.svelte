@@ -24,6 +24,20 @@
             closeModal();
         }
     }
+
+    function formatEuropeanDate(dateString) {
+        if (!dateString) return 'Date not available';
+
+        const date = new Date(dateString);
+
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    }
 </script>
 
 <br />
@@ -40,11 +54,16 @@
 </Modals>
 <div class="form-container">
     <img src={get(user).avatar} alt="Avatar" />
-    <h2>Username: {get(user).user.username}</h2>
-    <h2>Email: {get(user).user.email}</h2>
-    <h2>Created at: {get(user).user.createdAt}</h2>
-    <button>Edit Profile</button>
-    <button on:click={openChangePasswordModal}>Change Password</button>
+    <div class="user-info">
+        <h2><span class="label">Username:</span> {get(user).user.username}</h2>
+        <h2><span class="label">Email:</span> {get(user).user.email}</h2>
+        <h2><span class="label">Created at:</span> {formatEuropeanDate(get(user).user.createdAt)}</h2>
+        <h2><span class="label">Updated at:</span> {formatEuropeanDate(get(user).user.updatedAt)}</h2>
+    </div>
+    <div class="button-group">
+        <button>Edit Profile</button>
+        <button on:click={openChangePasswordModal}>Change Password</button>
+    </div>
 </div>
 
 <style>
@@ -56,6 +75,22 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
     }
+
+    .user-info h2 {
+        font-size: 16px;
+        color: #c0c0c0;
+        margin: 10px 0;
+    }
+
+    .label {
+        font-weight: bold;
+        color: #ff9500;
+    }
+
+    .button-group {
+        text-align: center;
+    }
+
     button {
         margin-top: 15px;
         padding: 10px 20px;
@@ -65,6 +100,8 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        display: inline-block;
+        margin: 10px;
     }
     button:hover {
         background-color: #cc7a00;
@@ -124,5 +161,19 @@
         left: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            margin-top: 0px;
+        }
+
+        .form-container img {
+            width: 80px;
+            height: 80px;
+        }
+        .form-container h2 {
+            font-size: 16px;
+        }
     }
 </style>

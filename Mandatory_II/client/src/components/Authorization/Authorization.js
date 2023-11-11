@@ -9,9 +9,9 @@ export async function checkSession() {
 
         if (response.ok) {
             const responseData = await response.json();
-            const { id, username, email, role } = responseData.data;
+            const { id, username, email, role, createdAt, updatedAt } = responseData.data;
 
-            user.set({ isLoggedIn: true, user: { id, username, email, role }, avatar: '' });
+            user.set({ isLoggedIn: true, user: { id, username, email, role, createdAt, updatedAt }, avatar: '' });
         } else if (response.status === 401) {
             console.log('No active session');
             user.set({ isLoggedIn: false, user: null, avatar: '' });
