@@ -11,11 +11,9 @@ export const authService = {
     },
 
     async checkAndChangePassword(userData) {
-        console.log('Data: ', userData);
         await checkAndChangePassword(userData.username, userData.currentPassword, userData.newPassword);
     },
     async editProfile(userData) {
-        console.log('Data: ', userData);
         return await editProfile(userData.oldUsername, userData.newUsername, userData.oldEmail, userData.newEmail);
     }
 };

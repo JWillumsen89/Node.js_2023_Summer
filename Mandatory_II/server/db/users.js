@@ -106,7 +106,7 @@ export async function createUser(username, email, password, role = 'user', creat
         createdAt,
         updatedAt,
     };
-    console.log(newUser);
+
     await addDoc(collection(db, 'users'), newUser);
 
     const { password: _, ...userWithoutPassword } = newUser;
@@ -114,7 +114,6 @@ export async function createUser(username, email, password, role = 'user', creat
 }
 
 export async function loginUser(loginInput, password) {
-    console.log('loginUser', loginInput, password);
 
     if (loginInput.includes('@')) {
         loginInput = loginInput.charAt(0).toUpperCase() + loginInput.slice(1).toLowerCase();
@@ -151,15 +150,12 @@ export async function checkAndChangePassword(username, oldPassword, newPassword)
     let userQuery = query(collection(db, 'users'), where('username', '==', username));
     let querySnapshot = await getDocs(userQuery);
 
-    console.log('querySnapshot', querySnapshot);
-
     let user;
     let userDocId;
     querySnapshot.forEach(doc => {
         user = doc.data();
         userDocId = doc.id;
     });
-    console.log('user', user);
 
     const isCurrentPasswordValid = await comparePassword(oldPassword, user.password);
     if (!isCurrentPasswordValid) {

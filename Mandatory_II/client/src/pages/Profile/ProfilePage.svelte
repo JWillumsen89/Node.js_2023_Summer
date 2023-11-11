@@ -15,15 +15,12 @@
     let userData;
 
     $: userData = $user.user;
-    console.log(userData);
 
     function openChangePasswordModal() {
-        console.log('openChangePasswordModal - Its working');
         openModal(PasswordChangeModal, { title: 'Change Password' });
     }
 
     function openEditUsernameAndEmail() {
-        console.log('openEditUsernameAndEmail - Its working');
         openModal(EditProfileModal, { title: 'Edit Username And Email' });
     }
 

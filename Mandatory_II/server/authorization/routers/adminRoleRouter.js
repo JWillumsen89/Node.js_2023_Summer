@@ -11,7 +11,6 @@ router.get('/admin/data', isAuthenticated, requireRole(['admin']), (req, res) =>
 
 router.get('/admin/users', isAuthenticated, requireRole(['admin']), async (req, res) => {
      const users = await authorizationController.getAllUsersWithUserRole();
-    console.log('Users: ', users);
     res.send({ data: users });
 });
 

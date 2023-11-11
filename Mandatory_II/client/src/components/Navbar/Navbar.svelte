@@ -199,8 +199,8 @@
         }
 
         .user-info span {
-            margin-top: 10px; /* Adjust this value as needed to lower the username */
-            display: block; /* This will ensure the span takes the full width it needs */
+            margin-top: 10px;
+            display: block;
         }
         div {
             font-size: 0.8em;
