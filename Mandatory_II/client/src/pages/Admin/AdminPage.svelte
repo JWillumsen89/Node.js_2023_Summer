@@ -29,8 +29,7 @@
         }
     });
 </script>
-
-<h1>Admin Page</h1>
+<br>
 {#if adminData.length > 0}
     <h3>{adminData}</h3>
 {:else}
