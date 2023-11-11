@@ -1,4 +1,4 @@
-import { createUser, loginUser, checkAndChangePassword } from '../../db/users.js';
+import { createUser, loginUser, checkAndChangePassword, editProfile } from '../../db/users.js';
 
 export const authService = {
     async signUpUser(userData) {
@@ -14,4 +14,8 @@ export const authService = {
         console.log('Data: ', userData);
         await checkAndChangePassword(userData.username, userData.currentPassword, userData.newPassword);
     },
+    async editProfile(userData) {
+        console.log('Data: ', userData);
+        return await editProfile(userData.oldUsername, userData.newUsername, userData.oldEmail, userData.newEmail);
+    }
 };

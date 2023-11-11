@@ -12,4 +12,7 @@ export const authController = {
     async checkAndChangePassword(body) {
         await authService.checkAndChangePassword(body);
     },
+    async editProfile(body) {
+        return await authService.editProfile(body);
+    }
 };

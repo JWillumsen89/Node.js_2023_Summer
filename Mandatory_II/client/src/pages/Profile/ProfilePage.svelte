@@ -5,14 +5,26 @@
     import { get } from 'svelte/store';
     import { Modals, openModal, closeModal } from 'svelte-modals';
     import PasswordChangeModal from './PasswordChangeModal.svelte';
+    import EditProfileModal from './EditProfileModal.svelte';
+    import { formatEuropeanDate } from '../../components/dateFormat.js';
 
     $: pageTitle.set('Profile');
     $: dynamicTitlePart.set($pageTitle);
     $: document.title = getFullTitle($dynamicTitlePart);
 
+    let userData;
+
+    $: userData = $user.user;
+    console.log(userData);
+
     function openChangePasswordModal() {
         console.log('openChangePasswordModal - Its working');
         openModal(PasswordChangeModal, { title: 'Change Password' });
+    }
+
+    function openEditUsernameAndEmail() {
+        console.log('openEditUsernameAndEmail - Its working');
+        openModal(EditProfileModal, { title: 'Edit Username And Email' });
     }
 
     function handleBackdropClick() {
@@ -23,20 +35,6 @@
         if (event.key === 'Enter' || event.key === 'Space') {
             closeModal();
         }
-    }
-
-    function formatEuropeanDate(dateString) {
-        if (!dateString) return 'Date not available';
-
-        const date = new Date(dateString);
-
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-
-        return `${day}/${month}/${year} ${hours}:${minutes}`;
     }
 </script>
 
@@ -55,13 +53,15 @@
 <div class="form-container">
     <img src={get(user).avatar} alt="Avatar" />
     <div class="user-info">
-        <h2><span class="label">Username:</span> {get(user).user.username}</h2>
-        <h2><span class="label">Email:</span> {get(user).user.email}</h2>
-        <h2><span class="label">Created at:</span> {formatEuropeanDate(get(user).user.createdAt)}</h2>
-        <h2><span class="label">Updated at:</span> {formatEuropeanDate(get(user).user.updatedAt)}</h2>
+        {#if userData}
+            <h2><span class="label">Username:</span> {userData.username}</h2>
+            <h2><span class="label">Email:</span> {userData.email}</h2>
+            <h2><span class="label">Created at:</span> {formatEuropeanDate(userData.createdAt)}</h2>
+            <h2><span class="label">Updated at:</span> {formatEuropeanDate(userData.updatedAt)}</h2>
+        {/if}
     </div>
     <div class="button-group">
-        <button>Edit Profile</button>
+        <button on:click={openEditUsernameAndEmail}>Edit Profile</button>
         <button on:click={openChangePasswordModal}>Change Password</button>
     </div>
 </div>

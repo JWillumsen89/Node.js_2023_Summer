@@ -8,43 +8,42 @@
     export let isOpen;
     export let title;
 
-    async function checkAndChangePassword(event) {
-        event.preventDefault();
-        const username = get(user).user.username;
-        const currentPassword = event.target.currentPassword.value;
-        const newPassword = event.target.newPassword.value;
-        const confirmNewPassword = event.target.confirmNewPassword.value;
+    let username = '';
+    let email = '';
 
-        const currentPasswordInput = /** @type {HTMLInputElement} */ (document.getElementById('currentPassword'));
-        const newPasswordInput = /** @type {HTMLInputElement} */ (document.getElementById('newPassword'));
-        const confirmNewPasswordInput = /** @type {HTMLInputElement} */ (document.getElementById('confirmNewPassword'));
+    $: username = $user.isLoggedIn ? formatString($user.user.username) : '';
+    $: email = $user.isLoggedIn ? formatString($user.user.email) : '';
+
+    function formatString(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    async function changeUsernameAndEmail(event) {
+        event.preventDefault();
+        const oldUsername = get(user).user.username;
+        const newUsername = event.target.username.value;
+        const oldEmail = get(user).user.email;
+        const newEmail = event.target.email.value;
+
+        const usernameInput = /** @type {HTMLInputElement} */ (document.getElementById('username'));
+        const emailInput = /** @type {HTMLInputElement} */ (document.getElementById('email'));
         const submitBtn = /** @type {HTMLInputElement} */ (document.getElementById('submit-btn'));
 
-        if (currentPasswordInput && newPasswordInput && confirmNewPasswordInput) {
-            currentPasswordInput.disabled = true;
-            newPasswordInput.disabled = true;
-            confirmNewPasswordInput.disabled = true;
+        if (usernameInput && emailInput) {
+            usernameInput.disabled = true;
+            emailInput.disabled = true;
             submitBtn.disabled = true;
         }
 
         const data = {
-            username,
-            currentPassword,
-            newPassword,
+            oldUsername,
+            newUsername,
+            oldEmail,
+            newEmail,
         };
 
-        if (newPassword !== confirmNewPassword) {
-            console.error('Passwords do not match!');
-            notificationStore.set({ message: 'New passwords do not match!', type: 'error' });
-            currentPasswordInput.disabled = false;
-            newPasswordInput.disabled = false;
-            confirmNewPasswordInput.disabled = false;
-            submitBtn.disabled = false;
-            return;
-        }
-
         try {
-            const response = await fetch(BaseURL + '/auth/change-password', {
+            const response = await fetch(BaseURL + '/auth/edit-profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,24 +52,24 @@
                 credentials: 'include',
             });
             if (response.ok) {
-                notificationStore.set({ message: 'Password successfully changed!', type: 'success' });
+                notificationStore.set({ message: 'Profile successfully edited!', type: 'success' });
                 user.update(currentUser => {
+                    currentUser.user.username = formatString(newUsername);
+                    currentUser.user.email = formatString(newEmail);
                     currentUser.user.updatedAt = new Date().toISOString();
                     return currentUser;
                 });
                 closeModal();
             } else {
-                currentPasswordInput.disabled = false;
-                newPasswordInput.disabled = false;
-                confirmNewPasswordInput.disabled = false;
+                usernameInput.disabled = false;
+                emailInput.disabled = false;
                 submitBtn.disabled = false;
                 const errorText = await response.text();
                 throw new Error(errorText);
             }
         } catch (error) {
-            currentPasswordInput.disabled = false;
-            newPasswordInput.disabled = false;
-            confirmNewPasswordInput.disabled = false;
+            usernameInput.disabled = false;
+            emailInput.disabled = false;
             submitBtn.disabled = false;
             const errorMessage = JSON.parse(error.message);
             if (errorMessage && errorMessage.error) {
@@ -86,18 +85,14 @@
     <div role="dialog" class="modal">
         <div class="contents form-container">
             <h2>{title}</h2>
-            <form on:submit={checkAndChangePassword}>
+            <form on:submit={changeUsernameAndEmail}>
                 <div class="form-group">
-                    <label for="currentPassword">Current Password:</label>
-                    <input id="currentPassword" type="password" placeholder="Current Password" />
+                    <label for="username">Username:</label>
+                    <input id="username" type="text" placeholder="Username" value={username} />
                 </div>
                 <div class="form-group">
-                    <label for="newPassword">New Password:</label>
-                    <input id="newPassword" type="password" placeholder="New Password" />
-                </div>
-                <div class="form-group">
-                    <label for="confirmNewPassword">Confirm New Password:</label>
-                    <input id="confirmNewPassword" type="password" placeholder="Confirm New Password" />
+                    <label for="email">Email:</label>
+                    <input id="email" type="mail" placeholder="Email" value={email} />
                 </div>
                 <div class="actions">
                     <button type="submit" id="submit-btn">Submit</button>

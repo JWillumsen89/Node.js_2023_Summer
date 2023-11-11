@@ -174,6 +174,12 @@
         border-radius: 50%;
         margin-right: 10px;
     }
+
+    @media (max-width: 1024px) {
+        .page-title {
+            font-size: 3em;
+        }
+    }
     @media (max-width: 768px) {
         .page-title {
             z-index: 10;

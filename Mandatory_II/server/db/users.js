@@ -68,6 +68,13 @@ export async function loginUser(loginInput, password) {
 */
 
 export async function createUser(username, email, password, role = 'user', createdAt, updatedAt) {
+    username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase().replace(/\s/g, '');
+    email = email.charAt(0).toUpperCase() + email.slice(1).toLowerCase();
+
+    if (/\s/.test(username)) {
+        throw new Error('Username cannot contain whitespace');
+    }
+
     const userQuery = query(collection(db, 'users'), where('username', '==', username));
     const querySnapshot = await getDocs(userQuery);
 
@@ -92,7 +99,6 @@ export async function createUser(username, email, password, role = 'user', creat
     const hashedPassword = await hashPassword(password);
 
     const newUser = {
-        id: uuidv4(),
         username,
         email,
         password: hashedPassword,
@@ -109,6 +115,12 @@ export async function createUser(username, email, password, role = 'user', creat
 
 export async function loginUser(loginInput, password) {
     console.log('loginUser', loginInput, password);
+
+    if (loginInput.includes('@')) {
+        loginInput = loginInput.charAt(0).toUpperCase() + loginInput.slice(1).toLowerCase();
+    } else {
+        loginInput = loginInput.charAt(0).toUpperCase() + loginInput.slice(1).toLowerCase().replace(/\s/g, '');
+    }
 
     let userQuery = query(collection(db, 'users'), where('username', '==', loginInput));
     let querySnapshot = await getDocs(userQuery);
@@ -147,7 +159,7 @@ export async function checkAndChangePassword(username, oldPassword, newPassword)
         user = doc.data();
         userDocId = doc.id;
     });
-    console.log('user', user)
+    console.log('user', user);
 
     const isCurrentPasswordValid = await comparePassword(oldPassword, user.password);
     if (!isCurrentPasswordValid) {
@@ -167,6 +179,72 @@ export async function checkAndChangePassword(username, oldPassword, newPassword)
     const updatedUser = {
         ...user,
         password: hashedPassword,
+        updatedAt: new Date().toISOString(),
+    };
+
+    const userRef = doc(db, 'users', userDocId);
+    await updateDoc(userRef, updatedUser);
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+
+    return userWithoutPassword;
+}
+
+export async function getAllUsersWithUserRole() {
+    const users = [];
+    const userQuery = query(collection(db, 'users'), where('role', '==', 'user'));
+    const querySnapshot = await getDocs(userQuery);
+
+    querySnapshot.forEach(doc => {
+        const { password: _, ...userWithoutPassword } = doc.data();
+        users.push(userWithoutPassword);
+    });
+
+    return users;
+}
+
+export async function editProfile(oldUsername, newUsername, oldEmail, newEmail) {
+    newUsername = newUsername.charAt(0).toUpperCase() + newUsername.slice(1).toLowerCase().replace(/\s/g, '');
+    newEmail = newEmail.charAt(0).toUpperCase() + newEmail.slice(1).toLowerCase();
+
+    // Check for whitespace in new username
+    if (/\s/.test(newUsername)) {
+        throw new Error('Username cannot contain whitespace');
+    }
+    
+    let userQuery = query(collection(db, 'users'), where('username', '==', oldUsername));
+    let querySnapshot = await getDocs(userQuery);
+
+    let user;
+    let userDocId;
+    querySnapshot.forEach(doc => {
+        user = doc.data();
+        userDocId = doc.id;
+    });
+
+    if (oldUsername !== newUsername) {
+        const usernameQuery = query(collection(db, 'users'), where('username', '==', newUsername), where('__name__', '!=', userDocId));
+        const usernameQuerySnapshot = await getDocs(usernameQuery);
+
+        if (!usernameQuerySnapshot.empty) {
+            throw new Error('Username already exists');
+        }
+    }
+
+    if (oldEmail !== newEmail) {
+        const emailQuery = query(collection(db, 'users'), where('email', '==', newEmail), where('__name__', '!=', userDocId));
+        const emailQuerySnapshot = await getDocs(emailQuery);
+
+        if (!emailQuerySnapshot.empty) {
+            throw new Error('Email already exists');
+        }
+    }
+
+    const updatedUser = {
+        ...user,
+        username: newUsername,
+        email: newEmail,
+        updatedAt: new Date().toISOString(),
     };
 
     const userRef = doc(db, 'users', userDocId);

@@ -43,4 +43,14 @@ router.post('/auth/change-password', authRateLimiter, async (req, res) => {
     }
 });
 
+router.post('/auth/edit-profile', authRateLimiter, async (req, res) => {
+    try {
+        const updatedUserData = await authController.editProfile(req.body);
+        req.session.user = updatedUserData;
+        res.send({ data: { message: 'Profile edited successfully', user: updatedUserData } });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
 export default router;
